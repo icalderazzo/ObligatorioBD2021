@@ -4,10 +4,10 @@ namespace Obligatorio.Services.Interfaces
 {
     public interface IService<T>
     {
-        int Create(T entity);
-        int Modify(T entity);
+        void Create(T entity);
+        void Modify(T entity);
         ICollection<T> List();
-        int Delete(string entityId);
+        void Delete(string entityId);
         T GetById(string entityId);
     }
 }

@@ -1,7 +1,8 @@
-using System;
-using System.Windows.Forms;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Presentation
 {
@@ -15,8 +16,10 @@ namespace Presentation
         static void Main()
         {
             var builder = new ConfigurationBuilder()
-                .AddJsonFile(@".\.\appsettings.json");
+                .AddJsonFile(@".\appsettings.json", optional: false, reloadOnChange: true);
             Configuration = builder.Build();
+
+            Obligatorio.Repositories.DatabaseSettingsRepository.ConnectionString = Configuration.GetConnectionString("Production");
 
             var services = new ServiceCollection();
             ConfigureServices(services);

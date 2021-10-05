@@ -63,7 +63,7 @@ namespace Presentation
             this.sideBarPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.sideBarPanel.Location = new System.Drawing.Point(0, 0);
             this.sideBarPanel.Name = "sideBarPanel";
-            this.sideBarPanel.Size = new System.Drawing.Size(235, 673);
+            this.sideBarPanel.Size = new System.Drawing.Size(235, 1033);
             this.sideBarPanel.TabIndex = 0;
             // 
             // btnTransactions
@@ -156,7 +156,7 @@ namespace Presentation
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(235, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1027, 45);
+            this.panel3.Size = new System.Drawing.Size(1667, 45);
             this.panel3.TabIndex = 1;
             // 
             // lblGreeting
@@ -164,7 +164,7 @@ namespace Presentation
             this.lblGreeting.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblGreeting.AutoSize = true;
             this.lblGreeting.Font = new System.Drawing.Font("Century Gothic", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblGreeting.Location = new System.Drawing.Point(336, 4);
+            this.lblGreeting.Location = new System.Drawing.Point(656, 4);
             this.lblGreeting.Name = "lblGreeting";
             this.lblGreeting.Size = new System.Drawing.Size(343, 34);
             this.lblGreeting.TabIndex = 2;
@@ -174,7 +174,7 @@ namespace Presentation
             // 
             this.panel6.Controls.Add(this.btnNotifications);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel6.Location = new System.Drawing.Point(937, 0);
+            this.panel6.Location = new System.Drawing.Point(1577, 0);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(45, 45);
             this.panel6.TabIndex = 1;
@@ -199,7 +199,7 @@ namespace Presentation
             // 
             this.panel5.Controls.Add(this.btnUserOptions);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel5.Location = new System.Drawing.Point(982, 0);
+            this.panel5.Location = new System.Drawing.Point(1622, 0);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(45, 45);
             this.panel5.TabIndex = 0;
@@ -226,14 +226,14 @@ namespace Presentation
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(235, 45);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1027, 55);
+            this.panel4.Size = new System.Drawing.Size(1667, 55);
             this.panel4.TabIndex = 2;
             // 
             // lblTitle
             // 
             this.lblTitle.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Location = new System.Drawing.Point(471, 9);
+            this.lblTitle.Location = new System.Drawing.Point(791, 9);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(90, 34);
             this.lblTitle.TabIndex = 0;
@@ -243,16 +243,17 @@ namespace Presentation
             // 
             this.mainContentPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(248)))), ((int)(((byte)(245)))));
             this.mainContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainContentPanel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.mainContentPanel.Location = new System.Drawing.Point(235, 100);
             this.mainContentPanel.Name = "mainContentPanel";
-            this.mainContentPanel.Size = new System.Drawing.Size(1027, 573);
+            this.mainContentPanel.Size = new System.Drawing.Size(1667, 933);
             this.mainContentPanel.TabIndex = 3;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 32F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.ClientSize = new System.Drawing.Size(1902, 1033);
             this.Controls.Add(this.mainContentPanel);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);

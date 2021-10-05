@@ -16,14 +16,13 @@ namespace Presentation
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            _activeForm = new HomeForm();
-            ActivateButton(this.btnHome);
+            OpenChildForm(new HomeForm(), this.btnHome);
         }
 
         #region ButtonClicks
         private void btnHome_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender);
+            OpenChildForm(new HomeForm(), sender);
         }
         private void btnPostArticle_Click(object sender, EventArgs e)
         {
@@ -71,18 +70,20 @@ namespace Presentation
             }
         }
 
-        private void ChangeActiveForm(Form childForm, object sender)
+        private void OpenChildForm(Form childForm, object sender)
         {
             if (_activeForm != null)
             {
                 _activeForm.Close();
             }
+            ActivateButton(sender);
             _activeForm = childForm;
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
             this.mainContentPanel.Controls.Add(childForm);
             this.mainContentPanel.Tag = childForm;
+            childForm.BringToFront();
             childForm.Show();
             this.lblTitle.Text = ((Button)sender).Text;
         }

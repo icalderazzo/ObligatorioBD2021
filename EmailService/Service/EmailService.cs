@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using MailKit.Net.Smtp;
 using MailKit.Security;
-using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using System;
+using System.Threading.Tasks;
 
 namespace EmailService.Service
 {
@@ -42,13 +42,13 @@ namespace EmailService.Service
             }
             catch (Exception e)
             {
-                throw new Exception("",e);
+                throw new Exception("", e);
             }
             finally
             {
                 if (client != null)
                 {
-                    client.Disconnect(true);    
+                    client.Disconnect(true);
                 }
             }
         }

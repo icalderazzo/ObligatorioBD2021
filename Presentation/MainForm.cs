@@ -1,6 +1,8 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using Obligatorio.Domain.Model;
+using Obligatorio.Services.Services;
 using Presentation.Forms;
+using System;
+using System.Windows.Forms;
 using static Presentation.Constant.Styles;
 
 namespace Presentation
@@ -9,14 +11,18 @@ namespace Presentation
     {
         private Button _selectedButton;
         private Form _activeForm;
-        public MainForm()
+        private Usuario _loggedUser;
+
+        public MainForm(Usuario usuario)
         {
+            _loggedUser = usuario;
             InitializeComponent();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             OpenChildForm(new HomeForm(), this.btnHome);
+            this.lblGreeting.Text = this.lblGreeting.Text.Replace("[UserName]", _loggedUser.Nombre);
         }
 
         #region ButtonClicks
@@ -88,5 +94,10 @@ namespace Presentation
             this.lblTitle.Text = ((Button)sender).Text;
         }
         #endregion
+
+        private void lblGreeting_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

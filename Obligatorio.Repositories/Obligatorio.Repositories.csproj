@@ -6,10 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DatabaseInterface\DatabaseInterface.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Repositories\" />
+    <ProjectReference Include="..\Obligatorio.Domain\Obligatorio.Domain.csproj" />
   </ItemGroup>
 
 </Project>

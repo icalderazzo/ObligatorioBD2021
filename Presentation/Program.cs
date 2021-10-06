@@ -1,7 +1,11 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Obligatorio.Repositories.Interfaces;
+using Obligatorio.Repositories.Repositories;
+using Obligatorio.Services.Interfaces;
+using Obligatorio.Services.Services;
+using Presentation.Forms;
 using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace Presentation
@@ -29,16 +33,18 @@ namespace Presentation
                 Application.SetHighDpiMode(HighDpiMode.SystemAware);
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                var mainForm = serviceProvider.GetRequiredService<MainForm>();
-                Application.Run(mainForm);
+                var login = serviceProvider.GetRequiredService<LoginForm>();
+                Application.Run(login);
             }
         }
 
         private static void ConfigureServices(ServiceCollection services)
         {
             services.Configure<EmailService.Settings>(options => Configuration.GetSection("emailSettings").Bind(options));
-            services.AddTransient<EmailService.Service.IEmailService, EmailService.Service.EmailService>()
-                    .AddScoped<MainForm>();
+            services.AddTransient<EmailService.Service.IEmailService, EmailService.Service.EmailService>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserService, UserService>()
+                    .AddScoped<LoginForm>();
         }
     }
 }

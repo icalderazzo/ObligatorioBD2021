@@ -13,7 +13,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EmailService\EmailService.csproj" />
+    <ProjectReference Include="..\Obligatorio.Domain\Obligatorio.Domain.csproj" />
     <ProjectReference Include="..\Obligatorio.Repositories\Obligatorio.Repositories.csproj" />
+    <ProjectReference Include="..\Obligatorio.Services\Obligatorio.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

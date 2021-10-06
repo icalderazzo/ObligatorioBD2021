@@ -3,11 +3,12 @@ namespace Obligatorio.Repositories
 {
     public static class DatabaseSettingsRepository
     {
-        public static string ConnectionString 
+        public static string ConnectionString
         {
-            set {
+            set
+            {
                 SetConnectionString(value);
-            } 
+            }
         }
         private static void SetConnectionString(string value)
         {

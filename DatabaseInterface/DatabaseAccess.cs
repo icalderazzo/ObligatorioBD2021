@@ -45,7 +45,7 @@ namespace DataBaseInterface
             }
             catch (Exception ex)
             {
-                throw new Exception("Ubknown exception", ex);
+                throw new Exception("Unknown exception", ex);
             }
         }
 
@@ -54,7 +54,7 @@ namespace DataBaseInterface
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public static async Task<IEnumerable<object[]>> Select(string query, List<SqlParameter> parameters = null)
+        public static async Task<List<object[]>> Select(string query, List<SqlParameter> parameters = null)
         {
             try
             {

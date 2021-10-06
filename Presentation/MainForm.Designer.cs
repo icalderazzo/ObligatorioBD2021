@@ -169,6 +169,7 @@ namespace Presentation
             this.lblGreeting.Size = new System.Drawing.Size(343, 34);
             this.lblGreeting.TabIndex = 2;
             this.lblGreeting.Text = "Bienvenido, [UserName]";
+            this.lblGreeting.Click += new System.EventHandler(this.lblGreeting_Click);
             // 
             // panel6
             // 

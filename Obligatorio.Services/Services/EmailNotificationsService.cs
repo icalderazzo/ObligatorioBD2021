@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using EmailService;
+﻿using EmailService;
 using EmailService.Service;
 using Obligatorio.Services.Interfaces;
+using System;
+using System.Threading.Tasks;
 
 namespace Obligatorio.Services.Services
 {

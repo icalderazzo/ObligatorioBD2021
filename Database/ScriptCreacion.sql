@@ -1,4 +1,4 @@
-CREATE DATABASE UCUTrade;
+--CREATE DATABASE UCUTrade;
 
 CREATE TABLE Usuario(
     Ci INT NOT NULL,
@@ -41,13 +41,20 @@ CREATE TABLE EstadoTransaccion(
     PRIMARY KEY (IdEstadoTransaccion)
 );
 
+begin tran
+insert into EstadoTransaccion Values ('Pendiente')
+insert into EstadoTransaccion Values ('Completada')
+insert into EstadoTransaccion Values ('Rechazada')
+commit
+
 CREATE TABLE Transaccion(
     IdTransaccion BIGINT IDENTITY(1,1),
     Fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
-    EstadoTransaccion SMALLINT,
+    EstadoTransaccion SMALLINT DEFAULT 1,
     FOREIGN KEY (EstadoTransaccion) REFERENCES EstadoTransaccion,
     PRIMARY KEY (IdTransaccion) 
 );
+
 
 CREATE TABLE ContraOferta(
     IdNuevaTransaccion BIGINT NOT NULL,

@@ -1,11 +1,10 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Obligatorio.Domain.Model
 {
     public class Usuario
     {
-        public int Cedula { get; set; }
+        public int Ci { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Correo { get; set; }

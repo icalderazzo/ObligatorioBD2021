@@ -34,7 +34,8 @@ namespace DataBaseInterface
                         }
                     }
 
-                    await conn.OpenAsync();
+                    //await conn.OpenAsync();
+                    conn.Open();
                     var result = await cmd.ExecuteNonQueryAsync();
                     return result;
                 }
@@ -42,6 +43,10 @@ namespace DataBaseInterface
             catch(SqlException dbEx)
             {
                 throw new Exception("Error de base de datos", dbEx);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new Exception("Error de base de datos", ex);
             }
             catch (Exception ex)
             {
@@ -75,8 +80,11 @@ namespace DataBaseInterface
                         }
                     }
 
-                    await conn.OpenAsync();
-                    var reader = await cmd.ExecuteReaderAsync();
+                    //await conn.OpenAsync();
+                    conn.Open();
+                    //var reader = await cmd.ExecuteReaderAsync();
+
+                    var reader = cmd.ExecuteReader();
 
                     if (reader.HasRows)
                     {

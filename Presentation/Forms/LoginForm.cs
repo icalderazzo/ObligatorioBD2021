@@ -18,14 +18,7 @@ namespace Presentation.Forms
         {
             try
             {
-                Usuario usuario = new Usuario()
-                {
-                    NombreUsuario = this.txtUsername.Text,
-                    Contrasenia = this.txtPassword.Text
-                };
-
-                Usuario loggedUser = _userService.Login(usuario);
-
+                Usuario loggedUser = _userService.Login(this.txtUsername.Text, this.txtPassword.Text);
                 if (loggedUser != null)
                 {
                     var mainForm = new MainForm(loggedUser);

@@ -4,6 +4,6 @@ namespace Obligatorio.Services.Interfaces
 {
     public interface IUserService : IService<Usuario>
     {
-        Usuario Login(Usuario usuario);
+        Usuario Login(string username, string password);
     }
 }

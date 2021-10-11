@@ -15,11 +15,11 @@ namespace Obligatorio.Services.Services
             _userRepository = userRepository;
         }
 
-        public Usuario Login(Usuario usuario)
+        public Usuario Login(string username, string password)
         {
             try
             {
-                return _userRepository.Get(usuario).Result;
+                return _userRepository.Get(username, password).Result;
             }
             catch (Exception e)
             {

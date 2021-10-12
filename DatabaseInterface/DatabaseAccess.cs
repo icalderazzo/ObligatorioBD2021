@@ -36,7 +36,7 @@ namespace DataBaseInterface
 
                     //await conn.OpenAsync();
                     conn.Open();
-                    var result = await cmd.ExecuteNonQueryAsync();
+                    var result = cmd.ExecuteNonQuery();
                     return result;
                 }
             }
@@ -80,10 +80,7 @@ namespace DataBaseInterface
                         }
                     }
 
-                    //await conn.OpenAsync();
                     conn.Open();
-                    //var reader = await cmd.ExecuteReaderAsync();
-
                     var reader = cmd.ExecuteReader();
 
                     if (reader.HasRows)

@@ -22,8 +22,8 @@ namespace Presentation.Forms
                 if (loggedUser != null)
                 {
                     var mainForm = new MainForm(loggedUser);
-                    this.Close();
                     mainForm.Show();
+                    Hide();
                 }
                 else
                 {

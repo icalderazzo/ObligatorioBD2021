@@ -1,4 +1,4 @@
-CREATE DATABASE UCUTrade2;
+CREATE DATABASE UCUTrade;
 
 CREATE TABLE Usuario(
     Ci INT NOT NULL,
@@ -49,9 +49,9 @@ commit
 
 CREATE TABLE Oferta(
     IdOferta BIGINT IDENTITY(1,1),
-    FechaRealizacion DATETIME DEFAULT,
-    EstadoTransaccion SMALLINT DEFAULT 1,
-    FOREIGN KEY (EstadoTransaccion) REFERENCES EstadoTransaccion,
+    FechaRealizacion DATETIME,
+    EstadoOferta SMALLINT DEFAULT 1,
+    FOREIGN KEY (EstadoOferta) REFERENCES EstadoOferta,
     PRIMARY KEY (IdOferta) 
 );
 

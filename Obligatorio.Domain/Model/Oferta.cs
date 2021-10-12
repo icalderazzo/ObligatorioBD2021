@@ -6,7 +6,7 @@ namespace Obligatorio.Domain.Model
 {
     public class Oferta
     {
-        public long IdTransaccion { get; set; }
+        public long IdOferta { get; set; }
         public DateTime Fecha { get; set; }
         public EnumOfertas.EstadoOferta Estado { get; set; }
         public Usuario UsuarioEmisor { get; set; } = new();

@@ -5,11 +5,17 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using DatabaseInterface;
 
 namespace Obligatorio.Repositories.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly IDatabaseContext _context;
+        public UserRepository(IDatabaseContext context)
+        {
+            _context = context;
+        }
         public Task Delete(string id)
         {
             throw new NotImplementedException();
@@ -34,7 +40,7 @@ namespace Obligatorio.Repositories.Repositories
                     Value = password
                 }
             };
-            var dbResult = await DataBaseInterface.DatabaseAccess.Select(query, sqlParameters);
+            var dbResult = await _context.Select(query, sqlParameters);
             if (dbResult.Any())
             {
                 var filaUsuario = dbResult[0];

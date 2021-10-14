@@ -1,32 +1,32 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace DataBaseInterface
-{
-    public static class DatabaseAccess
-    {
-        private static string _connString;
+using System.Threading.Tasks;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="query"></param>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
-        public static async Task<int> SaveData(string query, List<SqlParameter> parameters = null)
+namespace DatabaseInterface
+{
+    public class DatabaseContext : IDatabaseContext
+    {
+        private string _connectionString;
+
+        public DatabaseContext(string connectionSting)
+        {
+            _connectionString = connectionSting;
+        }
+
+        public async Task<int> SaveData(string query, List<SqlParameter> parameters = null)
         {
             try
             {
-                using(var conn = new SqlConnection(_connString))
+                using (var conn = new SqlConnection(_connectionString))
                 {
                     var cmd = new SqlCommand()
                     {
                         Connection = conn,
                         CommandText = query
                     };
-                    if (parameters!=null)
+                    if (parameters != null)
                     {
                         foreach (var parameter in parameters)
                         {
@@ -34,13 +34,12 @@ namespace DataBaseInterface
                         }
                     }
 
-                    //await conn.OpenAsync();
                     conn.Open();
                     var result = cmd.ExecuteNonQuery();
                     return result;
                 }
             }
-            catch(SqlException dbEx)
+            catch (SqlException dbEx)
             {
                 throw new Exception("Error de base de datos", dbEx);
             }
@@ -50,21 +49,15 @@ namespace DataBaseInterface
             }
             catch (Exception ex)
             {
-                throw new Exception("Unknown exception", ex);
+                throw new Exception("Error desconocido", ex);
             }
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        public static async Task<List<object[]>> Select(string query, List<SqlParameter> parameters = null)
+        public async Task<List<object[]>> Select(string query, List<SqlParameter> parameters = null)
         {
             try
             {
                 List<object[]> result = new List<object[]>();
-                using (var conn = new SqlConnection(_connString))
+                using (var conn = new SqlConnection(_connectionString))
                 {
                     var cmd = new SqlCommand()
                     {
@@ -72,7 +65,7 @@ namespace DataBaseInterface
                         CommandText = query
                     };
 
-                    if (parameters!=null)
+                    if (parameters != null)
                     {
                         foreach (var parameter in parameters)
                         {
@@ -103,12 +96,6 @@ namespace DataBaseInterface
             {
                 throw new Exception("Unknown exception", ex);
             }
-        }
-
-
-        public static void SetConnectionString(string connString)
-        {
-            _connString = connString;
         }
     }
 }

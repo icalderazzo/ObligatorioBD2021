@@ -1,3 +1,4 @@
+using DatabaseInterface;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Obligatorio.Repositories.Interfaces;
@@ -23,8 +24,6 @@ namespace Presentation
                 .AddJsonFile(@".\appsettings.json", optional: false, reloadOnChange: true);
             Configuration = builder.Build();
 
-            Obligatorio.Repositories.DatabaseSettingsRepository.ConnectionString = Configuration.GetConnectionString("Production");
-
             var services = new ServiceCollection();
             ConfigureServices(services);
 
@@ -41,6 +40,7 @@ namespace Presentation
         private static void ConfigureServices(ServiceCollection services)
         {
             services.Configure<EmailService.Settings>(options => Configuration.GetSection("emailSettings").Bind(options));
+            services.AddSingleton<IDatabaseContext>(DatabaseContextFactory.GetContext(Configuration.GetConnectionString("Production")));
             services.AddTransient<EmailService.Service.IEmailService, EmailService.Service.EmailService>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>()

@@ -25,7 +25,7 @@ CREATE TABLE Publicacion(
 
 CREATE TABLE UsuarioPublicacion(
     CiUsuario INT NOT NULL,
-    IdPublicacion BIGINT NOT NULL
+    IdPublicacion BIGINT NOT NULL,
     FechaPublicacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (CiUsuario) REFERENCES Usuario(Ci),
     FOREIGN KEY (IdPublicacion) REFERENCES Publicacion(IdPublicacion),

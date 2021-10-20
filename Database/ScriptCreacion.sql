@@ -1,4 +1,4 @@
---CREATE DATABASE UCUTrade;
+CREATE DATABASE UCUTrade;
 
 CREATE TABLE Usuario(
     Ci INT NOT NULL,
@@ -7,73 +7,81 @@ CREATE TABLE Usuario(
     Correo NVARCHAR(50) NOT NULL,
     NombreUsuario NVARCHAR(20) NOT NULL,
     Contrasenia NVARCHAR(30) NOT NULL,
+    Telefono INT,
     PRIMARY KEY (Ci)
 );
 
-CREATE TABLE Telefono(
-    Numero INT NOT NULL,
-    CiUsuario INT NOT NULL,
-    FOREIGN KEY (CiUsuario) REFERENCES Usuario(Ci),
-    PRIMARY KEY (Numero)  
-);
-
-CREATE TABLE Producto(
-    IdProducto BIGINT IDENTITY(1,1),
-    Nombre NVARCHAR(50),
-    Descripcion NTEXT,
-    Valor INT,
-    PRIMARY KEY (IdProducto)
-);
-
 CREATE TABLE Publicacion(
-    IdProducto BIGINT NOT NULL,
-    CiUsuario INT NOT NULL,
+    IdPublicacion BIGINT IDENTITY(1,1),
     Estado BIT DEFAULT 1,
-    FechaPublicacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (IdProducto) REFERENCES Producto (IdProducto),
-    FOREIGN KEY (CiUsuario) REFERENCES Usuario (Ci),
-    PRIMARY KEY (IdProducto)
+    NombreProducto NVARCHAR(50) NOT NULL,
+    DescripcionProducto NTEXT NOT NULL,
+    ValorProducto INT NOT NULL,
+    PRIMARY KEY (IdPublicacion)
 );
 
-CREATE TABLE EstadoTransaccion(
-    IdEstadoTransaccion SMALLINT IDENTITY(1,1),
+--CREATE TABLE Imagen (
+--);
+
+CREATE TABLE UsuarioPublicacion(
+    CiUsuario INT NOT NULL,
+    IdPublicacion BIGINT NOT NULL
+    FechaPublicacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (CiUsuario) REFERENCES Usuario(Ci),
+    FOREIGN KEY (IdPublicacion) REFERENCES Publicacion(IdPublicacion),
+    PRIMARY KEY (IdPublicacion)
+);
+
+CREATE TABLE EstadoOferta(
+    IdEstadoOferta SMALLINT IDENTITY(1,1),
     Descripcion VARCHAR (15)
-    PRIMARY KEY (IdEstadoTransaccion)
+    PRIMARY KEY (IdEstadoOferta)
 );
 
 begin tran
-insert into EstadoTransaccion Values ('Pendiente')
-insert into EstadoTransaccion Values ('Completada')
-insert into EstadoTransaccion Values ('Rechazada')
+insert into EstadoOferta Values ('Pendiente')
+insert into EstadoOferta Values ('Completada')
+insert into EstadoOferta Values ('Rechazada')
 commit
 
-CREATE TABLE Transaccion(
-    IdTransaccion BIGINT IDENTITY(1,1),
-    Fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
-    EstadoTransaccion SMALLINT DEFAULT 1,
-    FOREIGN KEY (EstadoTransaccion) REFERENCES EstadoTransaccion,
-    PRIMARY KEY (IdTransaccion) 
+
+CREATE TABLE Oferta(
+    IdOferta BIGINT IDENTITY(1,1),
+    FechaRealizacion DATETIME,
+    EstadoOferta SMALLINT DEFAULT 1,
+    FOREIGN KEY (EstadoOferta) REFERENCES EstadoOferta,
+    PRIMARY KEY (IdOferta) 
+);
+
+CREATE TABLE RolOferta(
+    IdRolOferta SMALLINT IDENTITY(1,1),
+    Descripcion NVARCHAR(30),
+    PRIMARY KEY (IdRolOferta)
+);
+
+CREATE TABLE UsuarioOferta(
+    CiUsuario INT NOT NULL,
+    IdOferta BIGINT NOT NULL,
+    IdRolOferta SMALLINT NOT NULL,
+    FOREIGN KEY (CiUsuario) REFERENCES Usuario (Ci),
+    FOREIGN KEY (IdOferta) REFERENCES Oferta (IdOferta),
+    FOREIGN KEY (IdRolOferta) REFERENCES RolOferta (IdRolOferta),
+    PRIMARY KEY (CiUsuario, IdOferta)
 );
 
 
 CREATE TABLE ContraOferta(
-    IdNuevaTransaccion BIGINT NOT NULL,
-    IdTransaccionContraofertada BIGINT NOT NULL,
-    PRIMARY KEY (IdNuevaTransaccion, IdTransaccionContraofertada)
+    IdOfertaNueva BIGINT NOT NULL,
+    IdOfertaAnterior BIGINT NOT NULL,
+    FOREIGN KEY (IdOfertaNueva) REFERENCES Oferta (IdOferta),
+    FOREIGN KEY (IdOfertaAnterior) REFERENCES Oferta (IdOferta),
+    PRIMARY KEY (IdOfertaNueva, IdOfertaAnterior)
 );
 
-CREATE TABLE EsOfrecida(
-    IdTransaccion BIGINT NOT NULL,
-    IdProductoOfrecido BIGINT NOT NULL,
-    FOREIGN KEY (IdProductoOfrecido) REFERENCES Publicacion (IdProducto),
-    FOREIGN KEY (IdTransaccion) REFERENCES Transaccion(IdTransaccion),
-    PRIMARY KEY (IdTransaccion, IdProductoOfrecido)
-);
-
-CREATE TABLE RecibeOferta(
-    IdTransaccion BIGINT NOT NULL,
-    IdProductoDeseado BIGINT NOT NULL,
-    FOREIGN KEY (IdProductoDeseado) REFERENCES Publicacion (IdProducto),
-    FOREIGN KEY (IdTransaccion) REFERENCES Transaccion(IdTransaccion),
-    PRIMARY KEY (IdTransaccion, IdProductoDeseado)
+CREATE TABLE PublicacionOferta(
+    IdPublicacion BIGINT NOT NULL,
+    IdOferta BIGINT NOT NULL,
+    FOREIGN KEY (IdPublicacion) REFERENCES Publicacion (IdPublicacion),
+    FOREIGN KEY (IdOferta) REFERENCES Oferta (IdOferta),
+    PRIMARY KEY (IdPublicacion, IdOferta)
 );

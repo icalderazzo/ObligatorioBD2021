@@ -20,8 +20,11 @@ CREATE TABLE Publicacion(
     PRIMARY KEY (IdPublicacion)
 );
 
---CREATE TABLE Imagen (
---);
+CREATE TABLE Imagen (
+	IdPublicacion BIGINT NOT NULL,
+	Imagen VARBINARY(MAX) NOT NULL,
+	FOREIGN KEY IdPublicacion REFERENCES Publicacion(IdPublicacion)
+);
 
 CREATE TABLE UsuarioPublicacion(
     CiUsuario INT NOT NULL,

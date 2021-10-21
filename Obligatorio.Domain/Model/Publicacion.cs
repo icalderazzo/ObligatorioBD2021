@@ -10,5 +10,6 @@ namespace Obligatorio.Domain.Model
         public DateTime FechaPublicacion { get; set; }
         public Usuario Propietario { get; set; }
         public Articulo Articulo { get; set; }
+        public byte[] Imagen { get; set; }
     }
 }

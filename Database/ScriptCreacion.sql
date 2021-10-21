@@ -23,7 +23,8 @@ CREATE TABLE Publicacion(
 CREATE TABLE Imagen (
 	IdPublicacion BIGINT NOT NULL,
 	Imagen VARBINARY(MAX) NOT NULL,
-	FOREIGN KEY IdPublicacion REFERENCES Publicacion(IdPublicacion)
+	FOREIGN KEY IdPublicacion REFERENCES Publicacion(IdPublicacion),
+	PRIMARY KEY (IdPublicacion)
 );
 
 CREATE TABLE UsuarioPublicacion(

@@ -5,9 +5,9 @@ CREATE TABLE Usuario(
     Nombre NVARCHAR(30) NOT NULL,
     Apellido NVARCHAR(30) NOT NULL,
     Correo NVARCHAR(50) NOT NULL,
-    NombreUsuario NVARCHAR(20) NOT NULL,
+    NombreUsuario NVARCHAR(20) NOT NULL UNIQUE,
     Contrasenia NVARCHAR(30) NOT NULL,
-    Telefono INT,
+    Telefono INT UNIQUE,
     PRIMARY KEY (Ci)
 );
 
@@ -58,6 +58,11 @@ CREATE TABLE RolOferta(
     Descripcion NVARCHAR(30),
     PRIMARY KEY (IdRolOferta)
 );
+
+begin tran
+insert into RolOferta Values ('Emisor')
+insert into RolOferta Values ('Destinatario')
+commit
 
 CREATE TABLE UsuarioOferta(
     CiUsuario INT NOT NULL,

@@ -6,5 +6,6 @@ namespace Obligatorio.Repositories.Interfaces
     public interface IUserRepository : IRepository<Usuario>
     {
         Task<Usuario> Get(string username, string password);
+        Task<bool> ExistsUserWithUsername(string username);
     }
 }

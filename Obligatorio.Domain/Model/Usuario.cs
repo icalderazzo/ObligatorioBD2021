@@ -10,6 +10,6 @@ namespace Obligatorio.Domain.Model
         public string Correo { get; set; }
         public string NombreUsuario { get; set; }
         public string Contrasenia { get; set; }
-        public List<int> Telefonos { get; set; }
+        public int Telefono { get; set; }
     }
 }

@@ -8,5 +8,10 @@ namespace Presentation.Forms
         {
             InitializeComponent();
         }
+
+        private void HomeForm_Load(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }

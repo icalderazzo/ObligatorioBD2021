@@ -21,6 +21,22 @@ namespace Obligatorio.Repositories.Repositories
             throw new NotImplementedException();
         }
 
+        public async Task<bool> ExistsUserWithUsername(string username)
+        {
+            string query = "SELECT u.Ci FROM Usuario u WHERE u.NombreUsuario = @username;";
+            List<SqlParameter> sqlParameters = new List<SqlParameter>()
+            {
+                new SqlParameter()
+                {
+                    ParameterName = "@username",
+                    DbType = System.Data.DbType.String,
+                    Value = username
+                }
+            };
+            var result = await _context.Select(query, sqlParameters);
+            return result.Count > 0;
+        }
+
         public async Task<Usuario> Get(string username, string password)
         {
             string query = "SELECT u.Ci, u.Nombre, u.Apellido, u.Correo, u.NombreUsuario FROM Usuario u " +
@@ -62,9 +78,58 @@ namespace Obligatorio.Repositories.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Usuario> Insert(Usuario model)
+        public async Task<Usuario> Insert(Usuario model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = "INSERT INTO " +
+                               "Usuario (Ci, Nombre, Apellido, Correo, Telefono, NombreUsuario, Contrasenia) " +
+                               "VALUES (@Ci, @Nombre, @Apellido, @Correo, @Telefono, @NombreUsuario, @Contrasenia)";
+                await _context.SaveData(query,
+                    new List<SqlParameter>()
+                    {
+                        new SqlParameter()
+                        {
+                            ParameterName = "@Ci",
+                            Value = model.Cedula
+                        },
+                        new SqlParameter()
+                        {
+                            ParameterName = "@Nombre",
+                            Value = model.Nombre
+                        },
+                        new SqlParameter()
+                        {
+                            ParameterName = "@Apellido",
+                            Value = model.Apellido
+                        },
+                        new SqlParameter()
+                        {
+                            ParameterName = "@Correo",
+                            Value = model.Correo
+                        },
+                        new SqlParameter()
+                        {
+                            ParameterName = "@Telefono",
+                            Value = model.Telefono
+                        },
+                        new SqlParameter()
+                        {
+                            ParameterName = "@NombreUsuario",
+                            Value = model.NombreUsuario
+                        },
+                        new SqlParameter()
+                        {
+                            ParameterName = "@Contrasenia",
+                            Value = model.Contrasenia
+                        }
+                    });
+                return model;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public Task<ICollection<Usuario>> List()

@@ -18,7 +18,7 @@ namespace Presentation.Forms
         {
             try
             {
-                Usuario loggedUser = _userService.Login(this.txtUsername.Text, this.txtPassword.Text);
+                Obligatorio.Domain.Model.Usuario loggedUser = _userService.Login(this.txtUsername.Text, this.txtPassword.Text);
                 if (loggedUser != null)
                 {
                     var mainForm = new MainForm(loggedUser);
@@ -40,7 +40,9 @@ namespace Presentation.Forms
         {
             try
             {
-
+                this.Hide();
+                var createUserForm = new CreateUserForm(_userService, this);
+                createUserForm.Show();
             }
             catch (Exception)
             {

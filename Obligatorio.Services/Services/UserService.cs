@@ -29,7 +29,13 @@ namespace Obligatorio.Services.Services
 
         public void Create(Usuario entity)
         {
-            throw new NotImplementedException();
+            if (_userRepository.ExistsUserWithUsername(entity.NombreUsuario).Result)
+            {
+                throw new InvalidOperationException("El nombre de usuario seleccionado ya está ocupado");
+            }
+            // chequear cedula
+            // chequear telefono
+            _userRepository.Insert(entity).Wait();
         }
 
         public void Delete(string entityId)

@@ -11,9 +11,9 @@ namespace Presentation
     {
         private Button _selectedButton;
         private Form _activeForm;
-        private Usuario _loggedUser;
+        private Obligatorio.Domain.Model.Usuario _loggedUser;
 
-        public MainForm(Usuario usuario)
+        public MainForm(Obligatorio.Domain.Model.Usuario usuario)
         {
             _loggedUser = usuario;
             InitializeComponent();

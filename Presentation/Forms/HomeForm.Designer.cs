@@ -40,6 +40,7 @@ namespace Presentation.Forms
             this.Name = "HomeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "HomeForm";
+            this.Load += new System.EventHandler(this.HomeForm_Load);
             this.ResumeLayout(false);
 
         }

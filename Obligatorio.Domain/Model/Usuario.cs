@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Obligatorio.Domain.Model
+﻿namespace Obligatorio.Domain.Model
 {
     public class Usuario
     {

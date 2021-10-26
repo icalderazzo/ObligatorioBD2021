@@ -19,7 +19,7 @@ namespace Obligatorio.Services.Services
         {
             try
             {
-                return _userRepository.Get(username, password).Result;
+                return _userRepository.GetForLogin(username, password);
             }
             catch (Exception e)
             {
@@ -29,13 +29,13 @@ namespace Obligatorio.Services.Services
 
         public void Create(Usuario entity)
         {
-            if (_userRepository.ExistsUserWithUsername(entity.NombreUsuario).Result)
+            if (_userRepository.ExistsUserWithUsername(entity.NombreUsuario))
             {
                 throw new InvalidOperationException("El nombre de usuario seleccionado ya está ocupado");
             }
             // chequear cedula
             // chequear telefono
-            _userRepository.Insert(entity).Wait();
+            _userRepository.Insert(entity);
         }
 
         public void Delete(string entityId)

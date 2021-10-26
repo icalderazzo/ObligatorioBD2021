@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using Obligatorio.Domain.Model;
 using Obligatorio.Services.Interfaces;
-using Obligatorio.Domain.Model;
+using System;
+using System.Windows.Forms;
 
 namespace Presentation.Forms
 {
@@ -60,7 +60,7 @@ namespace Presentation.Forms
                 _userService.Create(newUser);
                 MessageBox.Show("Has sido registrado correctamente!");
                 _previous.Show();
-                this.Close();                
+                this.Close();
             }
             catch (InvalidOperationException ex)
             {

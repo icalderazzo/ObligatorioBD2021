@@ -2,20 +2,18 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-using System.Threading.Tasks;
-
 namespace DatabaseInterface
 {
     public class DatabaseContext : IDatabaseContext
     {
-        private string _connectionString;
+        private readonly string _connectionString;
 
         public DatabaseContext(string connectionSting)
         {
             _connectionString = connectionSting;
         }
 
-        public async Task<int> SaveData(string query, List<SqlParameter> parameters = null)
+        public int SaveData(string query, List<SqlParameter> parameters = null)
         {
             try
             {
@@ -39,20 +37,12 @@ namespace DatabaseInterface
                     return result;
                 }
             }
-            catch (SqlException dbEx)
-            {
-                throw new Exception("Error de base de datos", dbEx);
-            }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
                 throw new Exception("Error de base de datos", ex);
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error desconocido", ex);
-            }
         }
-        public async Task<List<object[]>> Select(string query, List<SqlParameter> parameters = null)
+        public List<object[]> Select(string query, List<SqlParameter> parameters = null)
         {
             try
             {
@@ -88,13 +78,9 @@ namespace DatabaseInterface
                     return result;
                 }
             }
-            catch (SqlException dbEx)
-            {
-                throw new Exception("Error de base de datos", dbEx);
-            }
             catch (Exception ex)
             {
-                throw new Exception("Unknown exception", ex);
+                throw new Exception("Error de base de datos", ex);
             }
         }
     }

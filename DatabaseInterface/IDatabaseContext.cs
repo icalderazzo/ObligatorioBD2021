@@ -6,7 +6,7 @@ namespace DatabaseInterface
 {
     public interface IDatabaseContext
     {
-        int SaveData(string query, List<SqlParameter> parameters = null);
-        List<object[]> Select(string query, List<SqlParameter> parameters = null);
+        int SaveData(string query, params SqlParameter[] parameters);
+        List<object[]> Select(string query, params SqlParameter[] parameters);
     }
 }

@@ -23,16 +23,7 @@ namespace Obligatorio.Repositories.Repositories
         public bool ExistsUserWithUsername(string username)
         {
             string query = "SELECT u.Ci FROM Usuario u WHERE u.NombreUsuario = @username;";
-            List<SqlParameter> sqlParameters = new List<SqlParameter>()
-            {
-                new SqlParameter()
-                {
-                    ParameterName = "@username",
-                    DbType = System.Data.DbType.String,
-                    Value = username
-                }
-            };
-            var result = _context.Select(query, sqlParameters);
+            var result = _context.Select(query, new SqlParameter("@username", username));
             return result.Count > 0;
         }
 
@@ -40,22 +31,12 @@ namespace Obligatorio.Repositories.Repositories
         {
             string query = "SELECT u.Ci, u.Nombre, u.Apellido, u.Correo, u.NombreUsuario FROM Usuario u " +
                            "WHERE u.NombreUsuario = @username AND u.Contrasenia = @password;";
-            List<SqlParameter> sqlParameters = new List<SqlParameter>()
-            {
-                new SqlParameter()
-                {
-                    ParameterName = "@username",
-                    DbType = System.Data.DbType.String,
-                    Value = username
-                },
-                new SqlParameter()
-                {
-                    ParameterName = "@password",
-                    DbType = System.Data.DbType.String,
-                    Value = password
-                }
-            };
-            var dbResult = _context.Select(query, sqlParameters);
+
+            var dbResult = _context.Select(query, 
+                new SqlParameter("@username", username),
+                new SqlParameter("@password", password)
+            );
+
             if (dbResult.Any())
             {
                 var filaUsuario = dbResult[0];
@@ -84,45 +65,16 @@ namespace Obligatorio.Repositories.Repositories
                 string query = "INSERT INTO " +
                                "Usuario (Ci, Nombre, Apellido, Correo, Telefono, NombreUsuario, Contrasenia) " +
                                "VALUES (@Ci, @Nombre, @Apellido, @Correo, @Telefono, @NombreUsuario, @Contrasenia)";
+                
                 _context.SaveData(query,
-                    new List<SqlParameter>()
-                    {
-                        new SqlParameter()
-                        {
-                            ParameterName = "@Ci",
-                            Value = model.Cedula
-                        },
-                        new SqlParameter()
-                        {
-                            ParameterName = "@Nombre",
-                            Value = model.Nombre
-                        },
-                        new SqlParameter()
-                        {
-                            ParameterName = "@Apellido",
-                            Value = model.Apellido
-                        },
-                        new SqlParameter()
-                        {
-                            ParameterName = "@Correo",
-                            Value = model.Correo
-                        },
-                        new SqlParameter()
-                        {
-                            ParameterName = "@Telefono",
-                            Value = model.Telefono
-                        },
-                        new SqlParameter()
-                        {
-                            ParameterName = "@NombreUsuario",
-                            Value = model.NombreUsuario
-                        },
-                        new SqlParameter()
-                        {
-                            ParameterName = "@Contrasenia",
-                            Value = model.Contrasenia
-                        }
-                    });
+                    new SqlParameter("@Ci",model.Cedula),
+                    new SqlParameter("@Nombre", model.Nombre),
+                    new SqlParameter("@Apellido", model.Apellido),
+                    new SqlParameter("@Correo", model.Correo),
+                    new SqlParameter("@Telefono", model.Telefono),
+                    new SqlParameter("@NombreUsuario", model.NombreUsuario),
+                    new SqlParameter("@Contrasenia", model.Contrasenia)
+                );
 
                 return model;
             }

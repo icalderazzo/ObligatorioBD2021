@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Obligatorio.Repositories.Interfaces
 {
     public interface IRepository<T>
     {
-        Task<T> Insert(T model);
-        Task<T> Update(T model);
-        Task Delete(string id);
-        Task<ICollection<T>> List();
-        Task<T> GetById(string id);
+        T Insert(T model);
+        T Update(T model);
+        void Delete(string id);
+        ICollection<T> List();
+        T GetById(string id);
     }
 }

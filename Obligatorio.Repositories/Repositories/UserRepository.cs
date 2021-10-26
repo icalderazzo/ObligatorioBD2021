@@ -1,11 +1,10 @@
-﻿using Obligatorio.Domain.Model;
+﻿using DatabaseInterface;
+using Obligatorio.Domain.Model;
 using Obligatorio.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
-using DatabaseInterface;
 
 namespace Obligatorio.Repositories.Repositories
 {
@@ -16,12 +15,12 @@ namespace Obligatorio.Repositories.Repositories
         {
             _context = context;
         }
-        public Task Delete(string id)
+        public void Delete(string id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<bool> ExistsUserWithUsername(string username)
+        public bool ExistsUserWithUsername(string username)
         {
             string query = "SELECT u.Ci FROM Usuario u WHERE u.NombreUsuario = @username;";
             List<SqlParameter> sqlParameters = new List<SqlParameter>()
@@ -33,11 +32,11 @@ namespace Obligatorio.Repositories.Repositories
                     Value = username
                 }
             };
-            var result = await _context.Select(query, sqlParameters);
+            var result = _context.Select(query, sqlParameters);
             return result.Count > 0;
         }
 
-        public async Task<Usuario> Get(string username, string password)
+        public Usuario GetForLogin(string username, string password)
         {
             string query = "SELECT u.Ci, u.Nombre, u.Apellido, u.Correo, u.NombreUsuario FROM Usuario u " +
                            "WHERE u.NombreUsuario = @username AND u.Contrasenia = @password;";
@@ -56,7 +55,7 @@ namespace Obligatorio.Repositories.Repositories
                     Value = password
                 }
             };
-            var dbResult = await _context.Select(query, sqlParameters);
+            var dbResult = _context.Select(query, sqlParameters);
             if (dbResult.Any())
             {
                 var filaUsuario = dbResult[0];
@@ -73,19 +72,19 @@ namespace Obligatorio.Repositories.Repositories
             return null;
         }
 
-        public Task<Usuario> GetById(string id)
+        public Usuario GetById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Usuario> Insert(Usuario model)
+        public Usuario Insert(Usuario model)
         {
             try
             {
                 string query = "INSERT INTO " +
                                "Usuario (Ci, Nombre, Apellido, Correo, Telefono, NombreUsuario, Contrasenia) " +
                                "VALUES (@Ci, @Nombre, @Apellido, @Correo, @Telefono, @NombreUsuario, @Contrasenia)";
-                await _context.SaveData(query,
+                _context.SaveData(query,
                     new List<SqlParameter>()
                     {
                         new SqlParameter()
@@ -124,6 +123,7 @@ namespace Obligatorio.Repositories.Repositories
                             Value = model.Contrasenia
                         }
                     });
+
                 return model;
             }
             catch (Exception)
@@ -132,12 +132,12 @@ namespace Obligatorio.Repositories.Repositories
             }
         }
 
-        public Task<ICollection<Usuario>> List()
+        public Usuario Update(Usuario model)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Usuario> Update(Usuario model)
+        public ICollection<Usuario> List()
         {
             throw new NotImplementedException();
         }

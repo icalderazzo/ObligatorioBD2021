@@ -1,6 +1,4 @@
-﻿using Obligatorio.Domain.Model;
-using Obligatorio.Services.Services;
-using Presentation.Forms;
+﻿using Presentation.Forms;
 using System;
 using System.Windows.Forms;
 using static Presentation.Constant.Styles;

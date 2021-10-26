@@ -1,5 +1,4 @@
-﻿using Obligatorio.Domain.Model;
-using Obligatorio.Services.Interfaces;
+﻿using Obligatorio.Services.Interfaces;
 using System;
 using System.Windows.Forms;
 

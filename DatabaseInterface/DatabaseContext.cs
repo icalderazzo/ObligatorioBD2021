@@ -13,7 +13,7 @@ namespace DatabaseInterface
             _connectionString = connectionSting;
         }
 
-        public int SaveData(string query, List<SqlParameter> parameters = null)
+        public int SaveData(string query, params SqlParameter[] parameters)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace DatabaseInterface
                 throw new Exception("Error de base de datos", ex);
             }
         }
-        public List<object[]> Select(string query, List<SqlParameter> parameters = null)
+        public List<object[]> Select(string query, params SqlParameter[] parameters)
         {
             try
             {

@@ -8,11 +8,11 @@ namespace Presentation.Forms
     public partial class CreateUserForm : Form
     {
         private readonly IUserService _userService;
-        Form _previous;
-        public CreateUserForm(IUserService userService, Form previous)
+        private readonly LoginForm _previous;
+        public CreateUserForm(IUserService userService, LoginForm loginForm)
         {
             _userService = userService;
-            _previous = previous;
+            _previous = loginForm;
             InitializeComponent();
         }
 

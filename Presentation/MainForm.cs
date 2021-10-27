@@ -9,24 +9,26 @@ namespace Presentation
     {
         private Button _selectedButton;
         private Form _activeForm;
-        private Obligatorio.Domain.Model.Usuario _loggedUser;
+        private readonly HomeForm _homeForm;
 
-        public MainForm(Obligatorio.Domain.Model.Usuario usuario)
+        public MainForm(
+            HomeForm homeForm
+            )
         {
-            _loggedUser = usuario;
+            _homeForm = homeForm;
             InitializeComponent();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            OpenChildForm(new HomeForm(), this.btnHome);
-            this.lblGreeting.Text = this.lblGreeting.Text.Replace("[UserName]", _loggedUser.Nombre);
+            OpenChildForm(_homeForm, this.btnHome);
+            this.lblGreeting.Text = this.lblGreeting.Text.Replace("[UserName]", Global.LoggedUser.Nombre);
         }
 
         #region ButtonClicks
         private void btnHome_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new HomeForm(), sender);
+            OpenChildForm(_homeForm, sender);
         }
         private void btnPostArticle_Click(object sender, EventArgs e)
         {

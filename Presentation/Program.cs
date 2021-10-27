@@ -14,6 +14,7 @@ namespace Presentation
     static class Program
     {
         public static IConfiguration Configuration;
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -39,12 +40,29 @@ namespace Presentation
 
         private static void ConfigureServices(ServiceCollection services)
         {
+            //Configuration
             services.Configure<EmailService.Settings>(options => Configuration.GetSection("emailSettings").Bind(options));
             services.AddSingleton<IDatabaseContext>(DatabaseContextFactory.GetContext(Configuration.GetConnectionString("Production")));
-            services.AddTransient<EmailService.Service.IEmailService, EmailService.Service.EmailService>();
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IUserService, UserService>()
-                    .AddScoped<LoginForm>();
+
+            //Repositories
+            services
+                .AddTransient<IUserRepository, UserRepository>()
+                .AddTransient<IPostsRepository, PostsRepository>()
+                ;
+            
+            //Services
+            services
+                .AddTransient<EmailService.Service.IEmailService, EmailService.Service.EmailService>()
+                .AddTransient<IUserService, UserService>()
+                .AddTransient<IPostsService, PostsService>()
+                ;
+            
+            //Forms
+            services
+                .AddScoped<LoginForm>()
+                .AddScoped<MainForm>()
+                .AddScoped<HomeForm>()
+                ;
         }
     }
 }

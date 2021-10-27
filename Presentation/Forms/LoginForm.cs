@@ -7,9 +7,14 @@ namespace Presentation.Forms
     public partial class LoginForm : Form
     {
         private readonly IUserService _userService;
-        public LoginForm(IUserService userService)
+        private readonly MainForm _mainForm;
+        public LoginForm(
+            IUserService userService,
+            MainForm mainForm
+            )
         {
             _userService = userService;
+            _mainForm = mainForm;
             InitializeComponent();
         }
 
@@ -20,8 +25,8 @@ namespace Presentation.Forms
                 Obligatorio.Domain.Model.Usuario loggedUser = _userService.Login(this.txtUsername.Text, this.txtPassword.Text);
                 if (loggedUser != null)
                 {
-                    var mainForm = new MainForm(loggedUser);
-                    mainForm.Show();
+                    Global.LoggedUser = loggedUser;
+                    _mainForm.Show();
                     Hide();
                 }
                 else

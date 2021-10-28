@@ -169,7 +169,6 @@ namespace Presentation
             this.lblGreeting.Size = new System.Drawing.Size(343, 34);
             this.lblGreeting.TabIndex = 2;
             this.lblGreeting.Text = "Bienvenido, [UserName]";
-            this.lblGreeting.Click += new System.EventHandler(this.lblGreeting_Click);
             // 
             // panel6
             // 
@@ -263,6 +262,8 @@ namespace Presentation
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UCUTrade";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.sideBarPanel.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

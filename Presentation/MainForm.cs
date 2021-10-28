@@ -80,7 +80,7 @@ namespace Presentation
         {
             if (_activeForm != null)
             {
-                _activeForm.Close();
+                _activeForm.Hide();
             }
             ActivateButton(sender);
             _activeForm = childForm;
@@ -95,9 +95,14 @@ namespace Presentation
         }
         #endregion
 
-        private void lblGreeting_Click(object sender, EventArgs e)
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-
+            DialogResult dialogResult = MessageBox.Show("¿Está seguro que desea salir de la aplicación?", "Salir", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                Global.LoggedUser = null;
+                Application.Exit();
+            }
         }
     }
 }

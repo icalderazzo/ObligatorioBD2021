@@ -3,16 +3,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Obligatorio.Domain.Model;
 using Obligatorio.Services.Interfaces;
+using Presentation.IndividualComponents;
 
 namespace Presentation.Forms
 {
     public partial class HomeForm : Form
     {
         private readonly IPostsService _postsService;
+        private List<PostItem> _activePosts;
 
         public HomeForm(IPostsService postsService)
         {
             _postsService = postsService;
+            _activePosts = new List<PostItem>();
             InitializeComponent();
         }
 
@@ -24,9 +27,12 @@ namespace Presentation.Forms
         private async Task LoadFeed()
         {
             var posts = await GetActivePosts();
+
             foreach (var post in posts)
             {
-
+                var postItem = new PostItem(post);
+                _activePosts.Add(postItem);
+                flowPostPanel.Controls.Add(postItem);
             }
         }
 

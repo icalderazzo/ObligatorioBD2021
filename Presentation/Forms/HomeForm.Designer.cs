@@ -77,6 +77,7 @@ namespace Presentation.Forms
             this.btnFilter.TabIndex = 2;
             this.btnFilter.Text = "Buscar";
             this.btnFilter.UseVisualStyleBackColor = true;
+            this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
             // 
             // HomeForm
             // 
@@ -99,7 +100,6 @@ namespace Presentation.Forms
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel flowPostPanel;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtFilter;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnFilter;

@@ -4,45 +4,52 @@ using System.Windows.Forms;
 using Obligatorio.Domain.Model;
 using Obligatorio.Services.Interfaces;
 using Presentation.IndividualComponents;
+using System;
+using System.Linq;
 
 namespace Presentation.Forms
 {
     public partial class HomeForm : Form
     {
         private readonly IPostsService _postsService;
-        private List<PostItem> _activePosts;
+        //private List<PostItem> _activePosts;
 
         public HomeForm(IPostsService postsService)
         {
             _postsService = postsService;
-            _activePosts = new List<PostItem>();
+            //_activePosts = new List<PostItem>();
             InitializeComponent();
         }
 
-        private async void HomeForm_Load(object sender, System.EventArgs e)
+        private async void HomeForm_Load(object sender, EventArgs e)
         {
-            await LoadFeed();
+            await GetActivePosts();
         }
 
-        private async Task LoadFeed()
+        private void LoadFeed(List<Publicacion> posts)
         {
-            var posts = await GetActivePosts();
-
             foreach (var post in posts)
             {
                 var postItem = new PostItem(post);
-                _activePosts.Add(postItem);
+                //_activePosts.Add(postItem);
                 flowPostPanel.Controls.Add(postItem);
             }
         }
 
-        private async Task<List<Publicacion>> GetActivePosts()
+        private async Task GetActivePosts()
         {
             var posts = await Task.Run(() => _postsService.ListForFeed(Global.LoggedUser.Cedula));
-            return posts;
+            LoadFeed(posts);
         }
 
-        private void txtFilter_Enter(object sender, System.EventArgs e)
+        private async Task<List<Publicacion>> FilterPosts(string nameFilter)
+        {
+            var filteredPosts = await Task.Run(() => _postsService.FilterByName(nameFilter, Global.LoggedUser.Cedula));
+            return filteredPosts;
+        }
+
+        #region FormElementsBeahaviour
+        private void txtFilter_Enter(object sender, EventArgs e)
         {
             if (txtFilter.Text == "Busca productos de interés aqui...")
             {
@@ -50,12 +57,40 @@ namespace Presentation.Forms
             }
         }
 
-        private void txtFilter_Leave(object sender, System.EventArgs e)
+        private void txtFilter_Leave(object sender, EventArgs e)
         {
             if (txtFilter.Text == "")
             {
                 txtFilter.Text = "Busca productos de interés aqui...";
             }
         }
+
+        private async void btnFilter_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                flowPostPanel.Controls.Clear(); //limpiar panel
+
+                var filteredPosts = await FilterPosts(txtFilter.Text);
+                if (filteredPosts.Any())
+                {
+                    LoadFeed(filteredPosts);
+                }
+                else
+                {
+                    DialogResult dialogResult = MessageBox.Show("No se encontraron coincidencias. ¿Desea volver a mostrar todas las publicaciones?", "", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        await GetActivePosts();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ha ocurrido un error al filtrar las publicaciones");
+            }
+        }
+
+        #endregion
     }
 }

@@ -41,5 +41,21 @@ namespace Presentation.Forms
             var posts = await Task.Run(() => _postsService.ListForFeed(Global.LoggedUser.Cedula));
             return posts;
         }
+
+        private void txtFilter_Enter(object sender, System.EventArgs e)
+        {
+            if (txtFilter.Text == "Busca productos de interés aqui...")
+            {
+                txtFilter.Text = "";
+            }
+        }
+
+        private void txtFilter_Leave(object sender, System.EventArgs e)
+        {
+            if (txtFilter.Text == "")
+            {
+                txtFilter.Text = "Busca productos de interés aqui...";
+            }
+        }
     }
 }

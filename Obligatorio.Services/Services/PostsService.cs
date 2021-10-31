@@ -24,6 +24,15 @@ namespace Obligatorio.Services.Services
             throw new NotImplementedException();
         }
 
+        public List<Publicacion> FilterByName(string name, int ciActiveUser)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return _postsRepository.ListForFeed(ciActiveUser).ToList();
+            }
+            return _postsRepository.FilterByName(name, ciActiveUser).ToList();
+        }
+
         public Publicacion GetById(string entityId)
         {
             throw new NotImplementedException();

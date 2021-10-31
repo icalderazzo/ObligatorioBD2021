@@ -71,7 +71,9 @@ namespace Presentation.Forms
             {
                 flowPostPanel.Controls.Clear(); //limpiar panel
 
-                var filteredPosts = await FilterPosts(txtFilter.Text);
+                string filter = txtFilter.Text == "Busca productos de interés aqui..." ? "" : txtFilter.Text;
+
+                var filteredPosts = await FilterPosts(filter);
                 if (filteredPosts.Any())
                 {
                     LoadFeed(filteredPosts);

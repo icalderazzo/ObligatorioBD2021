@@ -10,11 +10,13 @@ namespace Presentation
         private Button _selectedButton;
         private Form _activeForm;
         private readonly HomeForm _homeForm;
+        private readonly CreatePostForm _createPostForm;
 
         public MainForm(
-            HomeForm homeForm
+            HomeForm homeForm, CreatePostForm createPostForm
             )
         {
+            _createPostForm = createPostForm;
             _homeForm = homeForm;
             InitializeComponent();
         }
@@ -32,7 +34,8 @@ namespace Presentation
         }
         private void btnPostArticle_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender);
+            _createPostForm.Show();
+            Hide();
         }
 
         private void btnTransactions_Click(object sender, EventArgs e)

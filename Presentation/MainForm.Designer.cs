@@ -248,6 +248,7 @@ namespace Presentation
             this.mainContentPanel.Name = "mainContentPanel";
             this.mainContentPanel.Size = new System.Drawing.Size(1667, 933);
             this.mainContentPanel.TabIndex = 3;
+            this.mainContentPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainContentPanel_Paint);
             // 
             // MainForm
             // 

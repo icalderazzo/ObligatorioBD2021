@@ -104,5 +104,10 @@ namespace Presentation
                 Application.Exit();
             }
         }
+
+        private void mainContentPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

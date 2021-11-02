@@ -6,17 +6,22 @@ using Obligatorio.Services.Interfaces;
 using Presentation.IndividualComponents;
 using System;
 using System.Linq;
+using Presentation.CustomEvents;
 
 namespace Presentation.Forms
 {
     public partial class HomeForm : Form
     {
         private readonly IPostsService _postsService;
+        private readonly PostDetailForm _postDetailForm;
         //private List<PostItem> _activePosts;
 
-        public HomeForm(IPostsService postsService)
+        public HomeForm(
+            IPostsService postsService,
+            PostDetailForm postDetailForm)
         {
             _postsService = postsService;
+            _postDetailForm = postDetailForm;
             //_activePosts = new List<PostItem>();
             InitializeComponent();
         }
@@ -31,6 +36,7 @@ namespace Presentation.Forms
             foreach (var post in posts)
             {
                 var postItem = new PostItem(post);
+                postItem.ShowDetail_Click += new EventHandler(PostItem_ShowDetailClick);
                 //_activePosts.Add(postItem);
                 flowPostPanel.Controls.Add(postItem);
             }
@@ -47,6 +53,13 @@ namespace Presentation.Forms
             var filteredPosts = await Task.Run(() => _postsService.FilterByName(nameFilter, Global.LoggedUser.Cedula));
             return filteredPosts;
         }
+
+        protected void PostItem_ShowDetailClick(object sender, EventArgs e)
+        {
+            _postDetailForm.ActivePost = ((ShowPostDetailEventArgs)e).Post;
+            _postDetailForm.Show();
+        }
+
 
         #region FormElementsBeahaviour
         private void txtFilter_Enter(object sender, EventArgs e)

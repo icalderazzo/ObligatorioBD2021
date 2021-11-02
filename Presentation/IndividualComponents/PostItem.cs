@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 using Obligatorio.Domain.Model;
+using Presentation.CustomEvents;
 
 namespace Presentation.IndividualComponents
 {
     public partial class PostItem : UserControl
     {
         private readonly Publicacion _publicacion;
+        public event EventHandler ShowDetail_Click;
+
         public PostItem()
         {
             InitializeComponent();
@@ -28,7 +29,10 @@ namespace Presentation.IndividualComponents
 
         private void picBox_Click(object sender, EventArgs e)
         {
-            //Open detail
+            if (ShowDetail_Click != null)
+            {
+                this.ShowDetail_Click(this, new ShowPostDetailEventArgs(_publicacion));
+            }
         }
     }
 }

@@ -62,6 +62,7 @@ namespace Presentation
                 .AddScoped<LoginForm>()
                 .AddScoped<MainForm>()
                 .AddScoped<HomeForm>()
+                .AddScoped<PostDetailForm>()
                 ;
         }
     }

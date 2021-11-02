@@ -6,5 +6,7 @@ namespace Obligatorio.Repositories.Interfaces
     {
         Usuario GetForLogin(string username, string password);
         bool ExistsUserWithUsername(string username);
+        bool ExistsUserWithPhoneNumber(int phoneNumber);
+        bool ExistsUserWithCi(int ci);
     }
 }

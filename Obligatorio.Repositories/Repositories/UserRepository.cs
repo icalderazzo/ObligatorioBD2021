@@ -26,6 +26,19 @@ namespace Obligatorio.Repositories.Repositories
             var result = _context.Select(query, new SqlParameter("@username", username));
             return result.Count > 0;
         }
+        public bool ExistsUserWithPhoneNumber(int phoneNumber)
+        {
+            string query = "SELECT u.Ci FROM Usuario u WHERE u.Telefono = @phoneNumber;";
+            var result = _context.Select(query, new SqlParameter("@phoneNumber", phoneNumber));
+            return result.Count > 0;
+        }
+
+        public bool ExistsUserWithCi(int ci)
+        {
+            string query = "SELECT u.Ci FROM Usuario u WHERE u.Ci = @ci;";
+            var result = _context.Select(query, new SqlParameter("@ci", ci));
+            return result.Count > 0;
+        }
 
         public Usuario GetForLogin(string username, string password)
         {

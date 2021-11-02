@@ -1,6 +1,7 @@
 ﻿using Obligatorio.Domain.Model;
 using Obligatorio.Services.Interfaces;
 using System;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Presentation.Forms
@@ -22,6 +23,18 @@ namespace Presentation.Forms
 
         private void btnCreateUser_Click(object sender, EventArgs e)
         {
+            // Check null and white spaces in data
+            if(
+                String.IsNullOrWhiteSpace(txtCI.Text) || String.IsNullOrWhiteSpace(txtTelefono.Text) || 
+                String.IsNullOrWhiteSpace(txtApellido.Text) || String.IsNullOrWhiteSpace(txtNombre.Text) || 
+                String.IsNullOrWhiteSpace(txtCorreo.Text) || String.IsNullOrWhiteSpace(txtNombreUsuario.Text) || 
+                String.IsNullOrWhiteSpace(txtContrasenia.Text))
+            {
+                MessageBox.Show("Hay datos faltantes, chequee que haya completado todos");
+                return;
+            }
+            
+            //Check int CI and Phone
             int ci;
             int telefono;
 
@@ -44,6 +57,19 @@ namespace Presentation.Forms
                 MessageBox.Show("El telefono solo puede contener números");
                 return;
             }
+
+            //Check string Name and Surname
+            if (!Regex.IsMatch(txtNombre.Text, @"^[a-zA-Z]+$"))
+            {
+                MessageBox.Show("El nombre solo puede contener letras");
+                return;
+            }
+            if (!Regex.IsMatch(txtApellido.Text, @"^[a-zA-Z]+$"))
+            {
+                MessageBox.Show("El apellido solo puede contener letras");
+                return;
+            }
+
 
             try
             {

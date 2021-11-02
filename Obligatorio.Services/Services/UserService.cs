@@ -35,7 +35,8 @@ namespace Obligatorio.Services.Services
             bool validationResult = validation.Item1;
             string validationMessage = validation.Item2;
 
-            if (!validationResult){
+            if (!validationResult)
+            {
                 throw new InvalidOperationException(validationMessage);
             }
 
@@ -50,10 +51,8 @@ namespace Obligatorio.Services.Services
             // Check ci not being used
             if (ciUsed) { throw new InvalidOperationException("La cédula seleccionada ya está ocupada"); }
 
-            else {
-                _userRepository.Insert(entity);
-            }
-            
+            // Insert user
+            _userRepository.Insert(entity);
         }
 
         public void Delete(string entityId)

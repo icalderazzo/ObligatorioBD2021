@@ -38,14 +38,20 @@ namespace Presentation.Forms
             int ci;
             int telefono;
 
-            try{ci = int.Parse(txtCI.Text);}
+            try
+            {
+                ci = int.Parse(txtCI.Text);
+            }
             catch (FormatException)
             {
                 MessageBox.Show("La cédula debe ser numérica, sin puntos ni guiones");
                 return;
             }
 
-            try{telefono = int.Parse(txtTelefono.Text);}
+            try
+            {
+                telefono = int.Parse(txtTelefono.Text);
+            }
             catch (FormatException)
             {
                 MessageBox.Show("El telefono solo puede contener números");

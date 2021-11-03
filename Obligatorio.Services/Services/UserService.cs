@@ -3,16 +3,18 @@ using Obligatorio.Repositories.Interfaces;
 using Obligatorio.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using Obligatorio.Domain;
 
 namespace Obligatorio.Services.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-
-        public UserService(IUserRepository userRepository)
+        private readonly IValidator<Usuario> _userValidator;
+        public UserService(IUserRepository userRepository, IValidator<Usuario> userValidator)
         {
             _userRepository = userRepository;
+            _userValidator = userValidator;
         }
 
         public Usuario Login(string username, string password)
@@ -29,12 +31,27 @@ namespace Obligatorio.Services.Services
 
         public void Create(Usuario entity)
         {
-            if (_userRepository.ExistsUserWithUsername(entity.NombreUsuario))
+            (bool,string) validation = _userValidator.Validate(entity);
+            bool validationResult = validation.Item1;
+            string validationMessage = validation.Item2;
+
+            if (!validationResult)
             {
-                throw new InvalidOperationException("El nombre de usuario seleccionado ya está ocupado");
+                throw new InvalidOperationException(validationMessage);
             }
-            // chequear cedula
-            // chequear telefono
+
+            bool usernameUsed = _userRepository.ExistsUserWithUsername(entity.NombreUsuario);
+            bool phoneUsed = _userRepository.ExistsUserWithPhoneNumber(entity.Telefono);
+            bool ciUsed = _userRepository.ExistsUserWithCi(entity.Cedula);
+
+            // Check username not being used
+            if (usernameUsed){throw new InvalidOperationException("El nombre de usuario seleccionado ya está ocupado");}
+            // Check phone number not being used
+            if (phoneUsed){throw new InvalidOperationException("El número de teléfono seleccionado ya está ocupado");}
+            // Check ci not being used
+            if (ciUsed) { throw new InvalidOperationException("La cédula seleccionada ya está ocupada"); }
+
+            // Insert user
             _userRepository.Insert(entity);
         }
 

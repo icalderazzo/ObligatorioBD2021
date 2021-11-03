@@ -1,6 +1,8 @@
 using DatabaseInterface;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Obligatorio.Domain;
+using Obligatorio.Domain.Model;
 using Obligatorio.Repositories.Interfaces;
 using Obligatorio.Repositories.Repositories;
 using Obligatorio.Services.Interfaces;
@@ -55,6 +57,7 @@ namespace Presentation
                 .AddTransient<EmailService.Service.IEmailService, EmailService.Service.EmailService>()
                 .AddTransient<IUserService, UserService>()
                 .AddTransient<IPostsService, PostsService>()
+                .AddTransient<IValidator<Usuario>, UserValidator>()
                 ;
             
             //Forms

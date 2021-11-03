@@ -1,25 +1,70 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Obligatorio.Domain.Model;
+using Obligatorio.Services.Interfaces;
 
 namespace Presentation.Forms
 {
     public partial class CreatePostForm : Form
     {
-        public CreatePostForm()
+        private readonly IPostsService _postService;
+        private readonly MainForm _previous;
+
+        public CreatePostForm(IPostsService postService, MainForm mainForm)
         {
+            _postService = postService;
+            _previous = mainForm;
             InitializeComponent();
         }
 
         private void btnCreatePost_Click(object sender, EventArgs e)
         {
+            int valorUcuCoins;
+            try
+            {
+                valorUcuCoins = int.Parse(txtValorProducto.Text);
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("El Valor Producto solo puede contener números");
+                return;
+            }
+            try
+            {
+                var newPost = new Publicacion
+                {
+                    // Revisar tema de Id Publicacion
+                    IdPublicacion = 1,
+                    Estado = true,
+                    FechaPublicacion = DateTime.Now,
+                    Propietario = null,
+                    Articulo = new Articulo
+                    {
+                        Nombre = txtNombreProducto.Text,
+                        Descripcion = txtDescripcionProducto.Text,
+                        Valor = int.Parse(txtValorProducto.Text)
+                    },
+                    Imagen = null
+                };
+                _postService.Create(newPost);
+                MessageBox.Show("Se ha publicado el post correctamente");
+                _previous.Show();
+                this.Close();
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+         }
 
+        private void btnReturnToInit_Click(object sender, EventArgs e)
+        {
+            _previous.Show();
+            this.Close();
         }
     }
 }

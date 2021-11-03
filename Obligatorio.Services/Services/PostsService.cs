@@ -16,7 +16,7 @@ namespace Obligatorio.Services.Services
         }
         public void Create(Publicacion entity)
         {
-            throw new NotImplementedException();
+            _postsRepository.Insert(entity);
         }
 
         public void Delete(string entityId)

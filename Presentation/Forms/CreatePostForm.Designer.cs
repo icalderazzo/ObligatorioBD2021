@@ -40,6 +40,7 @@
             this.txtDescripcionProducto = new System.Windows.Forms.TextBox();
             this.txtValorProducto = new System.Windows.Forms.TextBox();
             this.btnCreatePost = new System.Windows.Forms.Button();
+            this.btnReturnToLogin = new System.Windows.Forms.Button();
             this.Imagen = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.Imagen)).BeginInit();
             this.SuspendLayout();
@@ -143,15 +144,31 @@
             this.btnCreatePost.FlatAppearance.BorderSize = 0;
             this.btnCreatePost.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCreatePost.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnCreatePost.Location = new System.Drawing.Point(406, 624);
+            this.btnCreatePost.Location = new System.Drawing.Point(412, 624);
             this.btnCreatePost.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCreatePost.Name = "btnCreatePost";
-            this.btnCreatePost.Size = new System.Drawing.Size(163, 31);
+            this.btnCreatePost.Size = new System.Drawing.Size(157, 31);
             this.btnCreatePost.TabIndex = 23;
             this.btnCreatePost.Text = "Crear Publicación";
             this.btnCreatePost.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnCreatePost.UseVisualStyleBackColor = false;
             this.btnCreatePost.Click += new System.EventHandler(this.btnCreatePost_Click);
+            // 
+            // btnReturnToLogin
+            // 
+            this.btnReturnToLogin.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnReturnToLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(249)))), ((int)(((byte)(237)))));
+            this.btnReturnToLogin.FlatAppearance.BorderSize = 0;
+            this.btnReturnToLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReturnToLogin.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnReturnToLogin.Location = new System.Drawing.Point(221, 624);
+            this.btnReturnToLogin.Name = "btnReturnToLogin";
+            this.btnReturnToLogin.Size = new System.Drawing.Size(132, 31);
+            this.btnReturnToLogin.TabIndex = 21;
+            this.btnReturnToLogin.Text = "Volver al login";
+            this.btnReturnToLogin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnReturnToLogin.UseVisualStyleBackColor = false;
+            this.btnReturnToLogin.Click += new System.EventHandler(this.btnReturnToInit_Click);
             // 
             // Imagen
             // 
@@ -173,6 +190,7 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnCreatePost);
+            this.Controls.Add(this.btnReturnToLogin);
             this.Controls.Add(this.txtValorProducto);
             this.Controls.Add(this.txtDescripcionProducto);
             this.Controls.Add(this.label4);
@@ -197,9 +215,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button btnCreatePost;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnCreatePost;
+        private System.Windows.Forms.Button btnReturnToInit;
         private System.Windows.Forms.PictureBox Imagen;
+        private System.Windows.Forms.Button btnReturnToLogin;
     }
 }

@@ -64,7 +64,25 @@ namespace Obligatorio.Repositories.Repositories
 
         public Publicacion Insert(Publicacion model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = "INSERT INTO " +
+                               "Publicacion (Estado, NombreProducto, DescripcionProducto, ValorProducto) " +
+                               "VALUES (@Estado, @NombreProducto, @DescripcionProducto, @ValorProducto)";
+
+                _databaseContext.SaveData(query,
+                    new SqlParameter("@Estado", model.Estado ? 1 : 0),
+                    new SqlParameter("@NombreProducto", model.Articulo.Nombre),
+                    new SqlParameter("@DescripcionProducto", model.Articulo.Descripcion),
+                    new SqlParameter("@ValorProducto", model.Articulo.Valor)
+                );
+
+                return model;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public ICollection<Publicacion> List()

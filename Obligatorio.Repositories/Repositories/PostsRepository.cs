@@ -126,7 +126,22 @@ namespace Obligatorio.Repositories.Repositories
 
         private void AssignPostToUser(Publicacion post, Usuario user)
         {
-            
+            try
+            {
+                string query = "INSERT INTO " +
+                               "UsuarioPublicacion(CiUsuario,IdPublicacion,FechaPublicacion) " +
+                               "VALUES (@CiUsuario,@IdPublicacion,CAST('@FechaPublicacion' AS DATETIME))";
+
+                _databaseContext.SaveData(query,
+                    new SqlParameter("@CiUsuario", user.Cedula),
+                    new SqlParameter("@IdPublicacion", post.IdPublicacion),
+                    new SqlParameter("@FechaPublicacion", post.FechaPublicacion.ToString("yyyy-MM-dd hh:mm:ss"))
+                );
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public ICollection<Publicacion> List()

@@ -5,12 +5,15 @@ using Obligatorio.Repositories.Interfaces;
 using DatabaseInterface;
 using System.Data.SqlClient;
 using System.Text;
+using System.Linq;
 
 namespace Obligatorio.Repositories.Repositories
 {
     public class PostsRepository : IPostsRepository
     {
         private readonly IDatabaseContext _databaseContext;
+        public Usuario _user;
+
         public PostsRepository(IDatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
@@ -64,6 +67,11 @@ namespace Obligatorio.Repositories.Repositories
 
         public Publicacion Insert(Publicacion model)
         {
+            throw new NotImplementedException();
+        }
+
+        public Publicacion Insert(Publicacion model, Usuario user)
+        {
             try
             {
                 string query = "INSERT INTO " +
@@ -76,13 +84,49 @@ namespace Obligatorio.Repositories.Repositories
                     new SqlParameter("@DescripcionProducto", model.Articulo.Descripcion),
                     new SqlParameter("@ValorProducto", model.Articulo.Valor)
                 );
-
+                string idPublicacion = GetIdPost(model);
+                AssignPostToUser(model, user);
                 return model;
             }
             catch (Exception)
             {
                 throw;
             }
+        }
+        private string GetIdPost(Publicacion post)
+        {
+            try
+            {
+                string query = "SELECT p.IdPublicacion, p.Estado, p.NombreProducto," +
+                          " p.DescripcionProducto, p.ValorProducto FROM Publicacion p " +
+                          "WHERE p.Estado = @Estado AND p.NombreProducto LIKE @NombreProducto'" +
+                          " AND p.DescripcionProducto LIKE @DescripcionProducto" +
+                          " AND p.ValorProducto = @ValorProducto;";
+
+                var dbResult = _databaseContext.Select(query,
+                    new SqlParameter("@Estado", post.Estado),
+                    new SqlParameter("@NombreProducto", post.Articulo.Nombre),
+                    new SqlParameter("@DescripcionProducto", post.Articulo.Descripcion),
+                    new SqlParameter("@ValorProducto", post.Articulo.Valor)
+                );
+                if (dbResult.Any())
+                {
+                    var filaUsuario = dbResult[0];
+                    post.IdPublicacion = long.Parse(filaUsuario[0].ToString());
+                    return post.IdPublicacion.ToString();
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        private void AssignPostToUser(Publicacion post, Usuario user)
+        {
+            
         }
 
         public ICollection<Publicacion> List()

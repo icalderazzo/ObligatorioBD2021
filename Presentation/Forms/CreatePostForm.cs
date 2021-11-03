@@ -46,7 +46,7 @@ namespace Presentation.Forms
                     },
                     Imagen = null
                 };
-                _postService.Create(newPost);
+                _postService.Create(newPost,Global.LoggedUser);
                 MessageBox.Show("Se ha publicado el post correctamente");
                 _previous.Show();
                 this.Close();

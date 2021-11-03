@@ -8,12 +8,12 @@ namespace Presentation.Forms
     public partial class CreatePostForm : Form
     {
         private readonly IPostsService _postService;
-        private readonly MainForm _previous;
+        //private readonly MainForm _previous;
 
-        public CreatePostForm(IPostsService postService, MainForm mainForm)
+        public CreatePostForm(IPostsService postService)
         {
             _postService = postService;
-            _previous = mainForm;
+            //_previous = mainForm;
             InitializeComponent();
         }
 
@@ -48,7 +48,7 @@ namespace Presentation.Forms
                 };
                 _postService.Create(newPost,Global.LoggedUser);
                 MessageBox.Show("Se ha publicado el post correctamente");
-                _previous.Show();
+               // _previous.Show();
                 this.Close();
             }
             catch (InvalidOperationException ex)
@@ -63,7 +63,7 @@ namespace Presentation.Forms
 
         private void btnReturnToInit_Click(object sender, EventArgs e)
         {
-            _previous.Show();
+           // _previous.Show();
             this.Close();
         }
     }

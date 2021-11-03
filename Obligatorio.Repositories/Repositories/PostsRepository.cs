@@ -99,7 +99,7 @@ namespace Obligatorio.Repositories.Repositories
             {
                 string query = "SELECT p.IdPublicacion, p.Estado, p.NombreProducto," +
                           " p.DescripcionProducto, p.ValorProducto FROM Publicacion p " +
-                          "WHERE p.Estado = @Estado AND p.NombreProducto LIKE @NombreProducto'" +
+                          "WHERE p.Estado = @Estado AND p.NombreProducto LIKE @NombreProducto" +
                           " AND p.DescripcionProducto LIKE @DescripcionProducto" +
                           " AND p.ValorProducto = @ValorProducto;";
 
@@ -130,7 +130,7 @@ namespace Obligatorio.Repositories.Repositories
             {
                 string query = "INSERT INTO " +
                                "UsuarioPublicacion(CiUsuario,IdPublicacion,FechaPublicacion) " +
-                               "VALUES (@CiUsuario,@IdPublicacion,CAST('@FechaPublicacion' AS DATETIME))";
+                               "VALUES (@CiUsuario,@IdPublicacion,CAST(@FechaPublicacion AS DATETIME))";
 
                 _databaseContext.SaveData(query,
                     new SqlParameter("@CiUsuario", user.Cedula),

@@ -13,10 +13,13 @@ CREATE TABLE Usuario(
 
 CREATE TABLE Publicacion(
     IdPublicacion BIGINT IDENTITY(1,1),
+	CiUsuario INT NOT NULL,
     Estado BIT DEFAULT 1,
     NombreProducto NVARCHAR(50) NOT NULL,
     DescripcionProducto NTEXT NOT NULL,
     ValorProducto INT NOT NULL,
+	FechaPublicacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (CiUsuario) REFERENCES Usuario (Ci),
     PRIMARY KEY (IdPublicacion)
 );
 
@@ -25,15 +28,6 @@ CREATE TABLE Imagen (
 	Imagen VARBINARY(MAX) NOT NULL,
 	FOREIGN KEY (IdPublicacion) REFERENCES Publicacion(IdPublicacion),
 	PRIMARY KEY (IdPublicacion)
-);
-
-CREATE TABLE UsuarioPublicacion(
-    CiUsuario INT NOT NULL,
-    IdPublicacion BIGINT NOT NULL,
-    FechaPublicacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (CiUsuario) REFERENCES Usuario(Ci),
-    FOREIGN KEY (IdPublicacion) REFERENCES Publicacion(IdPublicacion),
-    PRIMARY KEY (IdPublicacion)
 );
 
 CREATE TABLE EstadoOferta(

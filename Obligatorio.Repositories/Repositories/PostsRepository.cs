@@ -22,11 +22,10 @@ namespace Obligatorio.Repositories.Repositories
 
         public ICollection<Publicacion> FilterByName(string name, int ciActiveUser)
         {
-            string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, up.CiUsuario, i.Imagen " +
+            string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.Imagen " +
                "FROM Publicacion p " +
-               "INNER JOIN UsuarioPublicacion up on p.Idpublicacion = up.IdPublicacion " +
-               "INNER JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
-               $"WHERE p.NombreProducto LIKE '%{name}%' AND up.CiUsuario <> @Ci AND p.Estado = 1;";
+               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
+               $"WHERE p.NombreProducto LIKE '%{name}%' AND p.CiUsuario <> @Ci AND p.Estado = 1;";
 
             var dbResult = _databaseContext.Select(query,
                 new SqlParameter("@Ci", ciActiveUser)
@@ -76,11 +75,10 @@ namespace Obligatorio.Repositories.Repositories
         {
             try
             {
-                string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, up.CiUsuario, i.Imagen " +
+                string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.Imagen " +
                                "FROM Publicacion p " +
-                               "INNER JOIN UsuarioPublicacion up on p.Idpublicacion = up.IdPublicacion " +
-                               "INNER JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " + 
-                               "WHERE up.CiUsuario <> @Ci AND p.Estado = 1;";
+                               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " + 
+                               "WHERE p.CiUsuario <> @Ci AND p.Estado = 1;";
 
                 var dbResult = _databaseContext.Select(query, new SqlParameter("@Ci", ciActiveUser));
                 

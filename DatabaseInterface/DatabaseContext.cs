@@ -168,10 +168,17 @@ namespace DatabaseInterface
         }
         public (SqlConnection,SqlTransaction) BeginTransaction()
         {
-            var conn = new SqlConnection(_connectionString);
-            conn.Open();
-            var transaction = conn.BeginTransaction();
-            return (conn, transaction);
+            try
+            {
+                var conn = new SqlConnection(_connectionString);
+                conn.Open();
+                var transaction = conn.BeginTransaction();
+                return (conn, transaction);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public void Commit((SqlConnection, SqlTransaction) transaction)
         {

@@ -3,7 +3,6 @@ insert into Usuario values (11111111, 'Esteban', 'Barrios', 'estebanbarrios@hotm
 insert into Usuario values (22222222, 'Ignacio', 'Calderazzo', 'ignaciocalderazzo@hotmail.com', 'icalderazzo', 'contrasenia123', 977777779);
 insert into Usuario values (33333333, 'Diego', 'Kleinman', 'diegokleinman@hotmail.com', 'dkleinman', 'contrasenia123', 967777779);
 insert into Usuario values (44444444, 'Federico', 'Valiño', 'federicovalino@hotmail.com', 'fvalino', 'contrasenia123', 957777779);
-insert into Usuario values (44444444, 'Federico', 'Valiño', 'federicovalino@hotmail.com', 'fvalino', 'contrasenia123', 957777779);
 
 -- Paso 2 : Publicar
 insert into Publicacion (CiUsuario, NombreProducto, DescripcionProducto, ValorProducto) values (44444444,'Lapiz digital','Lapiz digital de la mejor calidad. Ideal para docentes!', 1000);

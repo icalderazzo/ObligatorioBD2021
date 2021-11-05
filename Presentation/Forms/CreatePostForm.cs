@@ -45,7 +45,7 @@ namespace Presentation.Forms
                     Articulo = new Articulo
                     {
                         Nombre = txtNombreProducto.Text,
-                        Descripcion = txtDescripcionProducto.Text,
+                        Descripcion = productDescriptionText.Text,
                         Valor = valorUcuCoins
                     },
                     Imagen = _loadedImage
@@ -81,6 +81,7 @@ namespace Presentation.Forms
                     Image img = Image.FromFile(fileDialog.FileName);
                     byte[] xByte = (byte[])_imageConverter.ConvertTo(img, typeof(byte[]));
                     _loadedImage = xByte;
+                    lblImageFileName.Text = fileDialog.SafeFileName;
                 }
             }
         }

@@ -233,7 +233,7 @@ namespace Presentation
             // 
             this.lblTitle.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Location = new System.Drawing.Point(791, 9);
+            this.lblTitle.Location = new System.Drawing.Point(765, 9);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(90, 34);
             this.lblTitle.TabIndex = 0;

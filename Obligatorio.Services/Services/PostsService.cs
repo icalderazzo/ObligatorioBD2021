@@ -10,7 +10,7 @@ namespace Obligatorio.Services.Services
     public class PostsService : IPostsService
     {
         private readonly  IPostsRepository _postsRepository;
-        private Usuario _user ;
+
         public PostsService(IPostsRepository postsRepository)
         {
             _postsRepository = postsRepository;
@@ -18,12 +18,7 @@ namespace Obligatorio.Services.Services
 
         public void Create(Publicacion entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Create(Publicacion entity, Usuario user)
-        {
-            _postsRepository.Insert(entity,user);
+            _postsRepository.Insert(entity);
         }
 
         public void Delete(string entityId)
@@ -53,11 +48,6 @@ namespace Obligatorio.Services.Services
         public List<Publicacion> ListForFeed(int ciActiveUser)
         {
             return _postsRepository.ListForFeed(ciActiveUser).ToList();
-        }
-
-        public void AssignUser(Usuario user)
-        {
-            this._user = user;
         }
 
         public void Modify(Publicacion entity)

@@ -37,18 +37,21 @@ namespace Presentation.Forms
                     IdPublicacion = 1,
                     Estado = true,
                     FechaPublicacion = DateTime.Now,
-                    Propietario = null,
+                    Propietario = Global.LoggedUser,
                     Articulo = new Articulo
                     {
                         Nombre = txtNombreProducto.Text,
                         Descripcion = txtDescripcionProducto.Text,
-                        Valor = int.Parse(txtValorProducto.Text)
+                        Valor = valorUcuCoins
                     },
                     Imagen = null
                 };
-                _postService.Create(newPost,Global.LoggedUser);
+                if (String.IsNullOrEmpty(newPost.Articulo.Descripcion)) 
+                {
+                    throw (new InvalidOperationException("Descripcion no puede estar vacía"));
+                } 
+                _postService.Create(newPost);
                 MessageBox.Show("Se ha publicado el post correctamente");
-               // _previous.Show();
                 this.Close();
             }
             catch (InvalidOperationException ex)
@@ -61,10 +64,5 @@ namespace Presentation.Forms
             }
          }
 
-        private void btnReturnToInit_Click(object sender, EventArgs e)
-        {
-           // _previous.Show();
-            this.Close();
-        }
     }
 }

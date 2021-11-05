@@ -12,7 +12,6 @@ namespace Obligatorio.Repositories.Repositories
     public class PostsRepository : IPostsRepository
     {
         private readonly IDatabaseContext _databaseContext;
-        public Usuario _user;
 
         public PostsRepository(IDatabaseContext databaseContext)
         {
@@ -66,76 +65,42 @@ namespace Obligatorio.Repositories.Repositories
 
         public Publicacion Insert(Publicacion model)
         {
-            throw new NotImplementedException();
-        }
-
-        public Publicacion Insert(Publicacion model, Usuario user)
-        {
             try
             {
+                // Insercion de Publicacion
                 string query = "INSERT INTO " +
-                               "Publicacion (Estado, NombreProducto, DescripcionProducto, ValorProducto) " +
-                               "VALUES (@Estado, @NombreProducto, @DescripcionProducto, @ValorProducto)";
-
+                               "Publicacion (CiUsuario, Estado, NombreProducto, DescripcionProducto, ValorProducto, FechaPublicacion) " +
+                               "VALUES (@CiUsuario, @Estado, @NombreProducto, @DescripcionProducto, @ValorProducto, @FechaPublicacion)";
                 _databaseContext.SaveData(query,
+                    new SqlParameter("@CiUsuario", model.Propietario.Cedula),
                     new SqlParameter("@Estado", model.Estado ? 1 : 0),
                     new SqlParameter("@NombreProducto", model.Articulo.Nombre),
                     new SqlParameter("@DescripcionProducto", model.Articulo.Descripcion),
-                    new SqlParameter("@ValorProducto", model.Articulo.Valor)
+                    new SqlParameter("@ValorProducto", model.Articulo.Valor),
+                    new SqlParameter("@FechaPublicacion", model.FechaPublicacion)
                 );
-                string idPublicacion = GetIdPost(model);
-                AssignPostToUser(model, user);
-                return model;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        private string GetIdPost(Publicacion post)
-        {
-            try
-            {
-                string query = "SELECT p.IdPublicacion, p.Estado, p.NombreProducto," +
-                          " p.DescripcionProducto, p.ValorProducto FROM Publicacion p " +
-                          "WHERE p.Estado = @Estado AND p.NombreProducto LIKE @NombreProducto" +
-                          " AND p.DescripcionProducto LIKE @DescripcionProducto" +
-                          " AND p.ValorProducto = @ValorProducto;";
+                
+                // Busqueda ID
+                string queryId = "SELECT TOP 1 IdPublicacion, CiUsuario FROM Publicacion  " +
+                               "WHERE CiUsuario = @CiUsuario ORDER BY IdPublicacion desc;";
 
-                var dbResult = _databaseContext.Select(query,
-                    new SqlParameter("@Estado", post.Estado),
-                    new SqlParameter("@NombreProducto", post.Articulo.Nombre),
-                    new SqlParameter("@DescripcionProducto", post.Articulo.Descripcion),
-                    new SqlParameter("@ValorProducto", post.Articulo.Valor)
+                var dbResult = _databaseContext.Select(queryId,
+                    new SqlParameter("@CiUsuario", model.Propietario.Cedula)
                 );
+
                 if (dbResult.Any())
                 {
                     var filaUsuario = dbResult[0];
-                    post.IdPublicacion = long.Parse(filaUsuario[0].ToString());
-                    return post.IdPublicacion.ToString();
+                    model.IdPublicacion = long.Parse(filaUsuario[0].ToString());
+                } 
+                else 
+                {
+                    throw (new Exception("No existe ID"));                
                 }
-                return null;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
 
-        }
+                // Asociación de imágenes A IMPLEMENTAR
 
-        private void AssignPostToUser(Publicacion post, Usuario user)
-        {
-            try
-            {
-                string query = "INSERT INTO " +
-                               "UsuarioPublicacion(CiUsuario,IdPublicacion,FechaPublicacion) " +
-                               "VALUES (@CiUsuario,@IdPublicacion,CAST(@FechaPublicacion AS DATETIME))";
-
-                _databaseContext.SaveData(query,
-                    new SqlParameter("@CiUsuario", user.Cedula),
-                    new SqlParameter("@IdPublicacion", post.IdPublicacion),
-                    new SqlParameter("@FechaPublicacion", post.FechaPublicacion.ToString("yyyy-MM-dd hh:mm:ss"))
-                );
+                return model;
             }
             catch (Exception)
             {
@@ -159,6 +124,47 @@ namespace Obligatorio.Repositories.Repositories
 
                 var dbResult = _databaseContext.Select(query, new SqlParameter("@Ci", ciActiveUser));
                 
+                List<Publicacion> result = new();
+
+                foreach (var postRow in dbResult)
+                {
+                    result.Add(new Publicacion()
+                    {
+                        IdPublicacion = long.Parse(postRow[0].ToString()),
+                        Articulo = new Articulo()
+                        {
+                            Nombre = postRow[1].ToString(),
+                            Descripcion = postRow[2].ToString(),
+                            Valor = int.Parse(postRow[3].ToString())
+                        },
+                        Estado = true,
+                        Propietario = new Usuario()
+                        {
+                            Cedula = int.Parse(postRow[4].ToString())
+                        },
+                        Imagen = Encoding.ASCII.GetBytes(postRow[5].ToString())
+                    });
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public ICollection<Publicacion> ListActivePosts(int ciActiveUser)
+        {
+            try
+            {
+                string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.Imagen " +
+                               "FROM Publicacion p " +
+                               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
+                               "WHERE p.CiUsuario = @Ci AND p.Estado = 1;";
+
+                var dbResult = _databaseContext.Select(query, new SqlParameter("@Ci", ciActiveUser));
+
                 List<Publicacion> result = new();
 
                 foreach (var postRow in dbResult)

@@ -34,8 +34,7 @@ namespace Presentation
         }
         private void btnPostArticle_Click(object sender, EventArgs e)
         {
-            _createPostForm.Show();
-            Hide();
+            OpenChildForm(_createPostForm, sender);
         }
 
         private void btnTransactions_Click(object sender, EventArgs e)

@@ -40,7 +40,6 @@
             this.txtDescripcionProducto = new System.Windows.Forms.TextBox();
             this.txtValorProducto = new System.Windows.Forms.TextBox();
             this.btnCreatePost = new System.Windows.Forms.Button();
-            this.btnReturnToLogin = new System.Windows.Forms.Button();
             this.Imagen = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.Imagen)).BeginInit();
             this.SuspendLayout();
@@ -50,7 +49,7 @@
             this.txtNombreProducto.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtNombreProducto.Location = new System.Drawing.Point(150, 126);
             this.txtNombreProducto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtNombreProducto.MaxLength = 8;
+            this.txtNombreProducto.MaxLength = 50;
             this.txtNombreProducto.Name = "txtNombreProducto";
             this.txtNombreProducto.Size = new System.Drawing.Size(419, 29);
             this.txtNombreProducto.TabIndex = 0;
@@ -132,7 +131,7 @@
             this.txtValorProducto.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtValorProducto.Location = new System.Drawing.Point(494, 235);
             this.txtValorProducto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtValorProducto.MaxLength = 7;
+            this.txtValorProducto.MaxLength = 15;
             this.txtValorProducto.Name = "txtValorProducto";
             this.txtValorProducto.Size = new System.Drawing.Size(75, 29);
             this.txtValorProducto.TabIndex = 16;
@@ -154,22 +153,6 @@
             this.btnCreatePost.UseVisualStyleBackColor = false;
             this.btnCreatePost.Click += new System.EventHandler(this.btnCreatePost_Click);
             // 
-            // btnReturnToLogin
-            // 
-            this.btnReturnToLogin.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnReturnToLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(249)))), ((int)(((byte)(237)))));
-            this.btnReturnToLogin.FlatAppearance.BorderSize = 0;
-            this.btnReturnToLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReturnToLogin.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnReturnToLogin.Location = new System.Drawing.Point(221, 624);
-            this.btnReturnToLogin.Name = "btnReturnToLogin";
-            this.btnReturnToLogin.Size = new System.Drawing.Size(132, 31);
-            this.btnReturnToLogin.TabIndex = 21;
-            this.btnReturnToLogin.Text = "Volver al login";
-            this.btnReturnToLogin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReturnToLogin.UseVisualStyleBackColor = false;
-            this.btnReturnToLogin.Click += new System.EventHandler(this.btnReturnToInit_Click);
-            // 
             // Imagen
             // 
             this.Imagen.Image = global::Presentation.Properties.Resources.Post;
@@ -190,7 +173,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnCreatePost);
-            this.Controls.Add(this.btnReturnToLogin);
             this.Controls.Add(this.txtValorProducto);
             this.Controls.Add(this.txtDescripcionProducto);
             this.Controls.Add(this.label4);
@@ -220,6 +202,5 @@
         private System.Windows.Forms.Button btnCreatePost;
         private System.Windows.Forms.Button btnReturnToInit;
         private System.Windows.Forms.PictureBox Imagen;
-        private System.Windows.Forms.Button btnReturnToLogin;
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using Obligatorio.Domain.Model;
 
@@ -25,6 +27,12 @@ namespace Presentation.Forms
 
         private void LoadPost()
         {
+            var imgbytes = _activePost.Imagen.Length == 0 ? null : _activePost.Imagen;
+            var img = imgbytes != null ? Image.FromStream(new MemoryStream(_activePost.Imagen)) : null;
+
+            if (img != null)
+                pictureBox1.Image = img;
+
             lblPostName.Text = _activePost.Articulo.Nombre;
             lblPrice.Text = _activePost.Articulo.Valor.ToString();
             lblDescription.Text = _activePost.Articulo.Descripcion;
@@ -45,6 +53,7 @@ namespace Presentation.Forms
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
+                pictureBox1.Image = null;
                 Hide();
             }
         }

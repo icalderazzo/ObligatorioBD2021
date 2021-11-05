@@ -50,7 +50,7 @@ namespace Obligatorio.Repositories.Repositories
                     {
                         Cedula = int.Parse(postRow[4].ToString())
                     },
-                    Imagen = Encoding.ASCII.GetBytes(postRow[5].ToString())
+                    Imagen = Convert.FromBase64String(postRow[5].ToString())
                 });
             }
 
@@ -146,7 +146,7 @@ namespace Obligatorio.Repositories.Repositories
                         {
                             Cedula = int.Parse(postRow[4].ToString())
                         },
-                        Imagen = Encoding.ASCII.GetBytes(postRow[5].ToString())
+                        Imagen = Convert.FromBase64String(postRow[5].ToString())
                     });
                 }
 
@@ -187,7 +187,7 @@ namespace Obligatorio.Repositories.Repositories
                         {
                             Cedula = int.Parse(postRow[4].ToString())
                         },
-                        Imagen = Encoding.ASCII.GetBytes(postRow[5].ToString())
+                        Imagen = Convert.FromBase64String(postRow[5].ToString())
                     });
                 }
 

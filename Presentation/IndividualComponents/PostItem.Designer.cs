@@ -53,6 +53,7 @@
             this.picBox.Location = new System.Drawing.Point(42, 21);
             this.picBox.Name = "picBox";
             this.picBox.Size = new System.Drawing.Size(260, 210);
+            this.picBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picBox.TabIndex = 0;
             this.picBox.TabStop = false;
             this.picBox.Click += new System.EventHandler(this.picBox_Click);

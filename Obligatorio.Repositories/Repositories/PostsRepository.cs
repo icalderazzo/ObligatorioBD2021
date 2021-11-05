@@ -11,6 +11,7 @@ namespace Obligatorio.Repositories.Repositories
     public class PostsRepository : IPostsRepository
     {
         private readonly IDatabaseContext _databaseContext;
+
         public PostsRepository(IDatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
@@ -22,7 +23,7 @@ namespace Obligatorio.Repositories.Repositories
 
         public ICollection<Publicacion> FilterByName(string name, int ciActiveUser)
         {
-            string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.Imagen " +
+            string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 " +
                "FROM Publicacion p " +
                "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
                $"WHERE p.NombreProducto LIKE '%{name}%' AND p.CiUsuario <> @Ci AND p.Estado = 1;";
@@ -63,7 +64,52 @@ namespace Obligatorio.Repositories.Repositories
 
         public Publicacion Insert(Publicacion model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var tran = _databaseContext.BeginTransaction();
+
+                // Insercion de Publicacion
+                string query = "INSERT INTO " +
+                               "Publicacion (CiUsuario, NombreProducto, DescripcionProducto, ValorProducto) " +
+                               "VALUES (@CiUsuario, @NombreProducto, @DescripcionProducto, @ValorProducto) ";
+                
+                _databaseContext.SaveData(tran, query,
+                    new SqlParameter("@CiUsuario", model.Propietario.Cedula),
+                    new SqlParameter("@NombreProducto", model.Articulo.Nombre),
+                    new SqlParameter("@DescripcionProducto", model.Articulo.Descripcion),
+                    new SqlParameter("@ValorProducto", model.Articulo.Valor)
+                );
+                
+                // Busqueda ID
+                string queryId = "SELECT TOP 1 IdPublicacion, CiUsuario FROM Publicacion  " +
+                                 "WHERE CiUsuario = @CiUsuario ORDER BY IdPublicacion desc;";
+
+                var dbResult = _databaseContext.Select(tran, queryId,
+                    new SqlParameter("@CiUsuario", model.Propietario.Cedula)
+                );
+
+                var filaPublicacion = dbResult[0];
+                model.IdPublicacion = long.Parse(filaPublicacion[0].ToString());
+
+                if (model.Imagen != null) //si el usuario subio una imagen
+                {
+                    string addImageQuery = "INSERT INTO Imagen Values (@IdPublicacion, @ImagenBase64);";
+                    string imgBase64 = Convert.ToBase64String(model.Imagen);
+
+                    _databaseContext.SaveData(tran, addImageQuery,
+                        new SqlParameter("@IdPublicacion", model.IdPublicacion),
+                        new SqlParameter("@ImagenBase64", imgBase64)
+                        );
+                }
+
+                _databaseContext.Commit(tran);
+
+                return model;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public ICollection<Publicacion> List()
@@ -75,13 +121,54 @@ namespace Obligatorio.Repositories.Repositories
         {
             try
             {
-                string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.Imagen " +
+                string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 " +
                                "FROM Publicacion p " +
                                "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " + 
                                "WHERE p.CiUsuario <> @Ci AND p.Estado = 1;";
 
                 var dbResult = _databaseContext.Select(query, new SqlParameter("@Ci", ciActiveUser));
                 
+                List<Publicacion> result = new();
+
+                foreach (var postRow in dbResult)
+                {
+                    result.Add(new Publicacion()
+                    {
+                        IdPublicacion = long.Parse(postRow[0].ToString()),
+                        Articulo = new Articulo()
+                        {
+                            Nombre = postRow[1].ToString(),
+                            Descripcion = postRow[2].ToString(),
+                            Valor = int.Parse(postRow[3].ToString())
+                        },
+                        Estado = true,
+                        Propietario = new Usuario()
+                        {
+                            Cedula = int.Parse(postRow[4].ToString())
+                        },
+                        Imagen = Encoding.ASCII.GetBytes(postRow[5].ToString())
+                    });
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public ICollection<Publicacion> ListPostsOfUser(int ciActiveUser)
+        {
+            try
+            {
+                string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 " +
+                               "FROM Publicacion p " +
+                               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
+                               "WHERE p.CiUsuario = @Ci AND p.Estado = 1;";
+
+                var dbResult = _databaseContext.Select(query, new SqlParameter("@Ci", ciActiveUser));
+
                 List<Publicacion> result = new();
 
                 foreach (var postRow in dbResult)

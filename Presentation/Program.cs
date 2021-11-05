@@ -58,6 +58,7 @@ namespace Presentation
                 .AddTransient<IUserService, UserService>()
                 .AddTransient<IPostsService, PostsService>()
                 .AddTransient<IValidator<Usuario>, UserValidator>()
+                .AddTransient<System.Drawing.ImageConverter>()
                 ;
             
             //Forms
@@ -66,6 +67,7 @@ namespace Presentation
                 .AddScoped<MainForm>()
                 .AddScoped<HomeForm>()
                 .AddScoped<PostDetailForm>()
+                .AddScoped<CreatePostForm>()
                 ;
         }
     }

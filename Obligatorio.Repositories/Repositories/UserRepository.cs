@@ -11,6 +11,7 @@ namespace Obligatorio.Repositories.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly IDatabaseContext _context;
+
         public UserRepository(IDatabaseContext context)
         {
             _context = context;

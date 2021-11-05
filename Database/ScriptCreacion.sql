@@ -25,7 +25,7 @@ CREATE TABLE Publicacion(
 
 CREATE TABLE Imagen (
 	IdPublicacion BIGINT NOT NULL,
-	Imagen VARBINARY(MAX) NOT NULL,
+	ImagenBase64 NVARCHAR(MAX) NOT NULL,
 	FOREIGN KEY (IdPublicacion) REFERENCES Publicacion(IdPublicacion),
 	PRIMARY KEY (IdPublicacion)
 );

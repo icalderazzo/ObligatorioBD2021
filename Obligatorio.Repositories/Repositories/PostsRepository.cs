@@ -5,7 +5,6 @@ using Obligatorio.Repositories.Interfaces;
 using DatabaseInterface;
 using System.Data.SqlClient;
 using System.Text;
-using System.Linq;
 
 namespace Obligatorio.Repositories.Repositories
 {
@@ -67,38 +66,43 @@ namespace Obligatorio.Repositories.Repositories
         {
             try
             {
+                var tran = _databaseContext.BeginTransaction();
+
                 // Insercion de Publicacion
                 string query = "INSERT INTO " +
-                               "Publicacion (CiUsuario, Estado, NombreProducto, DescripcionProducto, ValorProducto, FechaPublicacion) " +
-                               "VALUES (@CiUsuario, @Estado, @NombreProducto, @DescripcionProducto, @ValorProducto, @FechaPublicacion)";
-                _databaseContext.SaveData(query,
+                               "Publicacion (CiUsuario, NombreProducto, DescripcionProducto, ValorProducto) " +
+                               "VALUES (@CiUsuario, @NombreProducto, @DescripcionProducto, @ValorProducto) ";
+                
+                _databaseContext.SaveData(tran, query,
                     new SqlParameter("@CiUsuario", model.Propietario.Cedula),
-                    new SqlParameter("@Estado", model.Estado ? 1 : 0),
                     new SqlParameter("@NombreProducto", model.Articulo.Nombre),
                     new SqlParameter("@DescripcionProducto", model.Articulo.Descripcion),
-                    new SqlParameter("@ValorProducto", model.Articulo.Valor),
-                    new SqlParameter("@FechaPublicacion", model.FechaPublicacion)
+                    new SqlParameter("@ValorProducto", model.Articulo.Valor)
                 );
                 
                 // Busqueda ID
                 string queryId = "SELECT TOP 1 IdPublicacion, CiUsuario FROM Publicacion  " +
-                               "WHERE CiUsuario = @CiUsuario ORDER BY IdPublicacion desc;";
+                                 "WHERE CiUsuario = @CiUsuario ORDER BY IdPublicacion desc;";
 
-                var dbResult = _databaseContext.Select(queryId,
+                var dbResult = _databaseContext.Select(tran, queryId,
                     new SqlParameter("@CiUsuario", model.Propietario.Cedula)
                 );
 
-                if (dbResult.Any())
+                var filaUsuario = dbResult[0];
+                model.IdPublicacion = long.Parse(filaUsuario[0].ToString());
+
+                if (model.Imagen.Length > 0) //si el usuario subio una imagen
                 {
-                    var filaUsuario = dbResult[0];
-                    model.IdPublicacion = long.Parse(filaUsuario[0].ToString());
-                } 
-                else 
-                {
-                    throw (new Exception("No existe ID"));                
+                    string addImageQuery = "INSERT INTO Imagen Values (@IdPublicacion, @ImagenBase64);";
+                    string imgBase64 = Convert.ToBase64String(model.Imagen);
+
+                    _databaseContext.SaveData(tran, addImageQuery,
+                        new SqlParameter("@IdPublicacion", model.IdPublicacion),
+                        new SqlParameter("@ImagenBase64", imgBase64)
+                        );
                 }
 
-                // Asociación de imágenes A IMPLEMENTAR
+                _databaseContext.Commit(tran);
 
                 return model;
             }
@@ -154,7 +158,7 @@ namespace Obligatorio.Repositories.Repositories
             }
         }
 
-        public ICollection<Publicacion> ListActivePosts(int ciActiveUser)
+        public ICollection<Publicacion> ListPostsOfUser(int ciActiveUser)
         {
             try
             {

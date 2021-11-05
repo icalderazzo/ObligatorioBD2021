@@ -50,6 +50,11 @@ namespace Obligatorio.Services.Services
             return _postsRepository.ListForFeed(ciActiveUser).ToList();
         }
 
+        public List<Publicacion> ListPostsOfUser(int ciUser)
+        {
+            return _postsRepository.ListPostsOfUser(ciUser).ToList();
+        }
+
         public void Modify(Publicacion entity)
         {
             throw new NotImplementedException();

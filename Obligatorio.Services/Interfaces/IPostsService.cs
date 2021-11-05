@@ -7,5 +7,6 @@ namespace Obligatorio.Services.Interfaces
     {
         List<Publicacion> ListForFeed(int ciActiveUser);
         List<Publicacion> FilterByName(string name, int ciActiveUser);
+        List<Publicacion> ListPostsOfUser(int ciUser);
     }
 }

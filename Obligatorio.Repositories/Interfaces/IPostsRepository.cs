@@ -7,6 +7,6 @@ namespace Obligatorio.Repositories.Interfaces
     {
         ICollection<Publicacion> ListForFeed(int ciActiveUser);
         ICollection<Publicacion> FilterByName(string name, int ciActiveUser);
-        ICollection<Publicacion> ListActivePosts(int ciActiveUser);
+        ICollection<Publicacion> ListPostsOfUser(int ciUser);
     }
 }

@@ -23,7 +23,7 @@ namespace Obligatorio.Repositories.Repositories
 
         public ICollection<Publicacion> FilterByName(string name, int ciActiveUser)
         {
-            string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.Imagen " +
+            string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 " +
                "FROM Publicacion p " +
                "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
                $"WHERE p.NombreProducto LIKE '%{name}%' AND p.CiUsuario <> @Ci AND p.Estado = 1;";
@@ -88,10 +88,10 @@ namespace Obligatorio.Repositories.Repositories
                     new SqlParameter("@CiUsuario", model.Propietario.Cedula)
                 );
 
-                var filaUsuario = dbResult[0];
-                model.IdPublicacion = long.Parse(filaUsuario[0].ToString());
+                var filaPublicacion = dbResult[0];
+                model.IdPublicacion = long.Parse(filaPublicacion[0].ToString());
 
-                if (model.Imagen.Length > 0) //si el usuario subio una imagen
+                if (model.Imagen != null) //si el usuario subio una imagen
                 {
                     string addImageQuery = "INSERT INTO Imagen Values (@IdPublicacion, @ImagenBase64);";
                     string imgBase64 = Convert.ToBase64String(model.Imagen);
@@ -121,7 +121,7 @@ namespace Obligatorio.Repositories.Repositories
         {
             try
             {
-                string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.Imagen " +
+                string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 " +
                                "FROM Publicacion p " +
                                "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " + 
                                "WHERE p.CiUsuario <> @Ci AND p.Estado = 1;";
@@ -162,7 +162,7 @@ namespace Obligatorio.Repositories.Repositories
         {
             try
             {
-                string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.Imagen " +
+                string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 " +
                                "FROM Publicacion p " +
                                "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
                                "WHERE p.CiUsuario = @Ci AND p.Estado = 1;";

@@ -58,6 +58,7 @@ namespace Presentation
                 .AddTransient<IUserService, UserService>()
                 .AddTransient<IPostsService, PostsService>()
                 .AddTransient<IValidator<Usuario>, UserValidator>()
+                .AddTransient<System.Drawing.ImageConverter>()
                 ;
             
             //Forms

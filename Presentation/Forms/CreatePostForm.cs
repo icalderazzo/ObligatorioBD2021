@@ -2,18 +2,22 @@
 using System.Windows.Forms;
 using Obligatorio.Domain.Model;
 using Obligatorio.Services.Interfaces;
+using System.Drawing;
 
 namespace Presentation.Forms
 {
     public partial class CreatePostForm : Form
     {
         private readonly IPostsService _postService;
-        //private readonly MainForm _previous;
+        private byte[] _loadedImage;
+        private readonly ImageConverter _imageConverter;
 
-        public CreatePostForm(IPostsService postService)
+        public CreatePostForm(
+            IPostsService postService, 
+            ImageConverter imageConverter)
         {
             _postService = postService;
-            //_previous = mainForm;
+            _imageConverter = imageConverter;
             InitializeComponent();
         }
 
@@ -29,30 +33,33 @@ namespace Presentation.Forms
                 MessageBox.Show("El Valor Producto solo puede contener números");
                 return;
             }
+
             try
             {
                 var newPost = new Publicacion
                 {
-                    // Revisar tema de Id Publicacion
-                    IdPublicacion = 1,
-                    Estado = true,
-                    FechaPublicacion = DateTime.Now,
-                    Propietario = Global.LoggedUser,
+                    Propietario = new Usuario()
+                    {
+                        Cedula = Global.LoggedUser.Cedula
+                    },
                     Articulo = new Articulo
                     {
                         Nombre = txtNombreProducto.Text,
                         Descripcion = txtDescripcionProducto.Text,
                         Valor = valorUcuCoins
                     },
-                    Imagen = null
+                    Imagen = _loadedImage
                 };
+
                 if (String.IsNullOrEmpty(newPost.Articulo.Descripcion)) 
                 {
-                    throw (new InvalidOperationException("Descripcion no puede estar vacía"));
-                } 
+                    MessageBox.Show("Descripcion no puede estar vacía");
+                    return;
+                }
+                
                 _postService.Create(newPost);
+                _loadedImage = null;
                 MessageBox.Show("Se ha publicado el post correctamente");
-                this.Close();
             }
             catch (InvalidOperationException ex)
             {
@@ -60,9 +67,22 @@ namespace Presentation.Forms
             }
             catch (Exception)
             {
-                throw;
+                MessageBox.Show("Error desconocido");
             }
          }
 
+        private void btnAddImage_Click(object sender, EventArgs e)
+        {
+            using (var fileDialog = new OpenFileDialog())
+            {
+                fileDialog.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    Image img = Image.FromFile(fileDialog.FileName);
+                    byte[] xByte = (byte[])_imageConverter.ConvertTo(img, typeof(byte[]));
+                    _loadedImage = xByte;
+                }
+            }
+        }
     }
 }

@@ -50,6 +50,7 @@ namespace Presentation
             services
                 .AddTransient<IUserRepository, UserRepository>()
                 .AddTransient<IPostsRepository, PostsRepository>()
+                .AddTransient<IOfferRepository, OfferRepository>()
                 ;
             
             //Services
@@ -59,6 +60,7 @@ namespace Presentation
                 .AddTransient<IPostsService, PostsService>()
                 .AddTransient<IValidator<Usuario>, UserValidator>()
                 .AddTransient<System.Drawing.ImageConverter>()
+                .AddTransient<IOfferService, OfferService>()
                 ;
             
             //Forms

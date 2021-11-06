@@ -6,7 +6,7 @@ CREATE TABLE Usuario(
     Apellido NVARCHAR(30) NOT NULL,
     Correo NVARCHAR(50) NOT NULL,
     NombreUsuario NVARCHAR(20) NOT NULL UNIQUE,
-    Contrasenia NVARCHAR(30) NOT NULL,
+    Contrasenia NVARCHAR(300) NOT NULL,
     Telefono INT UNIQUE,
     PRIMARY KEY (Ci)
 );

@@ -16,6 +16,34 @@ namespace Obligatorio.Repositories.Repositories
         {
             _databaseContext = databaseContext;
         }
+
+        private ICollection<Publicacion> ExtractPosts(List<object[]> dbResult)
+        {
+            List<Publicacion> result = new();
+
+            foreach (var postRow in dbResult)
+            {
+                result.Add(new Publicacion()
+                {
+                    IdPublicacion = long.Parse(postRow[0].ToString()),
+                    Articulo = new Articulo()
+                    {
+                        Nombre = postRow[1].ToString(),
+                        Descripcion = postRow[2].ToString(),
+                        Valor = int.Parse(postRow[3].ToString())
+                    },
+                    Estado = true,
+                    Propietario = new Usuario()
+                    {
+                        Cedula = int.Parse(postRow[4].ToString())
+                    },
+                    Imagen = Convert.FromBase64String(postRow[5].ToString())
+                });
+            }
+
+            return result;
+        }
+
         public void Delete(string id)
         {
             throw new NotImplementedException();
@@ -60,6 +88,51 @@ namespace Obligatorio.Repositories.Repositories
         public Publicacion GetById(string id)
         {
             throw new NotImplementedException();
+        }
+
+        public ICollection<Publicacion> GetPostsAsked(int ciUser, long idOffer)
+        {
+            try
+            {
+                string query = "select p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 from Publicacion p " +
+                               "inner join PublicacionOferta on p.IdPublicacion = PublicacionOferta.IdPublicacion " +
+                               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
+                               "where PublicacionOferta.IdOferta = @idOffer and p.CiUsuario = @ciUser";
+                var dbResult = _databaseContext.Select(query,
+                    new SqlParameter("@idOffer", idOffer),
+                    new SqlParameter("@ciUser", ciUser)
+                );
+
+                return ExtractPosts(dbResult);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        public ICollection<Publicacion> GetPostsOffered(int ciUser, long idOffer)
+        {
+            try
+            {
+                string query = "select p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 from Publicacion p " +
+               "inner join PublicacionOferta on p.IdPublicacion = PublicacionOferta.IdPublicacion " +
+               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
+               "where PublicacionOferta.IdOferta = @idOffer and p.CiUsuario <> @ciUser";
+                var dbResult = _databaseContext.Select(query,
+                    new SqlParameter("@idOffer", idOffer),
+                    new SqlParameter("@ciUser", ciUser)
+                );
+
+                return ExtractPosts(dbResult);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public Publicacion Insert(Publicacion model)
@@ -127,30 +200,8 @@ namespace Obligatorio.Repositories.Repositories
                                "WHERE p.CiUsuario <> @Ci AND p.Estado = 1;";
 
                 var dbResult = _databaseContext.Select(query, new SqlParameter("@Ci", ciActiveUser));
-                
-                List<Publicacion> result = new();
 
-                foreach (var postRow in dbResult)
-                {
-                    result.Add(new Publicacion()
-                    {
-                        IdPublicacion = long.Parse(postRow[0].ToString()),
-                        Articulo = new Articulo()
-                        {
-                            Nombre = postRow[1].ToString(),
-                            Descripcion = postRow[2].ToString(),
-                            Valor = int.Parse(postRow[3].ToString())
-                        },
-                        Estado = true,
-                        Propietario = new Usuario()
-                        {
-                            Cedula = int.Parse(postRow[4].ToString())
-                        },
-                        Imagen = Convert.FromBase64String(postRow[5].ToString())
-                    });
-                }
-
-                return result;
+                return ExtractPosts(dbResult);
             }
             catch (Exception)
             {
@@ -169,29 +220,7 @@ namespace Obligatorio.Repositories.Repositories
 
                 var dbResult = _databaseContext.Select(query, new SqlParameter("@Ci", ciActiveUser));
 
-                List<Publicacion> result = new();
-
-                foreach (var postRow in dbResult)
-                {
-                    result.Add(new Publicacion()
-                    {
-                        IdPublicacion = long.Parse(postRow[0].ToString()),
-                        Articulo = new Articulo()
-                        {
-                            Nombre = postRow[1].ToString(),
-                            Descripcion = postRow[2].ToString(),
-                            Valor = int.Parse(postRow[3].ToString())
-                        },
-                        Estado = true,
-                        Propietario = new Usuario()
-                        {
-                            Cedula = int.Parse(postRow[4].ToString())
-                        },
-                        Imagen = Convert.FromBase64String(postRow[5].ToString())
-                    });
-                }
-
-                return result;
+                return ExtractPosts(dbResult);
             }
             catch (Exception)
             {

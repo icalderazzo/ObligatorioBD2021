@@ -4,6 +4,7 @@ using Obligatorio.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using Obligatorio.Domain;
+using System.Security.Cryptography;
 
 namespace Obligatorio.Services.Services
 {
@@ -21,7 +22,7 @@ namespace Obligatorio.Services.Services
         {
             try
             {
-                return _userRepository.GetForLogin(username, password);
+                return _userRepository.GetForLogin(username, HashingModule.ComputeSha256Hash(password));
             }
             catch (Exception e)
             {
@@ -50,6 +51,9 @@ namespace Obligatorio.Services.Services
             if (phoneUsed){throw new InvalidOperationException("El número de teléfono seleccionado ya está ocupado");}
             // Check ci not being used
             if (ciUsed) { throw new InvalidOperationException("La cédula seleccionada ya está ocupada"); }
+
+            //Hash password
+            entity.Contrasenia = HashingModule.ComputeSha256Hash(entity.Contrasenia);
 
             // Insert user
             _userRepository.Insert(entity);

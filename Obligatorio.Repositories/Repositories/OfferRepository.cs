@@ -5,6 +5,7 @@ using DatabaseInterface;
 using System.Data.SqlClient;
 using Obligatorio.Domain;
 using System;
+using System.Linq;
 
 namespace Obligatorio.Repositories.Repositories
 {
@@ -26,7 +27,66 @@ namespace Obligatorio.Repositories.Repositories
             throw new System.NotImplementedException();
         }
 
+        public List<Oferta> getOffersByParams(int ciUser, int userRoleInOffers, int offerStatus)
+        {
+            try
+            {
+                var query = "select UsuarioOferta.IdOferta, Oferta.FechaRealizacion from UsuarioOferta " +
+                            "inner join RolOferta on UsuarioOferta.IdRolOferta = RolOferta.IdRolOferta " +
+                            "inner join Oferta on UsuarioOferta.IdOferta = Oferta.IdOferta " +
+                            "where CiUsuario = @ciUser and UsuarioOferta.IdRolOferta = @userRoleInOffers and Oferta.EstadoOferta = @offerStatus";
 
+                var offersLines = _context.Select(query,
+                    new SqlParameter("@ciUser", ciUser),
+                    new SqlParameter("@userRoleInOffers", userRoleInOffers),
+                    new SqlParameter("@offerStatus", offerStatus)
+                );
+
+                List<Oferta> offers = new List<Oferta>(); 
+
+                for (int i = 0; i < offersLines.Count; i++)
+                {
+                    var offersLine = offersLines[i];
+                    
+                    Oferta offer = new Oferta()
+                    {
+                        IdOferta = long.Parse(offersLine[0].ToString()),
+                        Fecha = DateTime.Parse(offersLine[1].ToString()),
+                    };
+
+                    offers.Add(offer);
+                }
+
+                return offers;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public Oferta hasCounterOffer(long idOferr)
+        {
+            try
+            {
+                string query = "select IdOfertaAnterior from ContraOferta where IdOfertaNueva = @idOferr";
+
+                var dbResult = _context.Select(query, new SqlParameter("@idOferr", idOferr));
+
+                if (dbResult.Any())
+                {
+                    Oferta offer = new Oferta() { IdOferta = long.Parse(dbResult[0][0].ToString()) };
+                    return offer;
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         public Oferta Insert(Oferta model)
         {

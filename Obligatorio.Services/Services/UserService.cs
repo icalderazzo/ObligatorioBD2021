@@ -4,6 +4,7 @@ using Obligatorio.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using Obligatorio.Domain;
+using System.Security.Cryptography;
 
 namespace Obligatorio.Services.Services
 {
@@ -21,7 +22,7 @@ namespace Obligatorio.Services.Services
         {
             try
             {
-                return _userRepository.GetForLogin(username, password);
+                return _userRepository.GetForLogin(username, HashingModule.ComputeSha256Hash(password));
             }
             catch (Exception e)
             {
@@ -51,6 +52,9 @@ namespace Obligatorio.Services.Services
             // Check ci not being used
             if (ciUsed) { throw new InvalidOperationException("La cédula seleccionada ya está ocupada"); }
 
+            //Hash password
+            entity.Contrasenia = HashingModule.ComputeSha256Hash(entity.Contrasenia);
+
             // Insert user
             _userRepository.Insert(entity);
         }
@@ -73,6 +77,11 @@ namespace Obligatorio.Services.Services
         public void Modify(Usuario entity)
         {
             throw new NotImplementedException();
+        }
+
+        public Usuario GetUserByRole(long idOffer, int idRole)
+        {
+            return _userRepository.GetUserByRole(idOffer, idRole);
         }
     }
 }

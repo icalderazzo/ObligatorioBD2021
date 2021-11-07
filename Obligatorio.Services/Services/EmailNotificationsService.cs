@@ -13,16 +13,21 @@ namespace Obligatorio.Services.Services
         {
             _emailService = emailService;
         }
-        public async Task Notify(Email notification)
+        public void Notify(Email notification)
         {
             try
             {
-                await _emailService.SendEmailAsync(notification);
+                _emailService.SendEmail(notification);
             }
             catch (Exception e)
             {
                 throw new Exception("", e);
             }
+        }
+
+        public Task NotifyAsync(Email notification)
+        {
+            throw new NotImplementedException();
         }
     }
 }

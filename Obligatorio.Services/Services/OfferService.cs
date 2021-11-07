@@ -4,6 +4,9 @@ using Obligatorio.Repositories.Interfaces;
 using Obligatorio.Services.Interfaces;
 using System.Collections.Generic;
 using System;
+using EmailService;
+using static Obligatorio.Domain.Emails.EmailBodies;
+using System.Threading.Tasks;
 
 namespace Obligatorio.Services.Services
 {
@@ -12,12 +15,17 @@ namespace Obligatorio.Services.Services
         private readonly IOfferRepository _offerRepository;
         private readonly IPostsService _postService;
         private readonly IUserService _userService;
-
-        public OfferService(IOfferRepository offerRepository, IPostsService postsService, IUserService userService)
+        private readonly INotificationsService<Email> _emailNotificationsService;
+        public OfferService(
+            IOfferRepository offerRepository, 
+            IPostsService postsService, 
+            IUserService userService,
+            INotificationsService<Email> emailNotificationsService)
         {
             _postService = postsService;
             _offerRepository = offerRepository;
             _userService = userService;
+            _emailNotificationsService = emailNotificationsService;
         }
         public void Create(Oferta entity)
         {
@@ -83,14 +91,58 @@ namespace Obligatorio.Services.Services
 
         public void AcceptOffer(Oferta offer)
         {
-            _offerRepository.UpdateOfferState(offer.IdOferta, EnumOfertas.EstadoOferta.Completada);
+            try
+            {
+                _offerRepository.UpdateOfferState(offer.IdOferta, EnumOfertas.EstadoOferta.Completada);
 
-            foreach (Publicacion pub in offer.PublicacionesDeseadas)
-                _postService.UpdatePostState(pub.IdPublicacion, false);
+                var sendersPosts = new List<string>();
+                var receiversPosts = new List<string>();
 
-            foreach (Publicacion pub in offer.PublicacionesOfrecidas)
-                _postService.UpdatePostState(pub.IdPublicacion, false);
+                foreach (Publicacion pub in offer.PublicacionesDeseadas)
+                {
+                    _postService.UpdatePostState(pub.IdPublicacion, false);
+                    receiversPosts.Add(pub.Articulo.Nombre);
+                }
 
+                foreach (Publicacion pub in offer.PublicacionesOfrecidas)
+                {
+                    _postService.UpdatePostState(pub.IdPublicacion, false);
+                    sendersPosts.Add(pub.Articulo.Nombre);
+                }
+
+                _emailNotificationsService.Notify(new Email()
+                {
+                    Subject = "Oferta aceptada",
+                    Body = SenderAcceptedOfferEmailBody(
+                                name: offer.UsuarioEmisor.Nombre,
+                                surname: offer.UsuarioEmisor.Apellido,
+                                postsnames: receiversPosts,
+                                receiversName: offer.UsuarioDestinatario.Nombre,
+                                receiversSurname: offer.UsuarioDestinatario.Apellido,
+                                receiversEmail: offer.UsuarioDestinatario.Correo
+                           ),
+                    ToEmail = offer.UsuarioEmisor.Correo
+                });
+
+                _emailNotificationsService.Notify(new Email()
+                {
+                    Subject = "Oferta aceptada",
+                    Body = ReceiversAcceptedOfferEmailBody(
+                                name: offer.UsuarioDestinatario.Nombre,
+                                surname: offer.UsuarioDestinatario.Apellido,
+                                postsnames: sendersPosts,
+                                sendersName: offer.UsuarioEmisor.Nombre,
+                                sendersSurname: offer.UsuarioEmisor.Apellido,
+                                sendersEmail: offer.UsuarioEmisor.Correo
+                            ),
+                    ToEmail = offer.UsuarioDestinatario.Correo
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             //Enviar mail a destinatario
         }
 

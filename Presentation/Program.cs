@@ -1,4 +1,5 @@
 using DatabaseInterface;
+using EmailService;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Obligatorio.Domain;
@@ -62,6 +63,7 @@ namespace Presentation
                 .AddTransient<System.Drawing.ImageConverter>()
                 .AddTransient<IOfferService, OfferService>()
                 .AddTransient<Utils.IImageConverter, Utils.ImageConverter>()
+                .AddTransient<INotificationsService<Email>, EmailNotificationsService>()
                 ;
 
             //Forms

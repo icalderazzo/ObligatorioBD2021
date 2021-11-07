@@ -35,7 +35,6 @@
             this.lblDescription = new System.Windows.Forms.Label();
             this.lblDesc = new System.Windows.Forms.Label();
             this.btnMakeOffer = new System.Windows.Forms.Button();
-            this.btnShowUserProfile = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -115,30 +114,12 @@
             this.btnMakeOffer.UseVisualStyleBackColor = false;
             this.btnMakeOffer.Click += new System.EventHandler(this.btnMakeOffer_Click);
             // 
-            // btnShowUserProfile
-            // 
-            this.btnShowUserProfile.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnShowUserProfile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(55)))), ((int)(((byte)(130)))));
-            this.btnShowUserProfile.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnShowUserProfile.FlatAppearance.BorderSize = 0;
-            this.btnShowUserProfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnShowUserProfile.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnShowUserProfile.ForeColor = System.Drawing.Color.White;
-            this.btnShowUserProfile.Location = new System.Drawing.Point(594, 70);
-            this.btnShowUserProfile.Name = "btnShowUserProfile";
-            this.btnShowUserProfile.Size = new System.Drawing.Size(158, 36);
-            this.btnShowUserProfile.TabIndex = 8;
-            this.btnShowUserProfile.Text = "Visitar perfil";
-            this.btnShowUserProfile.UseVisualStyleBackColor = false;
-            this.btnShowUserProfile.Click += new System.EventHandler(this.btnShowUserProfile_Click);
-            // 
             // PostDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(249)))), ((int)(((byte)(237)))));
             this.ClientSize = new System.Drawing.Size(782, 553);
-            this.Controls.Add(this.btnShowUserProfile);
             this.Controls.Add(this.btnMakeOffer);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblPrice);
@@ -167,6 +148,5 @@
         private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.Label lblDesc;
         private System.Windows.Forms.Button btnMakeOffer;
-        private System.Windows.Forms.Button btnShowUserProfile;
     }
 }

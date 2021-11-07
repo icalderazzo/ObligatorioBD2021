@@ -50,6 +50,14 @@ namespace Presentation.Forms
         private async Task LoadPage()
         {
             var aciveUserPosts = await Task.Run(() => _postsService.ListPostsOfUser(Global.LoggedUser.Cedula));
+
+            if (aciveUserPosts.Count == 0)
+            {
+                MessageBox.Show("Aún no tienes articulos publicados, no puedes realizar ofertas", "Advertencia");
+                Hide();
+                return;
+            }
+
             var receiversPosts = await Task.Run(() => _postsService.ListPostsOfUser(ReceiversCi));
 
             LoadSelectPostItems(aciveUserPosts, this.flowPanelActiveUserPosts);

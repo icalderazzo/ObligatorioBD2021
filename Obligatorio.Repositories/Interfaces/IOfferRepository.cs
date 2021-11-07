@@ -1,4 +1,5 @@
 ﻿using Obligatorio.Domain.Model;
+using Obligatorio.Domain;
 using System.Collections.Generic;
 
 namespace Obligatorio.Repositories.Interfaces
@@ -8,6 +9,7 @@ namespace Obligatorio.Repositories.Interfaces
         List<Oferta> getOffersByParams(int ciUser, int userRoleInOffers, int offerStatus);
 
         Oferta hasCounterOffer(long idOferr);
-        void UpdateOfferState(Oferta entity);
+        void UpdateOfferState(long idOffer, EnumOfertas.EstadoOferta state);
+        int GetOfferCi(long idOffer, bool isSender);
     }
 }

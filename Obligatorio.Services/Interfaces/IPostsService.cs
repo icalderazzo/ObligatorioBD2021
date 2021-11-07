@@ -11,5 +11,6 @@ namespace Obligatorio.Services.Interfaces
 
         List<Publicacion> GetPostsOffered(int ciUser, long idOffer);
         List<Publicacion> GetPostsAsked(int ciUser, long idOffer);
+        void UpdatePostsState(long post, int ciUser, bool isOffered);
     }
 }

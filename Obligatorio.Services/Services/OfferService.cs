@@ -3,7 +3,7 @@ using Obligatorio.Domain;
 using Obligatorio.Services.Interfaces;
 using System.Collections.Generic;
 using Obligatorio.Repositories.Interfaces;
-using Obligatorio.Domain;
+using System.Linq;
 
 namespace Obligatorio.Services.Services{
     public class OfferService : IOfferService
@@ -60,10 +60,20 @@ namespace Obligatorio.Services.Services{
             throw new System.NotImplementedException();
         }
 
-        public void ModifyOfferState(Oferta entity)
+        public void AcceptOffer(long idOffer)
         {
-            _offerRepository.UpdateOfferState(entity);
+            _offerRepository.UpdateOfferState(idOffer, EnumOfertas.EstadoOferta.Completada);
+            int ciOfertante = _offerRepository.GetOfferCi(idOffer, true);
+            int ciOfertado = _offerRepository.GetOfferCi(idOffer, false);
+            _postService.UpdatePostsState(idOffer, ciOfertante, true);
+            _postService.UpdatePostsState(idOffer, ciOfertado, false);
         }
+
+        public void CancelOffer(long idOffer)
+        {
+            _offerRepository.UpdateOfferState(idOffer, EnumOfertas.EstadoOferta.Rechazada);
+        }
+
     }
 
 }

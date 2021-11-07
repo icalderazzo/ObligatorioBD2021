@@ -69,5 +69,16 @@ namespace Obligatorio.Services.Services
         {
             throw new NotImplementedException();
         }
+
+        public void UpdatePostsState(long post, int ciUser, bool isSender) 
+        {
+            List<long> publicaciones;
+            if (isSender)
+                publicaciones = (List<long>) GetPostsAsked(ciUser, post).Select(p => p.IdPublicacion);
+            else
+                publicaciones = (List<long>) GetPostsOffered(ciUser, post).Select(p => p.IdPublicacion);
+            publicaciones.ForEach(publicacion => _postsRepository.UpdatePostState(publicacion));
+
+        }
     }
 }

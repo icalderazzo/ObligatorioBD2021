@@ -104,7 +104,6 @@ namespace Obligatorio.Repositories.Repositories
                 var insertedOfferId = long.Parse(_context.Select(tran, getInsertedOffer, null)[0][0].ToString());
 
                 model.IdOferta = insertedOfferId;
-
                 if (model.TransaccionContraofertada != null)
                 {
                     // Reject previous offer
@@ -177,56 +176,54 @@ namespace Obligatorio.Repositories.Repositories
             throw new System.NotImplementedException();
         }
 
-        public void UpdateOfferState(Oferta model)
+        public void UpdateOfferState(long idOffer, EnumOfertas.EstadoOferta state)
         {
             try
             {
                 var tran = _context.BeginTransaction();
-                if (model.Estado == EnumOfertas.EstadoOferta.Completada)
+                if (state == EnumOfertas.EstadoOferta.Completada)
                 {
                     var queryCompletada = "UPDATE Oferta SET EstadoOferta=@EstadoOferta WHERE IdOferta=@IdOferta;";
                     _context.SaveData(
                         tran, queryCompletada,
                         new SqlParameter("@EstadoOferta", EnumOfertas.EstadoOferta.Completada),
-                        new SqlParameter("@IdOferta", model.IdOferta)
+                        new SqlParameter("@IdOferta", idOffer)
                     );
-
-                    // Updatea estado publicaciones ofrecidas
-                    foreach (var publicacion in model.PublicacionesOfrecidas)
-                    {
-                        var queryPubOfrecida = "UPDATE Publicacion SET Estado=0 WHERE IdPublicacion = @IdPublicacion;";
-                        _context.SaveData(
-                            tran, queryPubOfrecida,
-                            new SqlParameter("@IdPublicacion", publicacion.IdPublicacion)
-                        );
-                        publicacion.Estado = false;
-                    }
-                    // Updatea estado publicaciones deseadas
-                    foreach (var publicacion in model.PublicacionesDeseadas)
-                    {
-                        var queryPubDeseada = "UPDATE Publicacion SET Estado=0 WHERE IdPublicacion = @IdPublicacion;";
-                        _context.SaveData(
-                            tran, queryPubDeseada,
-                            new SqlParameter("@IdPublicacion", publicacion.IdPublicacion)
-                        );
-                        publicacion.Estado = false;
-                    }
                     _context.Commit(tran);
                 }
-                else if (model.Estado == EnumOfertas.EstadoOferta.Rechazada)
+                else if (state == EnumOfertas.EstadoOferta.Rechazada)
                 {
                     var queryCompletada = "UPDATE Oferta SET EstadoOferta=@EstadoOferta WHERE IdOferta=@IdOferta;";
                     _context.SaveData(
                         tran, queryCompletada,
                         new SqlParameter("@EstadoOferta", EnumOfertas.EstadoOferta.Rechazada),
-                        new SqlParameter("@IdOferta", model.IdOferta)
+                        new SqlParameter("@IdOferta", idOffer)
                     );
                     _context.Commit(tran);
-                }                
+                }
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
 
+        public int GetOfferCi(long idOffer, bool isSender)
+        {
+            try
+            {
+                var tran = _context.BeginTransaction();
+                string queryCompletada = "SELECT CiUsuario FROM UsuarioOferta WHERE IdOferta=@IdOferta AND IdRolOferta=@IdRolOferta;";
+                var dbResult = _context.Select(
+                    tran, queryCompletada,
+                    new SqlParameter("@IdOferta", idOffer),
+                    new SqlParameter("@IdRolOferta", isSender == true ? 1 : 2)
+                );
+                var filaUsuarioOferta = dbResult[0];
+                return int.Parse(filaUsuarioOferta[0].ToString());
+            }
+            catch (Exception)
+            {
                 throw;
             }
         }

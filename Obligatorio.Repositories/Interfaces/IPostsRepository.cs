@@ -11,6 +11,6 @@ namespace Obligatorio.Repositories.Interfaces
 
         ICollection<Publicacion> GetPostsOffered(int ciUser, long idOffer);
         ICollection<Publicacion> GetPostsAsked(int ciUser, long idOffer);
-        void UpdatePostState(long idPost);
+        void UpdatePostState(long idPost, bool active);
     }
 }

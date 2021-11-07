@@ -10,6 +10,5 @@ namespace Obligatorio.Repositories.Interfaces
 
         Oferta hasCounterOffer(long idOferr);
         void UpdateOfferState(long idOffer, EnumOfertas.EstadoOferta state);
-        int GetOfferCi(long idOffer, bool isSender);
     }
 }

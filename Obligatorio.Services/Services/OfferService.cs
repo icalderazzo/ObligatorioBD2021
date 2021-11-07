@@ -60,18 +60,22 @@ namespace Obligatorio.Services.Services{
             throw new System.NotImplementedException();
         }
 
-        public void AcceptOffer(long idOffer)
+        public void AcceptOffer(Oferta offer)
         {
-            _offerRepository.UpdateOfferState(idOffer, EnumOfertas.EstadoOferta.Completada);
-            int ciOfertante = _offerRepository.GetOfferCi(idOffer, true);
-            int ciOfertado = _offerRepository.GetOfferCi(idOffer, false);
-            _postService.UpdatePostsState(idOffer, ciOfertante, true);
-            _postService.UpdatePostsState(idOffer, ciOfertado, false);
+            _offerRepository.UpdateOfferState(offer.IdOferta, EnumOfertas.EstadoOferta.Completada);
+            
+            foreach(Publicacion pub in offer.PublicacionesDeseadas)
+                _postService.UpdatePostState(pub.IdPublicacion,false);
+
+            foreach (Publicacion pub in offer.PublicacionesOfrecidas)
+                _postService.UpdatePostState(pub.IdPublicacion, false);
+            
+            //Enviar mail a destinatario
         }
 
-        public void CancelOffer(long idOffer)
+        public void CancelOffer(Oferta offer)
         {
-            _offerRepository.UpdateOfferState(idOffer, EnumOfertas.EstadoOferta.Rechazada);
+            _offerRepository.UpdateOfferState(offer.IdOferta, EnumOfertas.EstadoOferta.Rechazada);
         }
 
     }

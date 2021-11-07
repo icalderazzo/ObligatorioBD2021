@@ -228,15 +228,15 @@ namespace Obligatorio.Repositories.Repositories
             }
         }
 
-        public void UpdatePostState(long idPost)
+        public void UpdatePostState(long idPost, bool active)
         {
-            var tran = _databaseContext.BeginTransaction();
-            var queryPubOfrecida = "UPDATE Publicacion SET Estado=0 WHERE IdPublicacion = @IdPublicacion;";
+            var queryPubOfrecida = "UPDATE Publicacion SET Estado=@State WHERE IdPublicacion = @IdPublicacion;";
             _databaseContext.SaveData(
-                tran, queryPubOfrecida,
-                new SqlParameter("@IdPublicacion", idPost)
+                queryPubOfrecida,
+                new SqlParameter("@IdPublicacion", idPost),
+                new SqlParameter("@State", active)
             );
-            _databaseContext.Commit(tran);
+
         }
 
         public Publicacion Update(Publicacion model)

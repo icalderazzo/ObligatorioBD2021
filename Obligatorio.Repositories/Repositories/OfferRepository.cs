@@ -180,27 +180,12 @@ namespace Obligatorio.Repositories.Repositories
         {
             try
             {
-                var tran = _context.BeginTransaction();
-                if (state == EnumOfertas.EstadoOferta.Completada)
-                {
-                    var queryCompletada = "UPDATE Oferta SET EstadoOferta=@EstadoOferta WHERE IdOferta=@IdOferta;";
-                    _context.SaveData(
-                        tran, queryCompletada,
-                        new SqlParameter("@EstadoOferta", EnumOfertas.EstadoOferta.Completada),
-                        new SqlParameter("@IdOferta", idOffer)
-                    );
-                    _context.Commit(tran);
-                }
-                else if (state == EnumOfertas.EstadoOferta.Rechazada)
-                {
-                    var queryCompletada = "UPDATE Oferta SET EstadoOferta=@EstadoOferta WHERE IdOferta=@IdOferta;";
-                    _context.SaveData(
-                        tran, queryCompletada,
-                        new SqlParameter("@EstadoOferta", EnumOfertas.EstadoOferta.Rechazada),
-                        new SqlParameter("@IdOferta", idOffer)
-                    );
-                    _context.Commit(tran);
-                }
+                var queryCompletada = "UPDATE Oferta SET EstadoOferta=@EstadoOferta WHERE IdOferta=@IdOferta;";
+                _context.SaveData(
+                    queryCompletada,
+                    new SqlParameter("@EstadoOferta", state),
+                    new SqlParameter("@IdOferta", idOffer)
+                );
             }
             catch (Exception)
             {
@@ -208,24 +193,5 @@ namespace Obligatorio.Repositories.Repositories
             }
         }
 
-        public int GetOfferCi(long idOffer, bool isSender)
-        {
-            try
-            {
-                var tran = _context.BeginTransaction();
-                string queryCompletada = "SELECT CiUsuario FROM UsuarioOferta WHERE IdOferta=@IdOferta AND IdRolOferta=@IdRolOferta;";
-                var dbResult = _context.Select(
-                    tran, queryCompletada,
-                    new SqlParameter("@IdOferta", idOffer),
-                    new SqlParameter("@IdRolOferta", isSender == true ? 1 : 2)
-                );
-                var filaUsuarioOferta = dbResult[0];
-                return int.Parse(filaUsuarioOferta[0].ToString());
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
     }
 }

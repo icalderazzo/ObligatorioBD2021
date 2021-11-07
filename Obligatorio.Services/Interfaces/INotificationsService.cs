@@ -4,6 +4,7 @@ namespace Obligatorio.Services.Interfaces
 {
     public interface INotificationsService<T>
     {
-        Task Notify(T notification);
+        void Notify(T notification);
+        Task NotifyAsync(T notification);
     }
 }

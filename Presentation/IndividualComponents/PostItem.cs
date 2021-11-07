@@ -36,7 +36,7 @@ namespace Presentation.IndividualComponents
         {
             if (ShowDetail_Click != null)
             {
-                this.ShowDetail_Click(this, new ShowPostDetailEventArgs(_publicacion));
+                this.ShowDetail_Click(this, new PostEventArgs(_publicacion));
             }
         }
     }

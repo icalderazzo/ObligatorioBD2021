@@ -13,7 +13,8 @@ namespace Presentation
         private readonly CreatePostForm _createPostForm;
 
         public MainForm(
-            HomeForm homeForm, CreatePostForm createPostForm
+            HomeForm homeForm, 
+            CreatePostForm createPostForm
             )
         {
             _createPostForm = createPostForm;
@@ -97,19 +98,22 @@ namespace Presentation
         }
         #endregion
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("¿Está seguro que desea salir de la aplicación?", "Salir", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 Global.LoggedUser = null;
-                Application.Exit();
+            }
+            else
+            {
+                e.Cancel = true;
             }
         }
 
-        private void mainContentPanel_Paint(object sender, PaintEventArgs e)
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-
+            Application.Exit();
         }
     }
 }

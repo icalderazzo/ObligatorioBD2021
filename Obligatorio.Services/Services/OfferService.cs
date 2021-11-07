@@ -1,8 +1,9 @@
 using Obligatorio.Domain.Model;
+using Obligatorio.Domain;
 using Obligatorio.Services.Interfaces;
 using System.Collections.Generic;
 using Obligatorio.Repositories.Interfaces;
-using Obligatorio.Domain;
+using System.Linq;
 
 namespace Obligatorio.Services.Services{
     public class OfferService : IOfferService
@@ -58,6 +59,25 @@ namespace Obligatorio.Services.Services{
         {
             throw new System.NotImplementedException();
         }
+
+        public void AcceptOffer(Oferta offer)
+        {
+            _offerRepository.UpdateOfferState(offer.IdOferta, EnumOfertas.EstadoOferta.Completada);
+            
+            foreach(Publicacion pub in offer.PublicacionesDeseadas)
+                _postService.UpdatePostState(pub.IdPublicacion,false);
+
+            foreach (Publicacion pub in offer.PublicacionesOfrecidas)
+                _postService.UpdatePostState(pub.IdPublicacion, false);
+            
+            //Enviar mail a destinatario
+        }
+
+        public void CancelOffer(Oferta offer)
+        {
+            _offerRepository.UpdateOfferState(offer.IdOferta, EnumOfertas.EstadoOferta.Rechazada);
+        }
+
     }
 
 }

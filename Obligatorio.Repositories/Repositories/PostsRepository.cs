@@ -228,6 +228,17 @@ namespace Obligatorio.Repositories.Repositories
             }
         }
 
+        public void UpdatePostState(long idPost, bool active)
+        {
+            var queryPubOfrecida = "UPDATE Publicacion SET Estado=@State WHERE IdPublicacion = @IdPublicacion;";
+            _databaseContext.SaveData(
+                queryPubOfrecida,
+                new SqlParameter("@IdPublicacion", idPost),
+                new SqlParameter("@State", active)
+            );
+
+        }
+
         public Publicacion Update(Publicacion model)
         {
             throw new NotImplementedException();

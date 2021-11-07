@@ -104,7 +104,6 @@ namespace Obligatorio.Repositories.Repositories
                 var insertedOfferId = long.Parse(_context.Select(tran, getInsertedOffer, null)[0][0].ToString());
 
                 model.IdOferta = insertedOfferId;
-
                 if (model.TransaccionContraofertada != null)
                 {
                     // Reject previous offer
@@ -176,5 +175,23 @@ namespace Obligatorio.Repositories.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+        public void UpdateOfferState(long idOffer, EnumOfertas.EstadoOferta state)
+        {
+            try
+            {
+                var queryCompletada = "UPDATE Oferta SET EstadoOferta=@EstadoOferta WHERE IdOferta=@IdOferta;";
+                _context.SaveData(
+                    queryCompletada,
+                    new SqlParameter("@EstadoOferta", state),
+                    new SqlParameter("@IdOferta", idOffer)
+                );
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

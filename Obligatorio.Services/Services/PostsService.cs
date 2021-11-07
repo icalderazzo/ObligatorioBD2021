@@ -69,5 +69,10 @@ namespace Obligatorio.Services.Services
         {
             throw new NotImplementedException();
         }
+
+        public void UpdatePostState(long postId, bool active) 
+        {
+            _postsRepository.UpdatePostState(postId, active);
+        }
     }
 }

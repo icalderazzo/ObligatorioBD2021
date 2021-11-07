@@ -111,12 +111,8 @@ namespace Obligatorio.Repositories.Repositories
                 if (model.TransaccionContraofertada != null)
                 {
                     // Reject previous offer
-                    var queryUpdateState = "UPDATE Oferta SET EstadoOferta = @estadoInactivo WHERE IdOferta = @IdOfertaAnterior";
-                    _context.SaveData(
-                        tran, queryUpdateState,
-                        new SqlParameter("@estadoInactivo", EnumOfertas.EstadoOferta.Rechazada),
-                        new SqlParameter("@IdOfertaAnterior", model.TransaccionContraofertada.IdOferta)
-                    );
+                    UpdateOfferState(model.TransaccionContraofertada.IdOferta, EnumOfertas.EstadoOferta.Rechazada);
+
                     // Register counter offer
                     var queryInsertCounterOffer = "Insert into ContraOferta (IdOfertaAnterior, IdOfertaNueva) values (@IdOfertaAnterior, @IdOfertaNueva)";
                     _context.SaveData(

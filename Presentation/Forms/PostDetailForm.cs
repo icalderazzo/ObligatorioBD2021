@@ -45,15 +45,19 @@ namespace Presentation.Forms
 
         private void btnMakeOffer_Click(object sender, EventArgs e)
         {
-            //CreateOffer
-            _makeOfferForm.ReceiversCi = _activePost.Propietario.Cedula;
-            _makeOfferForm.IncludedPostOfferPosts = new List<Publicacion>() { this._activePost };
-            _makeOfferForm.Show();
-        }
-
-        private void btnShowUserProfile_Click(object sender, EventArgs e)
-        {
-            //Show form with owner's other post
+            DialogResult dialogResult = MessageBox.Show("¿Desea solo ofertar por la publicación seleccionada?", "", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.No)
+            {
+                MessageBox.Show("A continuación se mostrarán las demás publicaciones del usuario");
+                //CreateOffer
+                _makeOfferForm.ReceiversCi = _activePost.Propietario.Cedula;
+                _makeOfferForm.IncludedPostOfferPosts = new List<Publicacion>() { this._activePost };
+                _makeOfferForm.Show();
+            }
+            else
+            {
+                // List my posts
+            }
         }
 
         private void PostDetailForm_FormClosing(object sender, FormClosingEventArgs e)

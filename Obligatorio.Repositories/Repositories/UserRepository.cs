@@ -21,6 +21,20 @@ namespace Obligatorio.Repositories.Repositories
             throw new NotImplementedException();
         }
 
+        private Usuario ExtractUser(List<object[]> dbResult)
+        {
+            var filaUsuario = dbResult[0];
+            Usuario user = new Usuario()
+            {
+                Cedula = int.Parse(filaUsuario[0].ToString()),
+                Nombre = filaUsuario[1].ToString(),
+                Apellido = filaUsuario[2].ToString(),
+                Correo = filaUsuario[3].ToString(),
+                NombreUsuario = filaUsuario[4].ToString()
+            };
+            return user;
+        }
+
         public bool ExistsUserWithUsername(string username)
         {
             string query = "SELECT u.Ci FROM Usuario u WHERE u.NombreUsuario = @username;";
@@ -53,16 +67,7 @@ namespace Obligatorio.Repositories.Repositories
 
             if (dbResult.Any())
             {
-                var filaUsuario = dbResult[0];
-                Usuario loggedUser = new Usuario()
-                {
-                    Cedula = int.Parse(filaUsuario[0].ToString()),
-                    Nombre = filaUsuario[1].ToString(),
-                    Apellido = filaUsuario[2].ToString(),
-                    Correo = filaUsuario[3].ToString(),
-                    NombreUsuario = filaUsuario[4].ToString()
-                };
-                return loggedUser;
+                return ExtractUser(dbResult);
             }
             return null;
         }
@@ -106,6 +111,28 @@ namespace Obligatorio.Repositories.Repositories
         public ICollection<Usuario> List()
         {
             throw new NotImplementedException();
+        }
+
+        public Usuario GetUserByRole(long idOffer, int idRole)
+        {
+            try
+            {
+                string query = "select u.Ci, u.Nombre, u.Apellido, u.Correo, u.NombreUsuario from UsuarioOferta " +
+                               "inner join RolOferta on UsuarioOferta.IdRolOferta = RolOferta.IdRolOferta " +
+                               "inner join Usuario u on UsuarioOferta.CiUsuario = u.Ci " +
+                               "where UsuarioOferta.IdOferta = @idOffer and UsuarioOferta.IdRolOferta = @idRole";
+                var dbResult = _context.Select(query,
+                    new SqlParameter("@idOffer", idOffer),
+                    new SqlParameter("@idRole", idRole)
+                );
+
+                return ExtractUser(dbResult);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

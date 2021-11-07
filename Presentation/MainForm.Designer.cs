@@ -248,7 +248,6 @@ namespace Presentation
             this.mainContentPanel.Name = "mainContentPanel";
             this.mainContentPanel.Size = new System.Drawing.Size(1667, 933);
             this.mainContentPanel.TabIndex = 3;
-            this.mainContentPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainContentPanel_Paint);
             // 
             // MainForm
             // 
@@ -264,6 +263,7 @@ namespace Presentation
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UCUTrade";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.sideBarPanel.ResumeLayout(false);

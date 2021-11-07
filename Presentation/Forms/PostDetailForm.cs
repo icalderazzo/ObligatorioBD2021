@@ -10,6 +10,7 @@ namespace Presentation.Forms
     {
         private Publicacion _activePost;
         private readonly MakeOfferForm _makeOfferForm;
+        private readonly MakeOfferForSinglePostForm _makeOfferForSinglePostForm;
         private readonly IImageConverter _imageConverter;
         
         public Publicacion ActivePost 
@@ -24,9 +25,11 @@ namespace Presentation.Forms
 
         public PostDetailForm(
             MakeOfferForm makeOfferForm,
+            MakeOfferForSinglePostForm makeOfferForSinglePostForm,
             IImageConverter imageConverter)
         {
             _makeOfferForm = makeOfferForm;
+            _makeOfferForSinglePostForm = makeOfferForSinglePostForm;
             _imageConverter = imageConverter;
             InitializeComponent();
         }
@@ -49,14 +52,16 @@ namespace Presentation.Forms
             if (dialogResult == DialogResult.No)
             {
                 MessageBox.Show("A continuación se mostrarán las demás publicaciones del usuario");
-                //CreateOffer
                 _makeOfferForm.ReceiversCi = _activePost.Propietario.Cedula;
                 _makeOfferForm.IncludedPostOfferPosts = new List<Publicacion>() { this._activePost };
                 _makeOfferForm.Show();
+                Hide();
             }
             else
             {
-                // List my posts
+                _makeOfferForSinglePostForm.DesiredPost = _activePost;
+                _makeOfferForSinglePostForm.Show();
+                Hide();
             }
         }
 

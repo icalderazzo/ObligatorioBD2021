@@ -1,5 +1,5 @@
-﻿using System;
-using Obligatorio.Domain.Model; 
+﻿using Obligatorio.Domain.Model;
+using System;
 
 namespace Presentation.CustomEvents
 {

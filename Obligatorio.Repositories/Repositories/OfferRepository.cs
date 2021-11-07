@@ -1,10 +1,10 @@
-﻿using Obligatorio.Domain.Model;
-using Obligatorio.Repositories.Interfaces;
-using System.Collections.Generic;
-using DatabaseInterface;
-using System.Data.SqlClient;
+﻿using DatabaseInterface;
 using Obligatorio.Domain;
+using Obligatorio.Domain.Model;
+using Obligatorio.Repositories.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace Obligatorio.Repositories.Repositories
@@ -27,7 +27,7 @@ namespace Obligatorio.Repositories.Repositories
             throw new System.NotImplementedException();
         }
 
-        public List<Oferta> getOffersByParams(int ciUser, int userRoleInOffers, int offerStatus)
+        public List<Oferta> GetOffersByParams(int ciUser, int userRoleInOffers, int offerStatus)
         {
             try
             {
@@ -42,12 +42,12 @@ namespace Obligatorio.Repositories.Repositories
                     new SqlParameter("@offerStatus", offerStatus)
                 );
 
-                List<Oferta> offers = new List<Oferta>(); 
+                List<Oferta> offers = new List<Oferta>();
 
                 for (int i = 0; i < offersLines.Count; i++)
                 {
                     var offersLine = offersLines[i];
-                    
+
                     Oferta offer = new Oferta()
                     {
                         IdOferta = long.Parse(offersLine[0].ToString()),
@@ -66,7 +66,7 @@ namespace Obligatorio.Repositories.Repositories
 
         }
 
-        public Oferta hasCounterOffer(long idOferr)
+        public Oferta GetCounterOffer(long idOferr)
         {
             try
             {
@@ -163,7 +163,7 @@ namespace Obligatorio.Repositories.Repositories
 
                 throw;
             }
-            
+
         }
 
         public ICollection<Oferta> List()

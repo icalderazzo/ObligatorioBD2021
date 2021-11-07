@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Obligatorio.Domain.Model;
+using Obligatorio.Services.Interfaces;
+using Presentation.CustomEvents;
+using Presentation.IndividualComponents;
+using Presentation.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Obligatorio.Domain.Model;
-using Obligatorio.Services.Interfaces;
-using Presentation.Utils;
-using Presentation.IndividualComponents;
-using Presentation.CustomEvents;
 
 namespace Presentation.Forms
 {
@@ -41,7 +41,7 @@ namespace Presentation.Forms
             try
             {
                 var activeUserPosts = await Task.Run(() => _postsService.ListPostsOfUser(Global.LoggedUser.Cedula));
-                
+
                 if (activeUserPosts.Count == 0)
                 {
                     MessageBox.Show("Aún no tienes articulos publicados, no puedes realizar ofertas", "Advertencia");
@@ -64,8 +64,8 @@ namespace Presentation.Forms
             foreach (var post in posts)
             {
                 var selectPostItem = new SelectPostItem(
-                    post, 
-                    includeInOffer : false, 
+                    post,
+                    includeInOffer: false,
                     image: _imageConverter.ConvertFromByteArray(post.Imagen)
                 );
 

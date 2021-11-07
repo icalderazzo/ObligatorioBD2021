@@ -1,15 +1,15 @@
 ﻿using Obligatorio.Domain.Model;
+using Obligatorio.Repositories.Interfaces;
 using Obligatorio.Services.Interfaces;
 using System;
 using System.Collections.Generic;
-using Obligatorio.Repositories.Interfaces;
 using System.Linq;
 
 namespace Obligatorio.Services.Services
 {
     public class PostsService : IPostsService
     {
-        private readonly  IPostsRepository _postsRepository;
+        private readonly IPostsRepository _postsRepository;
 
         public PostsService(IPostsRepository postsRepository)
         {
@@ -70,7 +70,7 @@ namespace Obligatorio.Services.Services
             throw new NotImplementedException();
         }
 
-        public void UpdatePostState(long postId, bool active) 
+        public void UpdatePostState(long postId, bool active)
         {
             _postsRepository.UpdatePostState(postId, active);
         }

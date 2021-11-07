@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Obligatorio.Domain.Model;
+using Presentation.Utils;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Obligatorio.Domain.Model;
-using Presentation.Utils;
 
 namespace Presentation.Forms
 {
@@ -12,10 +12,10 @@ namespace Presentation.Forms
         private readonly MakeOfferForm _makeOfferForm;
         private readonly MakeOfferForSinglePostForm _makeOfferForSinglePostForm;
         private readonly IImageConverter _imageConverter;
-        
-        public Publicacion ActivePost 
+
+        public Publicacion ActivePost
         {
-            get { return _activePost; } 
+            get { return _activePost; }
             set
             {
                 _activePost = value;

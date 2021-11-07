@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Obligatorio.Domain.Model;
+using Presentation.CustomEvents;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Obligatorio.Domain.Model;
-using Presentation.CustomEvents;
 
 namespace Presentation.IndividualComponents
 {

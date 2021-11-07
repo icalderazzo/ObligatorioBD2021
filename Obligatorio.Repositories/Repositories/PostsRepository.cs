@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DatabaseInterface;
 using Obligatorio.Domain.Model;
 using Obligatorio.Repositories.Interfaces;
-using DatabaseInterface;
+using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace Obligatorio.Repositories.Repositories
 {
@@ -145,14 +144,14 @@ namespace Obligatorio.Repositories.Repositories
                 string query = "INSERT INTO " +
                                "Publicacion (CiUsuario, NombreProducto, DescripcionProducto, ValorProducto) " +
                                "VALUES (@CiUsuario, @NombreProducto, @DescripcionProducto, @ValorProducto) ";
-                
+
                 _databaseContext.SaveData(tran, query,
                     new SqlParameter("@CiUsuario", model.Propietario.Cedula),
                     new SqlParameter("@NombreProducto", model.Articulo.Nombre),
                     new SqlParameter("@DescripcionProducto", model.Articulo.Descripcion),
                     new SqlParameter("@ValorProducto", model.Articulo.Valor)
                 );
-                
+
                 // Busqueda ID
                 string queryId = "SELECT TOP 1 IdPublicacion, CiUsuario FROM Publicacion  " +
                                  "WHERE CiUsuario = @CiUsuario ORDER BY IdPublicacion desc;";
@@ -196,7 +195,7 @@ namespace Obligatorio.Repositories.Repositories
             {
                 string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 " +
                                "FROM Publicacion p " +
-                               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " + 
+                               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
                                "WHERE p.CiUsuario <> @Ci AND p.Estado = 1;";
 
                 var dbResult = _databaseContext.Select(query, new SqlParameter("@Ci", ciActiveUser));

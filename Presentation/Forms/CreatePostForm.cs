@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Forms;
-using Obligatorio.Domain.Model;
+﻿using Obligatorio.Domain.Model;
 using Obligatorio.Services.Interfaces;
+using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Presentation.Forms
 {
@@ -13,7 +13,7 @@ namespace Presentation.Forms
         private readonly ImageConverter _imageConverter;
 
         public CreatePostForm(
-            IPostsService postService, 
+            IPostsService postService,
             ImageConverter imageConverter)
         {
             _postService = postService;
@@ -51,12 +51,12 @@ namespace Presentation.Forms
                     Imagen = _loadedImage
                 };
 
-                if (String.IsNullOrEmpty(newPost.Articulo.Descripcion)) 
+                if (String.IsNullOrEmpty(newPost.Articulo.Descripcion))
                 {
                     MessageBox.Show("Descripcion no puede estar vacía");
                     return;
                 }
-                
+
                 _postService.Create(newPost);
                 _loadedImage = null;
                 MessageBox.Show("Se ha publicado el post correctamente");
@@ -69,7 +69,7 @@ namespace Presentation.Forms
             {
                 MessageBox.Show("Error desconocido");
             }
-         }
+        }
 
         private void btnAddImage_Click(object sender, EventArgs e)
         {

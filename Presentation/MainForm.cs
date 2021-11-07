@@ -13,7 +13,7 @@ namespace Presentation
         private readonly CreatePostForm _createPostForm;
 
         public MainForm(
-            HomeForm homeForm, 
+            HomeForm homeForm,
             CreatePostForm createPostForm
             )
         {

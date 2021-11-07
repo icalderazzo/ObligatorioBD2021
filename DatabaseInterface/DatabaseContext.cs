@@ -166,7 +166,7 @@ namespace DatabaseInterface
                 }
             }
         }
-        public (SqlConnection,SqlTransaction) BeginTransaction()
+        public (SqlConnection, SqlTransaction) BeginTransaction()
         {
             try
             {

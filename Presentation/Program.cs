@@ -52,7 +52,7 @@ namespace Presentation
                 .AddTransient<IPostsRepository, PostsRepository>()
                 .AddTransient<IOfferRepository, OfferRepository>()
                 ;
-            
+
             //Services
             services
                 .AddTransient<EmailService.Service.IEmailService, EmailService.Service.EmailService>()
@@ -63,7 +63,7 @@ namespace Presentation
                 .AddTransient<IOfferService, OfferService>()
                 .AddTransient<Utils.IImageConverter, Utils.ImageConverter>()
                 ;
-            
+
             //Forms
             services
                 .AddScoped<LoginForm>()

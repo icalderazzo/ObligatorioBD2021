@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Obligatorio.Domain.Model;
+﻿using Obligatorio.Domain.Model;
 using Obligatorio.Services.Interfaces;
 using Presentation.CustomEvents;
 using Presentation.IndividualComponents;
-using System.Linq;
 using Presentation.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Presentation.Forms
 {
@@ -23,9 +23,9 @@ namespace Presentation.Forms
         public List<Publicacion> IncludedPostOfferPosts
         {
             get { return _includedOfferPosts; }
-            set 
-            { 
-                _includedOfferPosts = value; 
+            set
+            {
+                _includedOfferPosts = value;
             }
         }
 
@@ -69,7 +69,7 @@ namespace Presentation.Forms
             panel.Controls.Clear();
             foreach (var post in posts)
             {
-                var postItem = new SelectPostItem(post, _imageConverter.ConvertFromByteArray(post.Imagen), includeInOffer : IsIncluded(post.IdPublicacion));
+                var postItem = new SelectPostItem(post, _imageConverter.ConvertFromByteArray(post.Imagen), includeInOffer: IsIncluded(post.IdPublicacion));
                 postItem.Check_IncludeInOffer += OnPostChecked;
                 postItem.Check_ExcludeInOffer += OnPostUnchecked;
                 panel.Controls.Add(postItem);
@@ -90,7 +90,7 @@ namespace Presentation.Forms
         private void OnPostUnchecked(object sender, EventArgs e)
         {
             var excludedPost = ((PostEventArgs)e).Post;
-            _includedOfferPosts.Remove(_includedOfferPosts.FirstOrDefault(p => 
+            _includedOfferPosts.Remove(_includedOfferPosts.FirstOrDefault(p =>
                 p.IdPublicacion == excludedPost.IdPublicacion)
             );
         }

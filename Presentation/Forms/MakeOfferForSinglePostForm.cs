@@ -137,6 +137,15 @@ namespace Presentation.Forms
             );
         }
 
-
+        private void MakeOfferForSinglePostForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                flowPanelDesiredPost.Controls.Clear();
+                flowPanelActiveUserPosts.Controls.Clear();
+                Hide();
+            }
+        }
     }
 }

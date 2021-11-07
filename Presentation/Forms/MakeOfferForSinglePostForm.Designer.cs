@@ -121,6 +121,7 @@
             this.MaximizeBox = false;
             this.Name = "MakeOfferForSinglePostForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MakeOfferForSinglePostForm_FormClosing);
             this.Load += new System.EventHandler(this.MakeOfferForSinglePostForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

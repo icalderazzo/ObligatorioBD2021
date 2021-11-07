@@ -24,7 +24,19 @@ namespace Obligatorio.Repositories.Repositories
 
         public Oferta GetById(string id)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                string query = "SELECT IdOferta, FechaRealizacion FROM Oferta WHERE IdOferta = @IdOffer;";
+                var result = _context.Select(
+                    query, 
+                        new SqlParameter("@IdOffer", long.Parse(id))
+                    );
+                return ExtractOffer(result[0]);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public List<Oferta> GetOffersByParams(int ciUser, int userRoleInOffers, int offerStatus)
@@ -46,15 +58,7 @@ namespace Obligatorio.Repositories.Repositories
 
                 for (int i = 0; i < offersLines.Count; i++)
                 {
-                    var offersLine = offersLines[i];
-
-                    Oferta offer = new Oferta()
-                    {
-                        IdOferta = long.Parse(offersLine[0].ToString()),
-                        Fecha = DateTime.Parse(offersLine[1].ToString()),
-                    };
-
-                    offers.Add(offer);
+                    offers.Add(ExtractOffer(offersLines[i]));
                 }
 
                 return offers;
@@ -191,6 +195,16 @@ namespace Obligatorio.Repositories.Repositories
             {
                 throw;
             }
+        }
+
+        private Oferta ExtractOffer (object[] oferta)
+        {
+            Oferta offer = new Oferta()
+            {
+                IdOferta = long.Parse(oferta[0].ToString()),
+                Fecha = DateTime.Parse(oferta[1].ToString()),
+            };
+            return offer;
         }
 
     }

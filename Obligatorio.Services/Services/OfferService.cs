@@ -3,6 +3,7 @@ using Obligatorio.Domain.Model;
 using Obligatorio.Repositories.Interfaces;
 using Obligatorio.Services.Interfaces;
 using System.Collections.Generic;
+using System;
 
 namespace Obligatorio.Services.Services
 {
@@ -30,9 +31,29 @@ namespace Obligatorio.Services.Services
 
         public Oferta GetById(string entityId)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var offer = _offerRepository.GetById(entityId);
+                offer.UsuarioEmisor = _userService.GetUserByRole(offer.IdOferta, (int)EnumRoles.RolOferta.Emisor);
+                offer.UsuarioDestinatario = _userService.GetUserByRole(offer.IdOferta, (int)EnumRoles.RolOferta.Destinatatio);
+                offer.PublicacionesDeseadas = _postService.GetPostsAsked(offer.UsuarioDestinatario.Cedula, offer.IdOferta);
+                offer.PublicacionesOfrecidas = _postService.GetPostsOffered(offer.UsuarioDestinatario.Cedula, offer.IdOferta);
+                offer.TransaccionContraofertada = _offerRepository.GetCounterOffer(offer.IdOferta);
+
+                return offer;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user">Usuario destinatario</param>
+        /// <returns></returns>
         public List<Oferta> GetOffersRecieved(Usuario user)
         {
             // Obtain offers that the user recieved and are pending

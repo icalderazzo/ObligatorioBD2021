@@ -3,16 +3,16 @@ using Obligatorio.Domain.Model;
 
 namespace Presentation.CustomEvents
 {
-    public class ShowPostDetailEventArgs : EventArgs
+    public class PostEventArgs : EventArgs
     {
         public Publicacion Post { get; set; }
 
-        public ShowPostDetailEventArgs()
+        public PostEventArgs()
         {
 
         }
 
-        public ShowPostDetailEventArgs(Publicacion post)
+        public PostEventArgs(Publicacion post)
         {
             Post = post;
         }

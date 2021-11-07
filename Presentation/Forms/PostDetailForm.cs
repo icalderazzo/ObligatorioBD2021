@@ -1,14 +1,17 @@
 ﻿using System;
-using System.Drawing;
-using System.IO;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Obligatorio.Domain.Model;
+using Presentation.Utils;
 
 namespace Presentation.Forms
 {
     public partial class PostDetailForm : Form
     {
         private Publicacion _activePost;
+        private readonly MakeOfferForm _makeOfferForm;
+        private readonly MakeOfferForSinglePostForm _makeOfferForSinglePostForm;
+        private readonly IImageConverter _imageConverter;
         
         public Publicacion ActivePost 
         {
@@ -20,15 +23,20 @@ namespace Presentation.Forms
             }
         }
 
-        public PostDetailForm()
+        public PostDetailForm(
+            MakeOfferForm makeOfferForm,
+            MakeOfferForSinglePostForm makeOfferForSinglePostForm,
+            IImageConverter imageConverter)
         {
+            _makeOfferForm = makeOfferForm;
+            _makeOfferForSinglePostForm = makeOfferForSinglePostForm;
+            _imageConverter = imageConverter;
             InitializeComponent();
         }
 
         private void LoadPost()
         {
-            var imgbytes = _activePost.Imagen.Length == 0 ? null : _activePost.Imagen;
-            var img = imgbytes != null ? Image.FromStream(new MemoryStream(_activePost.Imagen)) : null;
+            var img = _imageConverter.ConvertFromByteArray(_activePost.Imagen);
 
             if (img != null)
                 pictureBox1.Image = img;
@@ -40,12 +48,21 @@ namespace Presentation.Forms
 
         private void btnMakeOffer_Click(object sender, EventArgs e)
         {
-            //CreateOffer
-        }
-
-        private void btnShowUserProfile_Click(object sender, EventArgs e)
-        {
-            //Show form with owner's other post
+            DialogResult dialogResult = MessageBox.Show("¿Desea solo ofertar por la publicación seleccionada?", "", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.No)
+            {
+                MessageBox.Show("A continuación se mostrarán las demás publicaciones del usuario");
+                _makeOfferForm.ReceiversCi = _activePost.Propietario.Cedula;
+                _makeOfferForm.IncludedPostOfferPosts = new List<Publicacion>() { this._activePost };
+                _makeOfferForm.Show();
+                Hide();
+            }
+            else
+            {
+                _makeOfferForSinglePostForm.DesiredPost = _activePost;
+                _makeOfferForSinglePostForm.Show();
+                Hide();
+            }
         }
 
         private void PostDetailForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -56,6 +73,11 @@ namespace Presentation.Forms
                 pictureBox1.Image = null;
                 Hide();
             }
+        }
+
+        private void PostDetailForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -7,8 +7,7 @@ using Presentation.IndividualComponents;
 using System;
 using System.Linq;
 using Presentation.CustomEvents;
-using System.Drawing;
-using System.IO;
+using Presentation.Utils;
 
 namespace Presentation.Forms
 {
@@ -16,13 +15,16 @@ namespace Presentation.Forms
     {
         private readonly IPostsService _postsService;
         private readonly PostDetailForm _postDetailForm;
+        private readonly IImageConverter _imageConverter;
 
         public HomeForm(
             IPostsService postsService,
-            PostDetailForm postDetailForm)
+            PostDetailForm postDetailForm,
+            IImageConverter imageConverter)
         {
             _postsService = postsService;
             _postDetailForm = postDetailForm;
+            _imageConverter = imageConverter;
             InitializeComponent();
         }
 
@@ -35,9 +37,7 @@ namespace Presentation.Forms
         {
             foreach (var post in posts)
             {
-                var imgbytes = post.Imagen.Length == 0 ? null : post.Imagen; 
-                var img = imgbytes != null ? Image.FromStream(new MemoryStream(post.Imagen)) : null;
-                var postItem = new PostItem(post, img);
+                var postItem = new PostItem(post, _imageConverter.ConvertFromByteArray(post.Imagen));
                 postItem.ShowDetail_Click += new EventHandler(PostItem_ShowDetailClick);
                 flowPostPanel.Controls.Add(postItem);
             }
@@ -57,7 +57,7 @@ namespace Presentation.Forms
 
         protected void PostItem_ShowDetailClick(object sender, EventArgs e)
         {
-            _postDetailForm.ActivePost = ((ShowPostDetailEventArgs)e).Post;
+            _postDetailForm.ActivePost = ((PostEventArgs)e).Post;
             _postDetailForm.Show();
         }
 

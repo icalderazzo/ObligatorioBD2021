@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31005.135
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31815.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{54AB7170-B5E8-4AFF-B633-314280AD44AC}"
 EndProject
@@ -16,6 +16,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Obligatorio.Domain", "Obligatorio.Domain\Obligatorio.Domain.csproj", "{2890B096-C579-415A-8730-3F096588EC12}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentation\Presentation.csproj", "{507CE27F-A59E-4C57-A239-43211A2BEB0F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BB202BCC-0B4C-4832-B595-2DDA3B36E98D} = {BB202BCC-0B4C-4832-B595-2DDA3B36E98D}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService", "EmailService\EmailService.csproj", "{109D5F60-96EB-4115-B803-F6190EC43E55}"
 EndProject

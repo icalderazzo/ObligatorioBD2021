@@ -26,8 +26,6 @@ namespace Obligatorio.Repositories.Repositories
             throw new System.NotImplementedException();
         }
 
-
-
         public Oferta Insert(Oferta model)
         {
             try
@@ -115,6 +113,60 @@ namespace Obligatorio.Repositories.Repositories
         public Oferta Update(Oferta model)
         {
             throw new System.NotImplementedException();
+        }
+
+        public void UpdateOfferState(Oferta model)
+        {
+            try
+            {
+                var tran = _context.BeginTransaction();
+                if (model.Estado == EnumOfertas.EstadoOferta.Completada)
+                {
+                    var queryCompletada = "UPDATE Oferta SET EstadoOferta=@EstadoOferta WHERE IdOferta=@IdOferta;";
+                    _context.SaveData(
+                        tran, queryCompletada,
+                        new SqlParameter("@EstadoOferta", EnumOfertas.EstadoOferta.Completada),
+                        new SqlParameter("@IdOferta", model.IdOferta)
+                    );
+
+                    // Updatea estado publicaciones ofrecidas
+                    foreach (var publicacion in model.PublicacionesOfrecidas)
+                    {
+                        var queryPubOfrecida = "UPDATE Publicacion SET Estado=0 WHERE IdPublicacion = @IdPublicacion;";
+                        _context.SaveData(
+                            tran, queryPubOfrecida,
+                            new SqlParameter("@IdPublicacion", publicacion.IdPublicacion)
+                        );
+                        publicacion.Estado = false;
+                    }
+                    // Updatea estado publicaciones deseadas
+                    foreach (var publicacion in model.PublicacionesDeseadas)
+                    {
+                        var queryPubDeseada = "UPDATE Publicacion SET Estado=0 WHERE IdPublicacion = @IdPublicacion;";
+                        _context.SaveData(
+                            tran, queryPubDeseada,
+                            new SqlParameter("@IdPublicacion", publicacion.IdPublicacion)
+                        );
+                        publicacion.Estado = false;
+                    }
+                    _context.Commit(tran);
+                }
+                else if (model.Estado == EnumOfertas.EstadoOferta.Rechazada)
+                {
+                    var queryCompletada = "UPDATE Oferta SET EstadoOferta=@EstadoOferta WHERE IdOferta=@IdOferta;";
+                    _context.SaveData(
+                        tran, queryCompletada,
+                        new SqlParameter("@EstadoOferta", EnumOfertas.EstadoOferta.Rechazada),
+                        new SqlParameter("@IdOferta", model.IdOferta)
+                    );
+                    _context.Commit(tran);
+                }                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

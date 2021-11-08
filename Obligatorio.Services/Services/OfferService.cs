@@ -14,17 +14,14 @@ namespace Obligatorio.Services.Services
     {
         private readonly IOfferRepository _offerRepository;
         private readonly IPostsService _postService;
-        private readonly IUserService _userService;
         private readonly INotificationsService<Email> _emailNotificationsService;
         public OfferService(
             IOfferRepository offerRepository, 
             IPostsService postsService, 
-            IUserService userService,
             INotificationsService<Email> emailNotificationsService)
         {
             _postService = postsService;
             _offerRepository = offerRepository;
-            _userService = userService;
             _emailNotificationsService = emailNotificationsService;
         }
         public void Create(Oferta entity)
@@ -42,10 +39,10 @@ namespace Obligatorio.Services.Services
             try
             {
                 var offer = _offerRepository.GetById(entityId);
-                offer.UsuarioEmisor = _userService.GetUserByRole(offer.IdOferta, (int)EnumRoles.RolOferta.Emisor);
-                offer.UsuarioDestinatario = _userService.GetUserByRole(offer.IdOferta, (int)EnumRoles.RolOferta.Destinatatio);
-                offer.PublicacionesDeseadas = _postService.GetPostsAsked(offer.UsuarioDestinatario.Cedula, offer.IdOferta);
-                offer.PublicacionesOfrecidas = _postService.GetPostsOffered(offer.UsuarioDestinatario.Cedula, offer.IdOferta);
+                offer.UsuarioEmisor = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Emisor, offer.IdOferta);
+                offer.UsuarioDestinatario = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Destinatario, offer.IdOferta);
+                offer.PublicacionesDestinatario = _postService.GetPostsAsked(offer.UsuarioDestinatario.Cedula, offer.IdOferta);
+                offer.PublicacionesEmisor = _postService.GetPostsOffered(offer.UsuarioDestinatario.Cedula, offer.IdOferta);
                 offer.TransaccionContraofertada = _offerRepository.GetCounterOffer(offer.IdOferta);
 
                 return offer;
@@ -57,26 +54,21 @@ namespace Obligatorio.Services.Services
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="user">Usuario destinatario</param>
-        /// <returns></returns>
-        public List<Oferta> GetOffersRecieved(Usuario user)
+        public List<Oferta> FilterOffers(OfferFilter filter)
         {
             // Obtain offers that the user recieved and are pending
-            var offersRecieved = _offerRepository.GetOffersByParams(user.Cedula, (int)EnumRoles.RolOferta.Destinatatio, (int)EnumOfertas.EstadoOferta.Pendiente);
+            var offersRecieved = _offerRepository.FilterOffers(filter);
 
             foreach (var offer in offersRecieved)
             {
-                offer.UsuarioEmisor = _userService.GetUserByRole(offer.IdOferta, (int)EnumRoles.RolOferta.Emisor);
-                offer.PublicacionesDeseadas = _postService.GetPostsAsked(user.Cedula, offer.IdOferta);
-                offer.PublicacionesOfrecidas = _postService.GetPostsOffered(user.Cedula, offer.IdOferta);
+;               offer.UsuarioEmisor = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Emisor, offer.IdOferta);
+                offer.UsuarioDestinatario = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Destinatario, offer.IdOferta);
+                offer.PublicacionesEmisor = _postService.GetPostsOffered(offer.UsuarioEmisor.Cedula, offer.IdOferta);
+                offer.PublicacionesDestinatario = _postService.GetPostsAsked(offer.UsuarioDestinatario.Cedula, offer.IdOferta);
                 offer.TransaccionContraofertada = _offerRepository.GetCounterOffer(offer.IdOferta);
             }
 
             return offersRecieved;
-
         }
 
         public ICollection<Oferta> List()
@@ -98,13 +90,13 @@ namespace Obligatorio.Services.Services
                 var sendersPosts = new List<string>();
                 var receiversPosts = new List<string>();
 
-                foreach (Publicacion pub in offer.PublicacionesDeseadas)
+                foreach (Publicacion pub in offer.PublicacionesDestinatario)
                 {
                     _postService.UpdatePostState(pub.IdPublicacion, false);
                     receiversPosts.Add(pub.Articulo.Nombre);
                 }
 
-                foreach (Publicacion pub in offer.PublicacionesOfrecidas)
+                foreach (Publicacion pub in offer.PublicacionesEmisor)
                 {
                     _postService.UpdatePostState(pub.IdPublicacion, false);
                     sendersPosts.Add(pub.Articulo.Nombre);

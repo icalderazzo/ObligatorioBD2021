@@ -127,6 +127,7 @@
             // 
             // btnViewOfferDetail
             // 
+            this.btnViewOfferDetail.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnViewOfferDetail.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnViewOfferDetail.Location = new System.Drawing.Point(259, 240);
             this.btnViewOfferDetail.Name = "btnViewOfferDetail";

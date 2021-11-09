@@ -78,6 +78,7 @@ namespace Presentation.Forms
             // 
             this.btnLogin.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(249)))), ((int)(((byte)(237)))));
+            this.btnLogin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLogin.FlatAppearance.BorderSize = 0;
             this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogin.Location = new System.Drawing.Point(696, 393);

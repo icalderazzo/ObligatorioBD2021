@@ -48,6 +48,7 @@
             // chkIncludeInOffer
             // 
             this.chkIncludeInOffer.AutoSize = true;
+            this.chkIncludeInOffer.Cursor = System.Windows.Forms.Cursors.Hand;
             this.chkIncludeInOffer.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.chkIncludeInOffer.Location = new System.Drawing.Point(25, 12);
             this.chkIncludeInOffer.Name = "chkIncludeInOffer";
@@ -95,6 +96,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(245)))), ((int)(((byte)(224)))));
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblValue);
             this.Controls.Add(this.lblName);

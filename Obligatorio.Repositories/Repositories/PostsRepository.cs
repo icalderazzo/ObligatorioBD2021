@@ -89,51 +89,6 @@ namespace Obligatorio.Repositories.Repositories
             throw new NotImplementedException();
         }
 
-        public ICollection<Publicacion> GetPostsAsked(int ciUser, long idOffer)
-        {
-            try
-            {
-                string query = "select p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 from Publicacion p " +
-                               "inner join PublicacionOferta on p.IdPublicacion = PublicacionOferta.IdPublicacion " +
-                               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
-                               "where PublicacionOferta.IdOferta = @idOffer and p.CiUsuario = @ciUser";
-                var dbResult = _databaseContext.Select(query,
-                    new SqlParameter("@idOffer", idOffer),
-                    new SqlParameter("@ciUser", ciUser)
-                );
-
-                return ExtractPosts(dbResult);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
-
-        public ICollection<Publicacion> GetPostsOffered(int ciUser, long idOffer)
-        {
-            try
-            {
-                string query = "select p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 from Publicacion p " +
-               "inner join PublicacionOferta on p.IdPublicacion = PublicacionOferta.IdPublicacion " +
-               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
-               "where PublicacionOferta.IdOferta = @idOffer and p.CiUsuario <> @ciUser";
-                var dbResult = _databaseContext.Select(query,
-                    new SqlParameter("@idOffer", idOffer),
-                    new SqlParameter("@ciUser", ciUser)
-                );
-
-                return ExtractPosts(dbResult);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
         public Publicacion Insert(Publicacion model)
         {
             try
@@ -241,6 +196,29 @@ namespace Obligatorio.Repositories.Repositories
         public Publicacion Update(Publicacion model)
         {
             throw new NotImplementedException();
+        }
+
+        public ICollection<Publicacion> GetPostsInOffer(long offerId, int ciUser)
+        {
+            try
+            {
+                string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 " +
+                               "FROM Publicacion p " +
+                               "INNER JOIN PublicacionOferta on p.IdPublicacion = PublicacionOferta.IdPublicacion " +
+                               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
+                               "where PublicacionOferta.IdOferta = @idOffer and p.CiUsuario = @ciUser";
+                var dbResult = _databaseContext.Select(query,
+                    new SqlParameter("@idOffer", offerId),
+                    new SqlParameter("@ciUser", ciUser)
+                );
+
+                return ExtractPosts(dbResult);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
     }
 }

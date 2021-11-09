@@ -101,12 +101,13 @@ namespace Presentation.Forms
             LoadOffers(await FilterOffersAsync());
         }
 
+        #region EventHandlers
         protected async void AcceptOffer(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("¿Está seguro que desea aceptar la oferta seleccionada?", "", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.No)
                 return;
-            
+
             try
             {
                 var offer = ((OfferEventArgs)e).Offer;
@@ -130,6 +131,9 @@ namespace Presentation.Forms
 
             try
             {
+                var offer = ((OfferEventArgs)e).Offer;
+                await Task.Run(() => _offerService.CancelOffer(offer));
+
                 var offers = await Task.Run(() => _offerService.FilterOffers(_currentFilter)); // vuelvo a obtener pendientes
                 LoadOffers(offers);
             }
@@ -152,7 +156,6 @@ namespace Presentation.Forms
                 throw;
             }
         }
-
         protected void ShowOfferDetail(object sender, EventArgs e)
         {
             var offer = ((OfferEventArgs)e).Offer;
@@ -170,5 +173,6 @@ namespace Presentation.Forms
 
             _offerDetailForm.Show();
         }
+        #endregion
     }
 }

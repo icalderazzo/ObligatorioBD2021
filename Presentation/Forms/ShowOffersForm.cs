@@ -14,15 +14,18 @@ namespace Presentation.Forms
     {
         private readonly IOfferService _offerService;
         private readonly MakeOfferForm _makeOfferForm;
+        private readonly OfferDetailForm _offerDetailForm;
         private OfferFilter _currentFilter;
 
         public ShowOffersForm(
             IOfferService offerService,
-            MakeOfferForm makeOfferForm
+            MakeOfferForm makeOfferForm,
+            OfferDetailForm offerDetailForm
             )
         {
             _offerService = offerService;
             _makeOfferForm = makeOfferForm;
+            _offerDetailForm = offerDetailForm;
             InitializeComponent();
         }
 
@@ -50,6 +53,7 @@ namespace Presentation.Forms
                 offerItem.AcceptOfferEventHandler += new EventHandler(AcceptOffer);
                 offerItem.RejectOfferEventHandler += new EventHandler(RejectOffer);
                 offerItem.CounterOfferEventHandler += new EventHandler(CounterOffer);
+                offerItem.ViewOfferDetailEventHandler += new EventHandler(ShowOfferDetail);
                 flowOffersPanel.Controls.Add(offerItem);
             }
         }
@@ -147,6 +151,24 @@ namespace Presentation.Forms
 
                 throw;
             }
+        }
+
+        protected void ShowOfferDetail(object sender, EventArgs e)
+        {
+            var offer = ((OfferEventArgs)e).Offer;
+
+            if (offer.UsuarioEmisor.Cedula == Global.LoggedUser.Cedula) //Usuario activo es emisor
+            {
+                _offerDetailForm.ActiveUsersPosts = offer.PublicacionesEmisor;
+                _offerDetailForm.OtherUsersPosts = offer.PublicacionesDestinatario;
+            }
+            else
+            {
+                _offerDetailForm.ActiveUsersPosts = offer.PublicacionesDestinatario;
+                _offerDetailForm.OtherUsersPosts = offer.PublicacionesEmisor;
+            }
+
+            _offerDetailForm.Show();
         }
     }
 }

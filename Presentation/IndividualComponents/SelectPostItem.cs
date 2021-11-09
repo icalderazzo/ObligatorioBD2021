@@ -13,11 +13,12 @@ namespace Presentation.IndividualComponents
         public EventHandler Check_IncludeInOffer;
         public EventHandler Check_ExcludeInOffer;
 
-        public SelectPostItem(Publicacion publicacion, Image image, bool includeInOffer)
+        public SelectPostItem(Publicacion publicacion, Image image, bool includeInOffer, bool checkVisible = true)
         {
             _publicacion = publicacion;
             _postImage = image;
             InitializeComponent();
+            this.chkIncludeInOffer.Visible = checkVisible;
             this.chkIncludeInOffer.Checked = includeInOffer;
         }
 

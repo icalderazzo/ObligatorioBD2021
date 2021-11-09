@@ -76,6 +76,7 @@ namespace Presentation
                 .AddScoped<MakeOfferForm>()
                 .AddScoped<MakeOfferForSinglePostForm>()
                 .AddScoped<ShowOffersForm>()
+                .AddScoped<OfferDetailForm>()
                 ;
         }
     }

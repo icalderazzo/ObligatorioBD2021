@@ -18,6 +18,7 @@ namespace Presentation.IndividualComponents
         public EventHandler AcceptOfferEventHandler;
         public EventHandler RejectOfferEventHandler;
         public EventHandler CounterOfferEventHandler;
+        public EventHandler ViewOfferDetailEventHandler;
 
         public OfferItem(
             Oferta offer, 
@@ -49,7 +50,14 @@ namespace Presentation.IndividualComponents
             switch (_offerStatus)
             {
                 case EnumOfertas.EstadoOferta.Pendiente:
-                    lblTitle.Text = "Oferta pendiente";
+                    if (_offer.TransaccionContraofertada != null)
+                    {
+                        lblTitle.Text = "Contraoferta pendiente";
+                    }
+                    else
+                    {
+                        lblTitle.Text = "Oferta pendiente";
+                    }
                     bannerColorPanel.BackColor = PendingOfferColor;
                     btnAccpetOffer.Visible = true;
                     btnRejectOffer.Visible = true;
@@ -80,7 +88,10 @@ namespace Presentation.IndividualComponents
 
         private void btnViewOfferDetail_Click(object sender, EventArgs e)
         {
-
+            if (ViewOfferDetailEventHandler != null)
+            {
+                this.ViewOfferDetailEventHandler(this, new OfferEventArgs(_offer));
+            }
         }
 
         private void btnCounterOffer_Click(object sender, EventArgs e)

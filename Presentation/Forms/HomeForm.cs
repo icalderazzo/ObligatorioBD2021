@@ -33,20 +33,20 @@ namespace Presentation.Forms
             await GetActivePosts();
         }
 
-        private void LoadFeed(List<Publicacion> posts)
+        private void LoadPostInFeed(Publicacion post)
         {
-            foreach (var post in posts)
-            {
-                var postItem = new PostItem(post, _imageConverter.ConvertFromByteArray(post.Imagen));
-                postItem.ShowDetail_Click += new EventHandler(PostItem_ShowDetailClick);
-                flowPostPanel.Controls.Add(postItem);
-            }
+            var postItem = new PostItem(post, _imageConverter.ConvertFromByteArray(post.Imagen));
+            postItem.ShowDetail_Click += new EventHandler(PostItem_ShowDetailClick);
+            flowPostPanel.Controls.Add(postItem);
         }
 
         private async Task GetActivePosts()
         {
             var posts = await Task.Run(() => _postsService.ListForFeed(Global.LoggedUser.Cedula));
-            LoadFeed(posts);
+            foreach (var post in posts)
+            {
+                LoadPostInFeed(post);
+            }
         }
 
         private async Task<List<Publicacion>> FilterPosts(string nameFilter)
@@ -90,7 +90,10 @@ namespace Presentation.Forms
                 var filteredPosts = await FilterPosts(filter);
                 if (filteredPosts.Any())
                 {
-                    LoadFeed(filteredPosts);
+                    foreach (var p in filteredPosts)
+                    {
+                        LoadPostInFeed(p);
+                    }
                 }
                 else
                 {

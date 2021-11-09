@@ -42,11 +42,11 @@ namespace Presentation.IndividualComponents
 
         private void SelectPostItem_Load(object sender, EventArgs e)
         {
-            if (_postImage != null)
-                picBoxPostImage.Image = _postImage;
-
             lblName.Text = _publicacion.Articulo.Nombre;
             lblValue.Text = _publicacion.Articulo.Valor.ToString();
+
+            if (_postImage != null)
+                picBoxPostImage.Image = _postImage;
         }
     }
 }

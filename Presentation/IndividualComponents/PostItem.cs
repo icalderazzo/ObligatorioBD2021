@@ -25,11 +25,11 @@ namespace Presentation.IndividualComponents
 
         private void PostItem_Load(object sender, EventArgs e)
         {
-            if (_image != null)
-                this.picBox.Image = _image;
-
             this.lblPostName.Text = _publicacion.Articulo.Nombre;
             this.lblPrice.Text = this.lblPrice.Text.Replace("[1000]", _publicacion.Articulo.Valor.ToString());
+
+            if (_image != null)
+                this.picBox.Image = _image;
         }
 
         private void picBox_Click(object sender, EventArgs e)

@@ -33,20 +33,6 @@ namespace Presentation.IndividualComponents
 
         private void OfferItem_Load(object sender, EventArgs e)
         {
-            switch (_offerRole)
-            {
-                case EnumRoles.RolOferta.Emisor:
-                    lblSubTitle.Text = lblSubTitle.Text.Replace("[OfferSubtitle]", "Has ofertado por ");
-                    LoadPostsList(_offer.PublicacionesDestinatario);
-                    break;
-                case EnumRoles.RolOferta.Destinatario:
-                    lblSubTitle.Text = lblSubTitle.Text.Replace("[OfferSubtitle]", "Has recibido una oferta por ");
-                    LoadPostsList(_offer.PublicacionesEmisor);
-                    break;
-                default:
-                    break;
-            }
-
             switch (_offerStatus)
             {
                 case EnumOfertas.EstadoOferta.Pendiente:
@@ -70,6 +56,23 @@ namespace Presentation.IndividualComponents
                 case EnumOfertas.EstadoOferta.Rechazada:
                     lblTitle.Text = "Oferta rechazada";
                     bannerColorPanel.BackColor = RejectedOfferColor;
+                    break;
+                default:
+                    break;
+            }
+
+            switch (_offerRole)
+            {
+                case EnumRoles.RolOferta.Emisor:
+                    lblSubTitle.Text = lblSubTitle.Text.Replace("[OfferSubtitle]", "Has ofertado por ");
+                    LoadPostsList(_offer.PublicacionesDestinatario);
+                    btnAccpetOffer.Visible = false;
+                    btnRejectOffer.Visible = false;
+                    btnCounterOffer.Visible = false;
+                    break;
+                case EnumRoles.RolOferta.Destinatario:
+                    lblSubTitle.Text = lblSubTitle.Text.Replace("[OfferSubtitle]", "Has recibido una oferta por ");
+                    LoadPostsList(_offer.PublicacionesEmisor);
                     break;
                 default:
                     break;

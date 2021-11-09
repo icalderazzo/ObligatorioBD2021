@@ -51,7 +51,7 @@ namespace Obligatorio.Repositories.Repositories
                 var offersLines = _context.Select(query,
                     new SqlParameter("@ciUser", filter.UserCi),
                     new SqlParameter("@userRoleInOffers", filter.UsersRole),
-                    new SqlParameter("@offerStatus", filter.OfferStatus)
+                    new SqlParameter("@offerStatus", filter.OfferState)
                 );
 
                 List<Oferta> offers = new List<Oferta>();

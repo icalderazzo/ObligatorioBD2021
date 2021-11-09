@@ -5,6 +5,6 @@ namespace Obligatorio.Domain
     {
         public int UserCi { get; set; }
         public EnumRoles.RolOferta UsersRole { get; set; }
-        public EnumOfertas.EstadoOferta OfferStatus { get; set; }
+        public EnumOfertas.EstadoOferta OfferState { get; set; }
     }
 }

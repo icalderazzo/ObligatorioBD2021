@@ -5,6 +5,7 @@ using Obligatorio.Domain;
 using System.Collections.Generic;
 using System.Text;
 using static Presentation.Constant.Styles;
+using Presentation.CustomEvents;
 
 namespace Presentation.IndividualComponents
 {
@@ -13,6 +14,11 @@ namespace Presentation.IndividualComponents
         private readonly Oferta _offer;
         private readonly EnumOfertas.EstadoOferta _offerStatus;
         private readonly EnumRoles.RolOferta _offerRole;
+
+        public EventHandler AcceptOfferEventHandler;
+        public EventHandler RejectOfferEventHandler;
+        public EventHandler CounterOfferEventHandler;
+
         public OfferItem(
             Oferta offer, 
             EnumOfertas.EstadoOferta offerStatus, 
@@ -75,6 +81,30 @@ namespace Presentation.IndividualComponents
         private void btnViewOfferDetail_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnCounterOffer_Click(object sender, EventArgs e)
+        {
+            if (CounterOfferEventHandler != null)
+            {
+                this.CounterOfferEventHandler(this, new OfferEventArgs(_offer));
+            }
+        }
+
+        private void btnRejectOffer_Click(object sender, EventArgs e)
+        {
+            if (RejectOfferEventHandler != null)
+            {
+                this.RejectOfferEventHandler(this, new OfferEventArgs(_offer));
+            }
+        }
+
+        private void btnAccpetOffer_Click(object sender, EventArgs e)
+        {
+            if (AcceptOfferEventHandler != null)
+            {
+                this.AcceptOfferEventHandler(this, new OfferEventArgs(_offer));
+            }
         }
     }
 }

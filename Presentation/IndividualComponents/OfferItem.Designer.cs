@@ -90,6 +90,7 @@
             this.btnAccpetOffer.Text = "Aceptar";
             this.btnAccpetOffer.UseVisualStyleBackColor = false;
             this.btnAccpetOffer.Visible = false;
+            this.btnAccpetOffer.Click += new System.EventHandler(this.btnAccpetOffer_Click);
             // 
             // btnRejectOffer
             // 
@@ -107,6 +108,7 @@
             this.btnRejectOffer.Text = "Rechazar";
             this.btnRejectOffer.UseVisualStyleBackColor = false;
             this.btnRejectOffer.Visible = false;
+            this.btnRejectOffer.Click += new System.EventHandler(this.btnRejectOffer_Click);
             // 
             // btnCounterOffer
             // 
@@ -124,6 +126,7 @@
             this.btnCounterOffer.Text = "Contraofertar";
             this.btnCounterOffer.UseVisualStyleBackColor = false;
             this.btnCounterOffer.Visible = false;
+            this.btnCounterOffer.Click += new System.EventHandler(this.btnCounterOffer_Click);
             // 
             // btnViewOfferDetail
             // 

@@ -40,14 +40,9 @@ namespace Obligatorio.Services.Services
             throw new NotImplementedException();
         }
 
-        public List<Publicacion> GetPostsAsked(int ciUser, long idOffer)
+        public List<Publicacion> GetPostsInOffer(long offerId, int ciUser)
         {
-            return _postsRepository.GetPostsAsked(ciUser, idOffer).ToList();
-        }
-
-        public List<Publicacion> GetPostsOffered(int ciUser, long idOffer)
-        {
-            return _postsRepository.GetPostsOffered(ciUser, idOffer).ToList();
+            return _postsRepository.GetPostsInOffer(offerId, ciUser).ToList();
         }
 
         public ICollection<Publicacion> List()

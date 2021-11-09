@@ -41,8 +41,8 @@ namespace Obligatorio.Services.Services
                 var offer = _offerRepository.GetById(entityId);
                 offer.UsuarioEmisor = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Emisor, offer.IdOferta);
                 offer.UsuarioDestinatario = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Destinatario, offer.IdOferta);
-                offer.PublicacionesDestinatario = _postService.GetPostsAsked(offer.UsuarioDestinatario.Cedula, offer.IdOferta);
-                offer.PublicacionesEmisor = _postService.GetPostsOffered(offer.UsuarioDestinatario.Cedula, offer.IdOferta);
+                offer.PublicacionesEmisor = _postService.GetPostsInOffer(offer.IdOferta, offer.UsuarioEmisor.Cedula);
+                offer.PublicacionesDestinatario = _postService.GetPostsInOffer(offer.IdOferta, offer.UsuarioDestinatario.Cedula);
                 offer.TransaccionContraofertada = _offerRepository.GetCounterOffer(offer.IdOferta);
 
                 return offer;
@@ -51,7 +51,6 @@ namespace Obligatorio.Services.Services
             {
                 throw;
             }
-
         }
 
         public List<Oferta> FilterOffers(OfferFilter filter)
@@ -63,8 +62,8 @@ namespace Obligatorio.Services.Services
             {
 ;               offer.UsuarioEmisor = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Emisor, offer.IdOferta);
                 offer.UsuarioDestinatario = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Destinatario, offer.IdOferta);
-                offer.PublicacionesEmisor = _postService.GetPostsOffered(offer.UsuarioEmisor.Cedula, offer.IdOferta);
-                offer.PublicacionesDestinatario = _postService.GetPostsAsked(offer.UsuarioDestinatario.Cedula, offer.IdOferta);
+                offer.PublicacionesEmisor = _postService.GetPostsInOffer(offer.IdOferta, offer.UsuarioEmisor.Cedula);
+                offer.PublicacionesDestinatario = _postService.GetPostsInOffer(offer.IdOferta, offer.UsuarioDestinatario.Cedula);
                 offer.TransaccionContraofertada = _offerRepository.GetCounterOffer(offer.IdOferta);
             }
 

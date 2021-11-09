@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Obligatorio.Domain;
 using Obligatorio.Domain.Model;
 using Obligatorio.Services.Interfaces;
+using Presentation.CustomEvents;
 using Presentation.IndividualComponents;
 
 namespace Presentation.Forms
@@ -12,13 +13,19 @@ namespace Presentation.Forms
     public partial class ShowOffersForm : Form
     {
         private readonly IOfferService _offerService;
+        private readonly MakeOfferForm _makeOfferForm;
+        private readonly OfferDetailForm _offerDetailForm;
         private OfferFilter _currentFilter;
 
         public ShowOffersForm(
-            IOfferService offerService
+            IOfferService offerService,
+            MakeOfferForm makeOfferForm,
+            OfferDetailForm offerDetailForm
             )
         {
             _offerService = offerService;
+            _makeOfferForm = makeOfferForm;
+            _offerDetailForm = offerDetailForm;
             InitializeComponent();
         }
 
@@ -43,6 +50,10 @@ namespace Presentation.Forms
             foreach (var offer in offers)
             {
                 var offerItem = new OfferItem(offer, _currentFilter.OfferState, _currentFilter.UsersRole);
+                offerItem.AcceptOfferEventHandler += new EventHandler(AcceptOffer);
+                offerItem.RejectOfferEventHandler += new EventHandler(RejectOffer);
+                offerItem.CounterOfferEventHandler += new EventHandler(CounterOffer);
+                offerItem.ViewOfferDetailEventHandler += new EventHandler(ShowOfferDetail);
                 flowOffersPanel.Controls.Add(offerItem);
             }
         }
@@ -88,6 +99,76 @@ namespace Presentation.Forms
             _currentFilter.UsersRole = (EnumRoles.RolOferta)cmbRole.SelectedValue;
             _currentFilter.OfferState = (EnumOfertas.EstadoOferta)cmbOfferState.SelectedValue;
             LoadOffers(await FilterOffersAsync());
+        }
+
+        protected async void AcceptOffer(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("¿Está seguro que desea aceptar la oferta seleccionada?", "", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.No)
+                return;
+            
+            try
+            {
+                var offer = ((OfferEventArgs)e).Offer;
+                await Task.Run(() => _offerService.AcceptOffer(offer));
+
+                MessageBox.Show("La oferta ha sido aceptada con éxito");
+
+                var offers = await Task.Run(() => _offerService.FilterOffers(_currentFilter)); // vuelvo a obtener pendientes
+                LoadOffers(offers);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ha ocurrido un error al aceptar la oferta");
+            }
+        }
+        protected async void RejectOffer(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("¿Está seguro que desea rechazar la oferta seleccionada?", "", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.No)
+                return;
+
+            try
+            {
+                var offers = await Task.Run(() => _offerService.FilterOffers(_currentFilter)); // vuelvo a obtener pendientes
+                LoadOffers(offers);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ha ocurrido un error al rechazar la oferta");
+            }
+
+
+        }
+        protected void CounterOffer(object sender, EventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        protected void ShowOfferDetail(object sender, EventArgs e)
+        {
+            var offer = ((OfferEventArgs)e).Offer;
+
+            if (offer.UsuarioEmisor.Cedula == Global.LoggedUser.Cedula) //Usuario activo es emisor
+            {
+                _offerDetailForm.ActiveUsersPosts = offer.PublicacionesEmisor;
+                _offerDetailForm.OtherUsersPosts = offer.PublicacionesDestinatario;
+            }
+            else
+            {
+                _offerDetailForm.ActiveUsersPosts = offer.PublicacionesDestinatario;
+                _offerDetailForm.OtherUsersPosts = offer.PublicacionesEmisor;
+            }
+
+            _offerDetailForm.Show();
         }
     }
 }

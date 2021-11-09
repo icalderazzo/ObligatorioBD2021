@@ -56,6 +56,7 @@
             this.chkIncludeInOffer.TabIndex = 1;
             this.chkIncludeInOffer.Text = "Incluir en oferta";
             this.chkIncludeInOffer.UseVisualStyleBackColor = true;
+            this.chkIncludeInOffer.Visible = false;
             this.chkIncludeInOffer.CheckedChanged += new System.EventHandler(this.chkIncludeInOffer_CheckedChanged);
             // 
             // lblName

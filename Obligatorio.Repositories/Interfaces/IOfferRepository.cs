@@ -6,8 +6,9 @@ namespace Obligatorio.Repositories.Interfaces
 {
     public interface IOfferRepository : IRepository<Oferta>
     {
-        List<Oferta> GetOffersByParams(int ciUser, int userRoleInOffers, int offerStatus);
+        List<Oferta> FilterOffers(OfferFilter filter);
         Oferta GetCounterOffer(long idOferr);
         void UpdateOfferState(long idOffer, EnumOfertas.EstadoOferta state);
+        Usuario GetUserByRole(EnumRoles.RolOferta usersRole, long idOffer);
     }
 }

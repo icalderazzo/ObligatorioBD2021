@@ -81,7 +81,7 @@ namespace Presentation
             this.btnTransactions.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnTransactions.Size = new System.Drawing.Size(235, 90);
             this.btnTransactions.TabIndex = 4;
-            this.btnTransactions.Text = " Transacciones";
+            this.btnTransactions.Text = "    Ofertas";
             this.btnTransactions.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTransactions.UseVisualStyleBackColor = false;
             this.btnTransactions.Click += new System.EventHandler(this.btnTransactions_Click);
@@ -101,7 +101,7 @@ namespace Presentation
             this.btnPostArticle.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnPostArticle.Size = new System.Drawing.Size(235, 90);
             this.btnPostArticle.TabIndex = 3;
-            this.btnPostArticle.Text = "       Publicar";
+            this.btnPostArticle.Text = "    Publicar";
             this.btnPostArticle.UseVisualStyleBackColor = true;
             this.btnPostArticle.Click += new System.EventHandler(this.btnPostArticle_Click);
             // 
@@ -122,7 +122,7 @@ namespace Presentation
             this.btnHome.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnHome.Size = new System.Drawing.Size(235, 90);
             this.btnHome.TabIndex = 2;
-            this.btnHome.Text = "   Inicio";
+            this.btnHome.Text = "    Inicio";
             this.btnHome.UseVisualStyleBackColor = true;
             this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
@@ -233,7 +233,7 @@ namespace Presentation
             // 
             this.lblTitle.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Location = new System.Drawing.Point(765, 9);
+            this.lblTitle.Location = new System.Drawing.Point(741, 9);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(90, 34);
             this.lblTitle.TabIndex = 0;

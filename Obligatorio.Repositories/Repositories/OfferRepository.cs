@@ -39,7 +39,7 @@ namespace Obligatorio.Repositories.Repositories
             }
         }
 
-        public List<Oferta> GetOffersByParams(int ciUser, int userRoleInOffers, int offerStatus)
+        public List<Oferta> FilterOffers(OfferFilter filter)
         {
             try
             {
@@ -49,9 +49,9 @@ namespace Obligatorio.Repositories.Repositories
                             "where CiUsuario = @ciUser and UsuarioOferta.IdRolOferta = @userRoleInOffers and Oferta.EstadoOferta = @offerStatus";
 
                 var offersLines = _context.Select(query,
-                    new SqlParameter("@ciUser", ciUser),
-                    new SqlParameter("@userRoleInOffers", userRoleInOffers),
-                    new SqlParameter("@offerStatus", offerStatus)
+                    new SqlParameter("@ciUser", filter.UserCi),
+                    new SqlParameter("@userRoleInOffers", filter.UsersRole),
+                    new SqlParameter("@offerStatus", filter.OfferState)
                 );
 
                 List<Oferta> offers = new List<Oferta>();
@@ -132,11 +132,11 @@ namespace Obligatorio.Repositories.Repositories
                 _context.SaveData(
                     tran, queryInsertUserOfferReciever,
                     new SqlParameter("@IdOferta", model.IdOferta),
-                    new SqlParameter("@IdRolOferta", EnumRoles.RolOferta.Destinatatio),
+                    new SqlParameter("@IdRolOferta", EnumRoles.RolOferta.Destinatario),
                     new SqlParameter("@CiUsuario", model.UsuarioDestinatario.Cedula)
                 );
                 // Insert sender posts in PublicacionOferta
-                foreach (var publicacion in model.PublicacionesOfrecidas)
+                foreach (var publicacion in model.PublicacionesEmisor)
                 {
                     var query = "insert into PublicacionOferta (IdPublicacion, IdOferta) values (@IdPublicacion, @IdOfertaNueva)";
                     _context.SaveData(
@@ -146,7 +146,7 @@ namespace Obligatorio.Repositories.Repositories
                     );
                 }
                 // Insert reciever posts in PublicacionOferta
-                foreach (var publicacion in model.PublicacionesDeseadas)
+                foreach (var publicacion in model.PublicacionesDestinatario)
                 {
                     var query = "insert into PublicacionOferta (IdPublicacion, IdOferta) values (@IdPublicacion, @IdOfertaNueva)";
                     _context.SaveData(
@@ -203,5 +203,36 @@ namespace Obligatorio.Repositories.Repositories
             return offer;
         }
 
+        public Usuario GetUserByRole(EnumRoles.RolOferta usersRole, long idOffer)
+        {
+            try
+            {
+                string query = "select u.Ci, u.Nombre, u.Apellido, u.Correo, u.NombreUsuario from UsuarioOferta " +
+                   "inner join RolOferta on UsuarioOferta.IdRolOferta = RolOferta.IdRolOferta " +
+                   "inner join Usuario u on UsuarioOferta.CiUsuario = u.Ci " +
+                   "where UsuarioOferta.IdOferta = @idOffer and UsuarioOferta.IdRolOferta = @idRole";
+
+                var dbResult = _context.Select(query,
+                    new SqlParameter("@idOffer", idOffer),
+                    new SqlParameter("@idRole", usersRole)
+                );
+
+                var filaUsuario = dbResult[0];
+                Usuario user = new()
+                {
+                    Cedula = int.Parse(filaUsuario[0].ToString()),
+                    Nombre = filaUsuario[1].ToString(),
+                    Apellido = filaUsuario[2].ToString(),
+                    Correo = filaUsuario[3].ToString(),
+                    NombreUsuario = filaUsuario[4].ToString()
+                };
+
+                return user;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

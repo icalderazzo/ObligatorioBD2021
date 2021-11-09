@@ -98,8 +98,8 @@ namespace Presentation.Forms
             {
                 var offer = new Oferta()
                 {
-                    PublicacionesOfrecidas = _includedOfferPosts,
-                    PublicacionesDeseadas = new List<Publicacion>() { DesiredPost },
+                    PublicacionesEmisor = _includedOfferPosts,
+                    PublicacionesDestinatario = new List<Publicacion>() { DesiredPost },
                     UsuarioEmisor = new Usuario()
                     {
                         Cedula = Global.LoggedUser.Cedula

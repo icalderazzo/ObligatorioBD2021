@@ -77,10 +77,5 @@ namespace Obligatorio.Services.Services
         {
             throw new NotImplementedException();
         }
-
-        public Usuario GetUserByRole(long idOffer, int idRole)
-        {
-            return _userRepository.GetUserByRole(idOffer, idRole);
-        }
     }
 }

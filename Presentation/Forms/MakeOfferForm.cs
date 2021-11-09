@@ -128,8 +128,8 @@ namespace Presentation.Forms
                     {
                         Cedula = ReceiversCi
                     },
-                    PublicacionesOfrecidas = sendersPosts,
-                    PublicacionesDeseadas = receiversPosts,
+                    PublicacionesEmisor = sendersPosts,
+                    PublicacionesDestinatario = receiversPosts,
                     TransaccionContraofertada = CounteredOffer
                 };
 

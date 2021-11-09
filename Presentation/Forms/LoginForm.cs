@@ -16,6 +16,8 @@ namespace Presentation.Forms
             _userService = userService;
             _mainForm = mainForm;
             InitializeComponent();
+            txtPassword.Text = "admin123";
+            txtUsername.Text = "admin123";
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

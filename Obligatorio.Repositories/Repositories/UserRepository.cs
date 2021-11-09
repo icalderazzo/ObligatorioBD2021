@@ -112,27 +112,5 @@ namespace Obligatorio.Repositories.Repositories
         {
             throw new NotImplementedException();
         }
-
-        public Usuario GetUserByRole(long idOffer, int idRole)
-        {
-            try
-            {
-                string query = "select u.Ci, u.Nombre, u.Apellido, u.Correo, u.NombreUsuario from UsuarioOferta " +
-                               "inner join RolOferta on UsuarioOferta.IdRolOferta = RolOferta.IdRolOferta " +
-                               "inner join Usuario u on UsuarioOferta.CiUsuario = u.Ci " +
-                               "where UsuarioOferta.IdOferta = @idOffer and UsuarioOferta.IdRolOferta = @idRole";
-                var dbResult = _context.Select(query,
-                    new SqlParameter("@idOffer", idOffer),
-                    new SqlParameter("@idRole", idRole)
-                );
-
-                return ExtractUser(dbResult);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
     }
 }

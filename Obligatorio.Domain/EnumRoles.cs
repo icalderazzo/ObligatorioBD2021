@@ -7,7 +7,7 @@ namespace Obligatorio.Domain
         {
             None,
             Emisor,
-            Destinatatio
+            Destinatario
         }
     }
 }

@@ -11,14 +11,17 @@ namespace Presentation
         private Form _activeForm;
         private readonly HomeForm _homeForm;
         private readonly CreatePostForm _createPostForm;
+        private readonly ShowOffersForm _showOffersForm;
 
         public MainForm(
             HomeForm homeForm,
-            CreatePostForm createPostForm
+            CreatePostForm createPostForm,
+            ShowOffersForm showOffersForm
             )
         {
             _createPostForm = createPostForm;
             _homeForm = homeForm;
+            _showOffersForm = showOffersForm;
             InitializeComponent();
         }
 
@@ -40,7 +43,7 @@ namespace Presentation
 
         private void btnTransactions_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender);
+            OpenChildForm(_showOffersForm, sender);
         }
 
         private void btnNotifications_Click(object sender, EventArgs e)

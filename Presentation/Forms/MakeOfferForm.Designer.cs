@@ -110,6 +110,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(249)))), ((int)(((byte)(237)))));
             this.ClientSize = new System.Drawing.Size(1522, 953);
             this.Controls.Add(this.btnCancelOffer);
             this.Controls.Add(this.btnMakeOffer);

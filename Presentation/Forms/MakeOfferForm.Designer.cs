@@ -124,8 +124,6 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MakeOfferForm_FormClosing);
-            this.Load += new System.EventHandler(this.MakeOfferForm_Load);
-            this.Shown += new System.EventHandler(this.MakeOfferForm_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -6,7 +6,6 @@ using Presentation.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Presentation.Forms
@@ -14,7 +13,6 @@ namespace Presentation.Forms
     public partial class MakeOfferForm : Form
     {
         private readonly IOfferService _offerService;
-        private readonly IPostsService _postsService;
         private readonly IImageConverter _imageConverter;
         private List<Publicacion> _includedOfferPosts;
 
@@ -28,7 +26,22 @@ namespace Presentation.Forms
                 _includedOfferPosts = value;
             }
         }
+        public List<Publicacion> ActiveUserPosts 
+        { 
+            set
+            {
+                LoadSelectPostItems(value, flowPanelActiveUserPosts);
+            }
+        }
+        public List<Publicacion> OtherUsersPosts 
+        {
+            set
+            {
+                LoadSelectPostItems(value, flowLayoutPanel2);
+            }
+        }
 
+        
         public MakeOfferForm(
             IOfferService offerService,
             IPostsService postsService,
@@ -36,32 +49,9 @@ namespace Presentation.Forms
             )
         {
             _offerService = offerService;
-            _postsService = postsService;
             _imageConverter = imageConverter;
             _includedOfferPosts = new List<Publicacion>();
             InitializeComponent();
-        }
-
-        private async void MakeOfferForm_Shown(object sender, EventArgs e)
-        {
-            await LoadPage();
-        }
-
-        private async Task LoadPage()
-        {
-            var aciveUserPosts = await Task.Run(() => _postsService.ListPostsOfUser(Global.LoggedUser.Cedula));
-
-            if (aciveUserPosts.Count == 0)
-            {
-                MessageBox.Show("Aún no tienes articulos publicados, no puedes realizar ofertas", "Advertencia");
-                Hide();
-                return;
-            }
-
-            var receiversPosts = await Task.Run(() => _postsService.ListPostsOfUser(ReceiversCi));
-
-            LoadSelectPostItems(aciveUserPosts, this.flowPanelActiveUserPosts);
-            LoadSelectPostItems(receiversPosts, this.flowLayoutPanel2);
         }
 
         private void LoadSelectPostItems(List<Publicacion> posts, FlowLayoutPanel panel)
@@ -93,11 +83,6 @@ namespace Presentation.Forms
             _includedOfferPosts.Remove(_includedOfferPosts.FirstOrDefault(p =>
                 p.IdPublicacion == excludedPost.IdPublicacion)
             );
-        }
-
-        private void MakeOfferForm_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void btnCancelOffer_Click(object sender, EventArgs e)

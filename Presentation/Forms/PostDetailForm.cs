@@ -79,6 +79,7 @@ namespace Presentation.Forms
                 else
                 {
                     _makeOfferForSinglePostForm.DesiredPost = _activePost;
+                    _makeOfferForSinglePostForm.ActiveUsersPosts = activeUsersPosts;
                     _makeOfferForSinglePostForm.Show();
                     Hide();
                 }

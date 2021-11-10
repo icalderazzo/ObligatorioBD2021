@@ -60,6 +60,7 @@ namespace Presentation
                 .AddTransient<IUserService, UserService>()
                 .AddTransient<IPostsService, PostsService>()
                 .AddTransient<IValidator<Usuario>, UserValidator>()
+                .AddTransient<IValidator<Oferta>, OfferValidator>()
                 .AddTransient<System.Drawing.ImageConverter>()
                 .AddTransient<IOfferService, OfferService>()
                 .AddTransient<Utils.IImageConverter, Utils.ImageConverter>()

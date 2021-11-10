@@ -17,6 +17,7 @@ namespace Presentation.Forms
         private List<Publicacion> _includedOfferPosts;
 
         public int ReceiversCi { get; set; }
+        public string ReceveirsEmail { get; set; }
         public Oferta CounteredOffer { get; set; }
         public List<Publicacion> IncludedPostOfferPosts
         {
@@ -40,8 +41,14 @@ namespace Presentation.Forms
                 LoadSelectPostItems(value, flowLayoutPanel2);
             }
         }
-
-        
+        public List<Publicacion> IncludedOfferPosts
+        {
+            get { return _includedOfferPosts; }
+            set
+            {
+                _includedOfferPosts = value;
+            }
+        }
         public MakeOfferForm(
             IOfferService offerService,
             IPostsService postsService,
@@ -107,11 +114,13 @@ namespace Presentation.Forms
                 {
                     UsuarioEmisor = new Usuario()
                     {
-                        Cedula = Global.LoggedUser.Cedula
+                        Cedula = Global.LoggedUser.Cedula,
+                        Correo = Global.LoggedUser.Correo
                     },
                     UsuarioDestinatario = new Usuario()
                     {
-                        Cedula = ReceiversCi
+                        Cedula = ReceiversCi,
+                        Correo = ReceveirsEmail
                     },
                     PublicacionesEmisor = sendersPosts,
                     PublicacionesDestinatario = receiversPosts,

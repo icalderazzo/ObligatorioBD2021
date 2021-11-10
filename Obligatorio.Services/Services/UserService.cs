@@ -1,10 +1,9 @@
-﻿using Obligatorio.Domain.Model;
+﻿using Obligatorio.Domain;
+using Obligatorio.Domain.Model;
 using Obligatorio.Repositories.Interfaces;
 using Obligatorio.Services.Interfaces;
 using System;
 using System.Collections.Generic;
-using Obligatorio.Domain;
-using System.Security.Cryptography;
 
 namespace Obligatorio.Services.Services
 {
@@ -32,7 +31,7 @@ namespace Obligatorio.Services.Services
 
         public void Create(Usuario entity)
         {
-            (bool,string) validation = _userValidator.Validate(entity);
+            (bool, string) validation = _userValidator.Validate(entity);
             bool validationResult = validation.Item1;
             string validationMessage = validation.Item2;
 
@@ -46,9 +45,9 @@ namespace Obligatorio.Services.Services
             bool ciUsed = _userRepository.ExistsUserWithCi(entity.Cedula);
 
             // Check username not being used
-            if (usernameUsed){throw new InvalidOperationException("El nombre de usuario seleccionado ya está ocupado");}
+            if (usernameUsed) { throw new InvalidOperationException("El nombre de usuario seleccionado ya está ocupado"); }
             // Check phone number not being used
-            if (phoneUsed){throw new InvalidOperationException("El número de teléfono seleccionado ya está ocupado");}
+            if (phoneUsed) { throw new InvalidOperationException("El número de teléfono seleccionado ya está ocupado"); }
             // Check ci not being used
             if (ciUsed) { throw new InvalidOperationException("La cédula seleccionada ya está ocupada"); }
 
@@ -77,11 +76,6 @@ namespace Obligatorio.Services.Services
         public void Modify(Usuario entity)
         {
             throw new NotImplementedException();
-        }
-
-        public Usuario GetUserByRole(long idOffer, int idRole)
-        {
-            return _userRepository.GetUserByRole(idOffer, idRole);
         }
     }
 }

@@ -8,8 +8,7 @@ namespace Obligatorio.Services.Interfaces
         List<Publicacion> ListForFeed(int ciActiveUser);
         List<Publicacion> FilterByName(string name, int ciActiveUser);
         List<Publicacion> ListPostsOfUser(int ciUser);
-
-        List<Publicacion> GetPostsOffered(int ciUser, long idOffer);
-        List<Publicacion> GetPostsAsked(int ciUser, long idOffer);
+        List<Publicacion> GetPostsInOffer(long offerId, int ciUser);
+        void UpdatePostState(long postId, bool active);
     }
 }

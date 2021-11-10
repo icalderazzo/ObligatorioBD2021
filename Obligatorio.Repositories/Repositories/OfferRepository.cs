@@ -1,10 +1,10 @@
-﻿using Obligatorio.Domain.Model;
-using Obligatorio.Repositories.Interfaces;
-using System.Collections.Generic;
-using DatabaseInterface;
-using System.Data.SqlClient;
+﻿using DatabaseInterface;
 using Obligatorio.Domain;
+using Obligatorio.Domain.Model;
+using Obligatorio.Repositories.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace Obligatorio.Repositories.Repositories
@@ -24,10 +24,22 @@ namespace Obligatorio.Repositories.Repositories
 
         public Oferta GetById(string id)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                string query = "SELECT IdOferta, FechaRealizacion FROM Oferta WHERE IdOferta = @IdOffer;";
+                var result = _context.Select(
+                    query, 
+                        new SqlParameter("@IdOffer", long.Parse(id))
+                    );
+                return ExtractOffer(result[0]);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public List<Oferta> getOffersByParams(int ciUser, int userRoleInOffers, int offerStatus)
+        public List<Oferta> FilterOffers(OfferFilter filter)
         {
             try
             {
@@ -37,24 +49,16 @@ namespace Obligatorio.Repositories.Repositories
                             "where CiUsuario = @ciUser and UsuarioOferta.IdRolOferta = @userRoleInOffers and Oferta.EstadoOferta = @offerStatus";
 
                 var offersLines = _context.Select(query,
-                    new SqlParameter("@ciUser", ciUser),
-                    new SqlParameter("@userRoleInOffers", userRoleInOffers),
-                    new SqlParameter("@offerStatus", offerStatus)
+                    new SqlParameter("@ciUser", filter.UserCi),
+                    new SqlParameter("@userRoleInOffers", filter.UsersRole),
+                    new SqlParameter("@offerStatus", filter.OfferState)
                 );
 
-                List<Oferta> offers = new List<Oferta>(); 
+                List<Oferta> offers = new List<Oferta>();
 
                 for (int i = 0; i < offersLines.Count; i++)
                 {
-                    var offersLine = offersLines[i];
-                    
-                    Oferta offer = new Oferta()
-                    {
-                        IdOferta = long.Parse(offersLine[0].ToString()),
-                        Fecha = DateTime.Parse(offersLine[1].ToString()),
-                    };
-
-                    offers.Add(offer);
+                    offers.Add(ExtractOffer(offersLines[i]));
                 }
 
                 return offers;
@@ -66,7 +70,7 @@ namespace Obligatorio.Repositories.Repositories
 
         }
 
-        public Oferta hasCounterOffer(long idOferr)
+        public Oferta GetCounterOffer(long idOferr)
         {
             try
             {
@@ -104,16 +108,11 @@ namespace Obligatorio.Repositories.Repositories
                 var insertedOfferId = long.Parse(_context.Select(tran, getInsertedOffer, null)[0][0].ToString());
 
                 model.IdOferta = insertedOfferId;
-
                 if (model.TransaccionContraofertada != null)
                 {
                     // Reject previous offer
-                    var queryUpdateState = "UPDATE Oferta SET EstadoOferta = @estadoInactivo WHERE IdOferta = @IdOfertaAnterior";
-                    _context.SaveData(
-                        tran, queryUpdateState,
-                        new SqlParameter("@estadoInactivo", EnumOfertas.EstadoOferta.Rechazada),
-                        new SqlParameter("@IdOfertaAnterior", model.TransaccionContraofertada.IdOferta)
-                    );
+                    UpdateOfferState(model.TransaccionContraofertada.IdOferta, EnumOfertas.EstadoOferta.Rechazada);
+
                     // Register counter offer
                     var queryInsertCounterOffer = "Insert into ContraOferta (IdOfertaAnterior, IdOfertaNueva) values (@IdOfertaAnterior, @IdOfertaNueva)";
                     _context.SaveData(
@@ -133,11 +132,11 @@ namespace Obligatorio.Repositories.Repositories
                 _context.SaveData(
                     tran, queryInsertUserOfferReciever,
                     new SqlParameter("@IdOferta", model.IdOferta),
-                    new SqlParameter("@IdRolOferta", EnumRoles.RolOferta.Destinatatio),
+                    new SqlParameter("@IdRolOferta", EnumRoles.RolOferta.Destinatario),
                     new SqlParameter("@CiUsuario", model.UsuarioDestinatario.Cedula)
                 );
                 // Insert sender posts in PublicacionOferta
-                foreach (var publicacion in model.PublicacionesOfrecidas)
+                foreach (var publicacion in model.PublicacionesEmisor)
                 {
                     var query = "insert into PublicacionOferta (IdPublicacion, IdOferta) values (@IdPublicacion, @IdOfertaNueva)";
                     _context.SaveData(
@@ -147,7 +146,7 @@ namespace Obligatorio.Repositories.Repositories
                     );
                 }
                 // Insert reciever posts in PublicacionOferta
-                foreach (var publicacion in model.PublicacionesDeseadas)
+                foreach (var publicacion in model.PublicacionesDestinatario)
                 {
                     var query = "insert into PublicacionOferta (IdPublicacion, IdOferta) values (@IdPublicacion, @IdOfertaNueva)";
                     _context.SaveData(
@@ -164,7 +163,7 @@ namespace Obligatorio.Repositories.Repositories
 
                 throw;
             }
-            
+
         }
 
         public ICollection<Oferta> List()
@@ -175,6 +174,65 @@ namespace Obligatorio.Repositories.Repositories
         public Oferta Update(Oferta model)
         {
             throw new System.NotImplementedException();
+        }
+
+        public void UpdateOfferState(long idOffer, EnumOfertas.EstadoOferta state)
+        {
+            try
+            {
+                var queryCompletada = "UPDATE Oferta SET EstadoOferta=@EstadoOferta WHERE IdOferta=@IdOferta;";
+                _context.SaveData(
+                    queryCompletada,
+                    new SqlParameter("@EstadoOferta", state),
+                    new SqlParameter("@IdOferta", idOffer)
+                );
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private Oferta ExtractOffer (object[] oferta)
+        {
+            Oferta offer = new Oferta()
+            {
+                IdOferta = long.Parse(oferta[0].ToString()),
+                Fecha = DateTime.Parse(oferta[1].ToString()),
+            };
+            return offer;
+        }
+
+        public Usuario GetUserByRole(EnumRoles.RolOferta usersRole, long idOffer)
+        {
+            try
+            {
+                string query = "select u.Ci, u.Nombre, u.Apellido, u.Correo, u.NombreUsuario from UsuarioOferta " +
+                   "inner join RolOferta on UsuarioOferta.IdRolOferta = RolOferta.IdRolOferta " +
+                   "inner join Usuario u on UsuarioOferta.CiUsuario = u.Ci " +
+                   "where UsuarioOferta.IdOferta = @idOffer and UsuarioOferta.IdRolOferta = @idRole";
+
+                var dbResult = _context.Select(query,
+                    new SqlParameter("@idOffer", idOffer),
+                    new SqlParameter("@idRole", usersRole)
+                );
+
+                var filaUsuario = dbResult[0];
+                Usuario user = new()
+                {
+                    Cedula = int.Parse(filaUsuario[0].ToString()),
+                    Nombre = filaUsuario[1].ToString(),
+                    Apellido = filaUsuario[2].ToString(),
+                    Correo = filaUsuario[3].ToString(),
+                    NombreUsuario = filaUsuario[4].ToString()
+                };
+
+                return user;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

@@ -233,7 +233,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnCreatePost;
-        private System.Windows.Forms.Button btnReturnToInit;
         private System.Windows.Forms.Button btnAddImage;
         private System.Windows.Forms.RichTextBox productDescriptionText;
         private System.Windows.Forms.Label lblImageFileName;

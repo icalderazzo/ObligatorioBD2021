@@ -1,61 +1,32 @@
+using Obligatorio.Domain;
 using Obligatorio.Domain.Model;
+using Obligatorio.Repositories.Interfaces;
 using Obligatorio.Services.Interfaces;
 using System.Collections.Generic;
-using Obligatorio.Repositories.Interfaces;
-using Obligatorio.Domain;
+using System;
+using EmailService;
+using static Obligatorio.Domain.Emails.EmailBodies;
+using System.Threading.Tasks;
 
-namespace Obligatorio.Services.Services{
+namespace Obligatorio.Services.Services
+{
     public class OfferService : IOfferService
     {
         private readonly IOfferRepository _offerRepository;
         private readonly IPostsService _postService;
-        private readonly IUserService _userService;
-
-        public OfferService(IOfferRepository offerRepository, IPostsService postsService, IUserService userService)
+        private readonly INotificationsService<Email> _emailNotificationsService;
+        public OfferService(
+            IOfferRepository offerRepository, 
+            IPostsService postsService, 
+            INotificationsService<Email> emailNotificationsService)
         {
             _postService = postsService;
             _offerRepository = offerRepository;
-            _userService = userService;
+            _emailNotificationsService = emailNotificationsService;
         }
         public void Create(Oferta entity)
         {
-            // Test without previousOffer (OfferId = 4)
-            var offer = new Oferta() 
-            {
-                IdOferta = 4,
-                UsuarioDestinatario = new Usuario() {Cedula= 11111111},
-                UsuarioEmisor = new Usuario() { Cedula = 44444444 },
-                PublicacionesDeseadas = new List<Publicacion>() 
-                { 
-                    new Publicacion() {IdPublicacion= 1},
-                    new Publicacion() {IdPublicacion= 2}
-                },
-                PublicacionesOfrecidas = new List<Publicacion>()
-                {
-                    new Publicacion() {IdPublicacion= 3},
-                    new Publicacion() {IdPublicacion= 4}
-                }
-            };
-
-            // Test with previousOffer (OfferId = 5)
-            var offer2 = new Oferta()
-            {
-                UsuarioDestinatario = new Usuario() { Cedula = 44444444 },
-                UsuarioEmisor = new Usuario() { Cedula = 11111111 },
-                PublicacionesDeseadas = new List<Publicacion>()
-                {
-                    new Publicacion() {IdPublicacion= 6}
-                },
-                PublicacionesOfrecidas = new List<Publicacion>()
-                {
-                    new Publicacion() {IdPublicacion= 1},
-                    new Publicacion() {IdPublicacion= 2}
-                },
-                TransaccionContraofertada = offer
-                
-            };
-
-            _offerRepository.Insert(offer2);
+            _offerRepository.Insert(entity);
         }
 
         public void Delete(string entityId)
@@ -65,24 +36,38 @@ namespace Obligatorio.Services.Services{
 
         public Oferta GetById(string entityId)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var offer = _offerRepository.GetById(entityId);
+                offer.UsuarioEmisor = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Emisor, offer.IdOferta);
+                offer.UsuarioDestinatario = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Destinatario, offer.IdOferta);
+                offer.PublicacionesEmisor = _postService.GetPostsInOffer(offer.IdOferta, offer.UsuarioEmisor.Cedula);
+                offer.PublicacionesDestinatario = _postService.GetPostsInOffer(offer.IdOferta, offer.UsuarioDestinatario.Cedula);
+                offer.TransaccionContraofertada = _offerRepository.GetCounterOffer(offer.IdOferta);
+
+                return offer;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public List<Oferta> GetOffersRecieved(Usuario user)
+        public List<Oferta> FilterOffers(OfferFilter filter)
         {
             // Obtain offers that the user recieved and are pending
-            var offersRecieved = _offerRepository.getOffersByParams(user.Cedula, (int)EnumRoles.RolOferta.Destinatatio, (int)EnumOfertas.EstadoOferta.Pendiente);
-            
+            var offersRecieved = _offerRepository.FilterOffers(filter);
+
             foreach (var offer in offersRecieved)
             {
-                offer.UsuarioEmisor = _userService.GetUserByRole(offer.IdOferta, (int)EnumRoles.RolOferta.Emisor);
-                offer.PublicacionesDeseadas = _postService.GetPostsAsked(user.Cedula, offer.IdOferta);
-                offer.PublicacionesOfrecidas = _postService.GetPostsOffered(user.Cedula, offer.IdOferta);
-                offer.TransaccionContraofertada = _offerRepository.hasCounterOffer(offer.IdOferta);
+;               offer.UsuarioEmisor = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Emisor, offer.IdOferta);
+                offer.UsuarioDestinatario = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Destinatario, offer.IdOferta);
+                offer.PublicacionesEmisor = _postService.GetPostsInOffer(offer.IdOferta, offer.UsuarioEmisor.Cedula);
+                offer.PublicacionesDestinatario = _postService.GetPostsInOffer(offer.IdOferta, offer.UsuarioDestinatario.Cedula);
+                offer.TransaccionContraofertada = _offerRepository.GetCounterOffer(offer.IdOferta);
             }
 
             return offersRecieved;
-            
         }
 
         public ICollection<Oferta> List()
@@ -94,6 +79,69 @@ namespace Obligatorio.Services.Services{
         {
             throw new System.NotImplementedException();
         }
+
+        public void AcceptOffer(Oferta offer)
+        {
+            try
+            {
+                _offerRepository.UpdateOfferState(offer.IdOferta, EnumOfertas.EstadoOferta.Completada);
+
+                var sendersPosts = new List<string>();
+                var receiversPosts = new List<string>();
+
+                foreach (Publicacion pub in offer.PublicacionesDestinatario)
+                {
+                    _postService.UpdatePostState(pub.IdPublicacion, false);
+                    receiversPosts.Add(pub.Articulo.Nombre);
+                }
+
+                foreach (Publicacion pub in offer.PublicacionesEmisor)
+                {
+                    _postService.UpdatePostState(pub.IdPublicacion, false);
+                    sendersPosts.Add(pub.Articulo.Nombre);
+                }
+
+                _emailNotificationsService.Notify(new Email()
+                {
+                    Subject = "Oferta aceptada",
+                    Body = SenderAcceptedOfferEmailBody(
+                                name: offer.UsuarioEmisor.Nombre,
+                                surname: offer.UsuarioEmisor.Apellido,
+                                postsnames: receiversPosts,
+                                receiversName: offer.UsuarioDestinatario.Nombre,
+                                receiversSurname: offer.UsuarioDestinatario.Apellido,
+                                receiversEmail: offer.UsuarioDestinatario.Correo
+                           ),
+                    ToEmail = offer.UsuarioEmisor.Correo
+                });
+
+                _emailNotificationsService.Notify(new Email()
+                {
+                    Subject = "Oferta aceptada",
+                    Body = ReceiversAcceptedOfferEmailBody(
+                                name: offer.UsuarioDestinatario.Nombre,
+                                surname: offer.UsuarioDestinatario.Apellido,
+                                postsnames: sendersPosts,
+                                sendersName: offer.UsuarioEmisor.Nombre,
+                                sendersSurname: offer.UsuarioEmisor.Apellido,
+                                sendersEmail: offer.UsuarioEmisor.Correo
+                            ),
+                    ToEmail = offer.UsuarioDestinatario.Correo
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            //Enviar mail a destinatario
+        }
+
+        public void CancelOffer(Oferta offer)
+        {
+            _offerRepository.UpdateOfferState(offer.IdOferta, EnumOfertas.EstadoOferta.Rechazada);
+        }
+
     }
 
 }

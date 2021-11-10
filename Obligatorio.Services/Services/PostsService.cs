@@ -1,15 +1,15 @@
 ﻿using Obligatorio.Domain.Model;
+using Obligatorio.Repositories.Interfaces;
 using Obligatorio.Services.Interfaces;
 using System;
 using System.Collections.Generic;
-using Obligatorio.Repositories.Interfaces;
 using System.Linq;
 
 namespace Obligatorio.Services.Services
 {
     public class PostsService : IPostsService
     {
-        private readonly  IPostsRepository _postsRepository;
+        private readonly IPostsRepository _postsRepository;
 
         public PostsService(IPostsRepository postsRepository)
         {
@@ -40,14 +40,9 @@ namespace Obligatorio.Services.Services
             throw new NotImplementedException();
         }
 
-        public List<Publicacion> GetPostsAsked(int ciUser, long idOffer)
+        public List<Publicacion> GetPostsInOffer(long offerId, int ciUser)
         {
-            return _postsRepository.GetPostsAsked(ciUser, idOffer).ToList();
-        }
-
-        public List<Publicacion> GetPostsOffered(int ciUser, long idOffer)
-        {
-            return _postsRepository.GetPostsOffered(ciUser, idOffer).ToList();
+            return _postsRepository.GetPostsInOffer(offerId, ciUser).ToList();
         }
 
         public ICollection<Publicacion> List()
@@ -68,6 +63,11 @@ namespace Obligatorio.Services.Services
         public void Modify(Publicacion entity)
         {
             throw new NotImplementedException();
+        }
+
+        public void UpdatePostState(long postId, bool active)
+        {
+            _postsRepository.UpdatePostState(postId, active);
         }
     }
 }

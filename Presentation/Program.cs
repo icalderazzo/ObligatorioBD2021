@@ -1,4 +1,5 @@
 using DatabaseInterface;
+using EmailService;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Obligatorio.Domain;
@@ -52,7 +53,7 @@ namespace Presentation
                 .AddTransient<IPostsRepository, PostsRepository>()
                 .AddTransient<IOfferRepository, OfferRepository>()
                 ;
-            
+
             //Services
             services
                 .AddTransient<EmailService.Service.IEmailService, EmailService.Service.EmailService>()
@@ -61,8 +62,10 @@ namespace Presentation
                 .AddTransient<IValidator<Usuario>, UserValidator>()
                 .AddTransient<System.Drawing.ImageConverter>()
                 .AddTransient<IOfferService, OfferService>()
+                .AddTransient<Utils.IImageConverter, Utils.ImageConverter>()
+                .AddTransient<INotificationsService<Email>, EmailNotificationsService>()
                 ;
-            
+
             //Forms
             services
                 .AddScoped<LoginForm>()
@@ -70,6 +73,10 @@ namespace Presentation
                 .AddScoped<HomeForm>()
                 .AddScoped<PostDetailForm>()
                 .AddScoped<CreatePostForm>()
+                .AddScoped<MakeOfferForm>()
+                .AddScoped<MakeOfferForSinglePostForm>()
+                .AddScoped<ShowOffersForm>()
+                .AddScoped<OfferDetailForm>()
                 ;
         }
     }

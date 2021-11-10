@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Obligatorio.Domain.Model;
+using Obligatorio.Services.Interfaces;
+using Presentation.CustomEvents;
+using Presentation.IndividualComponents;
+using Presentation.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Obligatorio.Domain.Model;
-using Obligatorio.Services.Interfaces;
-using Presentation.IndividualComponents;
-using System;
-using System.Linq;
-using Presentation.CustomEvents;
-using System.Drawing;
-using System.IO;
 
 namespace Presentation.Forms
 {
@@ -16,13 +15,16 @@ namespace Presentation.Forms
     {
         private readonly IPostsService _postsService;
         private readonly PostDetailForm _postDetailForm;
+        private readonly IImageConverter _imageConverter;
 
         public HomeForm(
             IPostsService postsService,
-            PostDetailForm postDetailForm)
+            PostDetailForm postDetailForm,
+            IImageConverter imageConverter)
         {
             _postsService = postsService;
             _postDetailForm = postDetailForm;
+            _imageConverter = imageConverter;
             InitializeComponent();
         }
 
@@ -31,22 +33,20 @@ namespace Presentation.Forms
             await GetActivePosts();
         }
 
-        private void LoadFeed(List<Publicacion> posts)
+        private void LoadPostInFeed(Publicacion post)
         {
-            foreach (var post in posts)
-            {
-                var imgbytes = post.Imagen.Length == 0 ? null : post.Imagen; 
-                var img = imgbytes != null ? Image.FromStream(new MemoryStream(post.Imagen)) : null;
-                var postItem = new PostItem(post, img);
-                postItem.ShowDetail_Click += new EventHandler(PostItem_ShowDetailClick);
-                flowPostPanel.Controls.Add(postItem);
-            }
+            var postItem = new PostItem(post, _imageConverter.ConvertFromByteArray(post.Imagen));
+            postItem.ShowDetail_Click += new EventHandler(PostItem_ShowDetailClick);
+            flowPostPanel.Controls.Add(postItem);
         }
 
         private async Task GetActivePosts()
         {
             var posts = await Task.Run(() => _postsService.ListForFeed(Global.LoggedUser.Cedula));
-            LoadFeed(posts);
+            foreach (var post in posts)
+            {
+                LoadPostInFeed(post);
+            }
         }
 
         private async Task<List<Publicacion>> FilterPosts(string nameFilter)
@@ -57,7 +57,7 @@ namespace Presentation.Forms
 
         protected void PostItem_ShowDetailClick(object sender, EventArgs e)
         {
-            _postDetailForm.ActivePost = ((ShowPostDetailEventArgs)e).Post;
+            _postDetailForm.ActivePost = ((PostEventArgs)e).Post;
             _postDetailForm.Show();
         }
 
@@ -90,7 +90,10 @@ namespace Presentation.Forms
                 var filteredPosts = await FilterPosts(filter);
                 if (filteredPosts.Any())
                 {
-                    LoadFeed(filteredPosts);
+                    foreach (var p in filteredPosts)
+                    {
+                        LoadPostInFeed(p);
+                    }
                 }
                 else
                 {

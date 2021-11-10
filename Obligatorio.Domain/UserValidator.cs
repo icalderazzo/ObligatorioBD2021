@@ -7,21 +7,23 @@ namespace Obligatorio.Domain
 {
     public class UserValidator : IValidator<Usuario>
     {
-        public (bool,string) Validate(Usuario user)
+        public (bool, string) Validate(Usuario user)
         {
             bool validCi = ValidateCi(Convert.ToString(user.Cedula));
-            
+
             // Check valid CI
-            if(!validCi){
+            if (!validCi)
+            {
                 return (false, "La cédula ingresada no es válida");
             }
-            
+
             // Check valid email
-            if(!IsValidEmail(user.Correo)){
+            if (!IsValidEmail(user.Correo))
+            {
                 return (false, "El email ingresado no es válido");
             }
-            
-            return (true,"");
+
+            return (true, "");
         }
 
         private bool IsValidEmail(string email)
@@ -33,7 +35,7 @@ namespace Obligatorio.Domain
         {
             var a = 0;
             var i = 0;
-            if (ci.Length  <= 6)
+            if (ci.Length <= 6)
             {
                 for (i = ci.Length; i < 7; i++)
                 {
@@ -61,6 +63,6 @@ namespace Obligatorio.Domain
 
             int validDigitCalculated = ValidationDigit(ci);
             return (Int32.Parse(dig.ToString()) == validDigitCalculated);
-        } 
+        }
     }
 }

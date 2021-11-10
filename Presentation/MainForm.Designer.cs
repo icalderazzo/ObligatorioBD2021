@@ -38,8 +38,6 @@ namespace Presentation
             this.lblAppName = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.lblGreeting = new System.Windows.Forms.Label();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.btnNotifications = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
             this.btnUserOptions = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -48,7 +46,6 @@ namespace Presentation
             this.sideBarPanel.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
@@ -81,7 +78,7 @@ namespace Presentation
             this.btnTransactions.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnTransactions.Size = new System.Drawing.Size(235, 90);
             this.btnTransactions.TabIndex = 4;
-            this.btnTransactions.Text = " Transacciones";
+            this.btnTransactions.Text = "    Ofertas";
             this.btnTransactions.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTransactions.UseVisualStyleBackColor = false;
             this.btnTransactions.Click += new System.EventHandler(this.btnTransactions_Click);
@@ -101,7 +98,7 @@ namespace Presentation
             this.btnPostArticle.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnPostArticle.Size = new System.Drawing.Size(235, 90);
             this.btnPostArticle.TabIndex = 3;
-            this.btnPostArticle.Text = "       Publicar";
+            this.btnPostArticle.Text = "    Publicar";
             this.btnPostArticle.UseVisualStyleBackColor = true;
             this.btnPostArticle.Click += new System.EventHandler(this.btnPostArticle_Click);
             // 
@@ -122,7 +119,7 @@ namespace Presentation
             this.btnHome.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnHome.Size = new System.Drawing.Size(235, 90);
             this.btnHome.TabIndex = 2;
-            this.btnHome.Text = "   Inicio";
+            this.btnHome.Text = "    Inicio";
             this.btnHome.UseVisualStyleBackColor = true;
             this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
@@ -151,7 +148,6 @@ namespace Presentation
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(245)))), ((int)(((byte)(224)))));
             this.panel3.Controls.Add(this.lblGreeting);
-            this.panel3.Controls.Add(this.panel6);
             this.panel3.Controls.Add(this.panel5);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(235, 0);
@@ -169,31 +165,6 @@ namespace Presentation
             this.lblGreeting.Size = new System.Drawing.Size(343, 34);
             this.lblGreeting.TabIndex = 2;
             this.lblGreeting.Text = "Bienvenido, [UserName]";
-            // 
-            // panel6
-            // 
-            this.panel6.Controls.Add(this.btnNotifications);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel6.Location = new System.Drawing.Point(1577, 0);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(45, 45);
-            this.panel6.TabIndex = 1;
-            // 
-            // btnNotifications
-            // 
-            this.btnNotifications.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(245)))), ((int)(((byte)(224)))));
-            this.btnNotifications.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnNotifications.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnNotifications.FlatAppearance.BorderSize = 0;
-            this.btnNotifications.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNotifications.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnNotifications.Image = ((System.Drawing.Image)(resources.GetObject("btnNotifications.Image")));
-            this.btnNotifications.Location = new System.Drawing.Point(0, 0);
-            this.btnNotifications.Name = "btnNotifications";
-            this.btnNotifications.Size = new System.Drawing.Size(45, 45);
-            this.btnNotifications.TabIndex = 0;
-            this.btnNotifications.UseVisualStyleBackColor = false;
-            this.btnNotifications.Click += new System.EventHandler(this.btnNotifications_Click);
             // 
             // panel5
             // 
@@ -233,7 +204,7 @@ namespace Presentation
             // 
             this.lblTitle.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Location = new System.Drawing.Point(765, 9);
+            this.lblTitle.Location = new System.Drawing.Point(741, 9);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(90, 34);
             this.lblTitle.TabIndex = 0;
@@ -248,7 +219,6 @@ namespace Presentation
             this.mainContentPanel.Name = "mainContentPanel";
             this.mainContentPanel.Size = new System.Drawing.Size(1667, 933);
             this.mainContentPanel.TabIndex = 3;
-            this.mainContentPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainContentPanel_Paint);
             // 
             // MainForm
             // 
@@ -264,6 +234,7 @@ namespace Presentation
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UCUTrade";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.sideBarPanel.ResumeLayout(false);
@@ -271,7 +242,6 @@ namespace Presentation
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            this.panel6.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
@@ -285,8 +255,6 @@ namespace Presentation
         private System.Windows.Forms.Button btnHome;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Button btnNotifications;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button btnUserOptions;
         private System.Windows.Forms.Panel panel4;

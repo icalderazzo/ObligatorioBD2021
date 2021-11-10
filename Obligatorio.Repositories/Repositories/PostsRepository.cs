@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DatabaseInterface;
 using Obligatorio.Domain.Model;
 using Obligatorio.Repositories.Interfaces;
-using DatabaseInterface;
+using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace Obligatorio.Repositories.Repositories
 {
@@ -90,51 +89,6 @@ namespace Obligatorio.Repositories.Repositories
             throw new NotImplementedException();
         }
 
-        public ICollection<Publicacion> GetPostsAsked(int ciUser, long idOffer)
-        {
-            try
-            {
-                string query = "select p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 from Publicacion p " +
-                               "inner join PublicacionOferta on p.IdPublicacion = PublicacionOferta.IdPublicacion " +
-                               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
-                               "where PublicacionOferta.IdOferta = @idOffer and p.CiUsuario = @ciUser";
-                var dbResult = _databaseContext.Select(query,
-                    new SqlParameter("@idOffer", idOffer),
-                    new SqlParameter("@ciUser", ciUser)
-                );
-
-                return ExtractPosts(dbResult);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
-
-        public ICollection<Publicacion> GetPostsOffered(int ciUser, long idOffer)
-        {
-            try
-            {
-                string query = "select p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 from Publicacion p " +
-               "inner join PublicacionOferta on p.IdPublicacion = PublicacionOferta.IdPublicacion " +
-               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
-               "where PublicacionOferta.IdOferta = @idOffer and p.CiUsuario <> @ciUser";
-                var dbResult = _databaseContext.Select(query,
-                    new SqlParameter("@idOffer", idOffer),
-                    new SqlParameter("@ciUser", ciUser)
-                );
-
-                return ExtractPosts(dbResult);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
         public Publicacion Insert(Publicacion model)
         {
             try
@@ -145,14 +99,14 @@ namespace Obligatorio.Repositories.Repositories
                 string query = "INSERT INTO " +
                                "Publicacion (CiUsuario, NombreProducto, DescripcionProducto, ValorProducto) " +
                                "VALUES (@CiUsuario, @NombreProducto, @DescripcionProducto, @ValorProducto) ";
-                
+
                 _databaseContext.SaveData(tran, query,
                     new SqlParameter("@CiUsuario", model.Propietario.Cedula),
                     new SqlParameter("@NombreProducto", model.Articulo.Nombre),
                     new SqlParameter("@DescripcionProducto", model.Articulo.Descripcion),
                     new SqlParameter("@ValorProducto", model.Articulo.Valor)
                 );
-                
+
                 // Busqueda ID
                 string queryId = "SELECT TOP 1 IdPublicacion, CiUsuario FROM Publicacion  " +
                                  "WHERE CiUsuario = @CiUsuario ORDER BY IdPublicacion desc;";
@@ -196,7 +150,7 @@ namespace Obligatorio.Repositories.Repositories
             {
                 string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 " +
                                "FROM Publicacion p " +
-                               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " + 
+                               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
                                "WHERE p.CiUsuario <> @Ci AND p.Estado = 1;";
 
                 var dbResult = _databaseContext.Select(query, new SqlParameter("@Ci", ciActiveUser));
@@ -228,9 +182,43 @@ namespace Obligatorio.Repositories.Repositories
             }
         }
 
+        public void UpdatePostState(long idPost, bool active)
+        {
+            var queryPubOfrecida = "UPDATE Publicacion SET Estado=@State WHERE IdPublicacion = @IdPublicacion;";
+            _databaseContext.SaveData(
+                queryPubOfrecida,
+                new SqlParameter("@IdPublicacion", idPost),
+                new SqlParameter("@State", active)
+            );
+
+        }
+
         public Publicacion Update(Publicacion model)
         {
             throw new NotImplementedException();
+        }
+
+        public ICollection<Publicacion> GetPostsInOffer(long offerId, int ciUser)
+        {
+            try
+            {
+                string query = "SELECT p.IdPublicacion, p.NombreProducto, p.DescripcionProducto, p.ValorProducto, p.CiUsuario, i.ImagenBase64 " +
+                               "FROM Publicacion p " +
+                               "INNER JOIN PublicacionOferta on p.IdPublicacion = PublicacionOferta.IdPublicacion " +
+                               "LEFT JOIN Imagen i on p.IdPublicacion = i.IdPublicacion " +
+                               "where PublicacionOferta.IdOferta = @idOffer and p.CiUsuario = @ciUser";
+                var dbResult = _databaseContext.Select(query,
+                    new SqlParameter("@idOffer", offerId),
+                    new SqlParameter("@ciUser", ciUser)
+                );
+
+                return ExtractPosts(dbResult);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
     }
 }

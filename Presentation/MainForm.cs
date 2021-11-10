@@ -11,13 +11,17 @@ namespace Presentation
         private Form _activeForm;
         private readonly HomeForm _homeForm;
         private readonly CreatePostForm _createPostForm;
+        private readonly ShowOffersForm _showOffersForm;
 
         public MainForm(
-            HomeForm homeForm, CreatePostForm createPostForm
+            HomeForm homeForm,
+            CreatePostForm createPostForm,
+            ShowOffersForm showOffersForm
             )
         {
             _createPostForm = createPostForm;
             _homeForm = homeForm;
+            _showOffersForm = showOffersForm;
             InitializeComponent();
         }
 
@@ -39,7 +43,7 @@ namespace Presentation
 
         private void btnTransactions_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender);
+            OpenChildForm(_showOffersForm, sender);
         }
 
         private void btnNotifications_Click(object sender, EventArgs e)
@@ -97,19 +101,22 @@ namespace Presentation
         }
         #endregion
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("¿Está seguro que desea salir de la aplicación?", "Salir", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 Global.LoggedUser = null;
-                Application.Exit();
+            }
+            else
+            {
+                e.Cancel = true;
             }
         }
 
-        private void mainContentPanel_Paint(object sender, PaintEventArgs e)
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-
+            Application.Exit();
         }
     }
 }

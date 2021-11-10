@@ -73,10 +73,6 @@ namespace Obligatorio.Services.Services
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// No pasar nombre de usuario ni teléfono
-        /// </summary>
-        /// <param name="entity"></param>
         public void Modify(Usuario entity)
         {
             (bool, string) validation = _userValidator.Validate(entity);

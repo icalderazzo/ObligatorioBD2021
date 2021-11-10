@@ -15,19 +15,22 @@ namespace Obligatorio.Services.Services
         private readonly IOfferRepository _offerRepository;
         private readonly IPostsService _postService;
         private readonly INotificationsService<Email> _emailNotificationsService;
+        private readonly IValidator<Oferta> _offerValidator;
         public OfferService(
             IOfferRepository offerRepository, 
             IPostsService postsService, 
-            INotificationsService<Email> emailNotificationsService)
+            INotificationsService<Email> emailNotificationsService,
+            IValidator<Oferta> offerValidator
+        )
         {
+            _offerValidator = offerValidator;
             _postService = postsService;
             _offerRepository = offerRepository;
             _emailNotificationsService = emailNotificationsService;
         }
         public void Create(Oferta entity)
         {
-            OfferValidator validator = new OfferValidator();
-            var validation_result = validator.Validate(entity);
+            var validation_result = _offerValidator.Validate(entity);
 
             if (validation_result.Item1)
             {

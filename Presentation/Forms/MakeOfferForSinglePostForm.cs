@@ -100,7 +100,6 @@ namespace Presentation.Forms
 
                 _offerService.Create(offer);
 
-                DesiredPost = new Publicacion();
                 _includedOfferPosts.Clear();
                 _activeUsersPosts.Clear();
 

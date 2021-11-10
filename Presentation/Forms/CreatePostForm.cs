@@ -51,9 +51,14 @@ namespace Presentation.Forms
                     Imagen = _loadedImage
                 };
 
-                if (String.IsNullOrEmpty(newPost.Articulo.Descripcion))
+                if (String.IsNullOrWhiteSpace(newPost.Articulo.Descripcion))
                 {
                     MessageBox.Show("Descripcion no puede estar vacía");
+                    return;
+                }
+                if (String.IsNullOrWhiteSpace(newPost.Articulo.Nombre))
+                {
+                    MessageBox.Show("Nombre no puede estar vacío");
                     return;
                 }
 

@@ -10,5 +10,7 @@ namespace Obligatorio.Repositories.Interfaces
         ICollection<Publicacion> ListPostsOfUser(int ciUser);
         ICollection<Publicacion> GetPostsInOffer(long offerId, int ciUser);
         void UpdatePostState(long idPost, bool active);
+
+        bool CheckPostInOffers(long idPost);
     }
 }

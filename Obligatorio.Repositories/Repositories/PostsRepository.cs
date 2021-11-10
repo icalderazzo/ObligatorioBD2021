@@ -193,9 +193,42 @@ namespace Obligatorio.Repositories.Repositories
 
         }
 
-        public Publicacion Update(Publicacion model)
+        public Publicacion Update(Publicacion entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var tran = _databaseContext.BeginTransaction();
+
+                // Insercion de Publicacion
+                string query = "UPDATE Publicacion SET Estado=@state, DescripcionProducto=@description, NombreProducto=@name, ValorProducto=@value WHERE IdPublicacion=@id";
+
+                var dbResult = _databaseContext.SaveData(query,
+                    new SqlParameter("@state", entity.Estado),
+                    new SqlParameter("@description", entity.Articulo.Descripcion),
+                    new SqlParameter("@name", entity.Articulo.Nombre),
+                    new SqlParameter("@value", entity.Articulo.Valor),
+                    new SqlParameter("@id", entity.IdPublicacion)
+                );
+
+                if (entity.Imagen != null) //si el usuario subio una imagen
+                {
+                    string addImageQuery = "UPDATE Imagen SET ImagenBase64=@ImagenBase64 WHERE IdPublicacion=@IdPublicacion;";
+                    string imgBase64 = Convert.ToBase64String(entity.Imagen);
+
+                    _databaseContext.SaveData(tran, addImageQuery,
+                        new SqlParameter("@IdPublicacion", entity.IdPublicacion),
+                        new SqlParameter("@ImagenBase64", imgBase64)
+                    );
+                }
+
+                _databaseContext.Commit(tran);
+
+                return entity;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public ICollection<Publicacion> GetPostsInOffer(long offerId, int ciUser)
@@ -219,6 +252,24 @@ namespace Obligatorio.Repositories.Repositories
                 throw;
             }
 
+        }
+
+        public bool CheckPostInOffers(long idPost)
+        {
+            try
+            {
+                string query = "select * from PublicacionOferta where IdPublicacion = @idPost";
+
+                var dbResult = _databaseContext.Select(query,
+                    new SqlParameter("@idPost", idPost)
+                );
+
+                return dbResult.Count > 0;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

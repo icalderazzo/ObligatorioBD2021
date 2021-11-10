@@ -10,8 +10,8 @@ namespace Obligatorio.Domain
         public (bool, string errorMessage) Validate(Oferta offer)
         {
             // Validate equal value in UCUCoins
-            var postsOffered = offer.PublicacionesOfrecidas;
-            var postsAsked = offer.PublicacionesDeseadas;
+            var postsOffered = offer.PublicacionesEmisor;
+            var postsAsked = offer.PublicacionesDestinatario;
             int ucuCoinsOffered = 0;
             int ucuCoinsAsked = 0;
 
@@ -30,7 +30,7 @@ namespace Obligatorio.Domain
                 {
                     // newOffer postsOffered are always equal to previousOffer postsAsked
                     // we have to validate that newOffer postsAsked are different from previousOffer postsOffered
-                    var postsPreviouslyOffered = offer.TransaccionContraofertada.PublicacionesOfrecidas;
+                    var postsPreviouslyOffered = offer.TransaccionContraofertada.PublicacionesEmisor;
 
                     var postsDiffer = PostsAreDifferent(postsAsked, postsPreviouslyOffered);
 

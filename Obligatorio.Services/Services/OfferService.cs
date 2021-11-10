@@ -26,7 +26,17 @@ namespace Obligatorio.Services.Services
         }
         public void Create(Oferta entity)
         {
-            _offerRepository.Insert(entity);
+            OfferValidator validator = new OfferValidator();
+            var validation_result = validator.Validate(entity);
+
+            if (validation_result.Item1)
+            {
+                _offerRepository.Insert(entity);
+            }
+            else 
+            {
+                throw new InvalidOperationException(validation_result.Item2);
+            }
         }
 
         public void Delete(string entityId)

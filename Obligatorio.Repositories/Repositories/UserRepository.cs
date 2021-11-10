@@ -105,7 +105,35 @@ namespace Obligatorio.Repositories.Repositories
 
         public Usuario Update(Usuario model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = "UPDATE Usuario SET " +
+                               "Nombre=@Nombre, Apellido=@Apellido, Correo=@Correo, Telefono=@Telefono, Contrasenia=@Contrasenia " +
+                               "WHERE Usuario.Ci = @Ci";
+
+                _context.SaveData(query,
+                    new SqlParameter("@Ci", model.Cedula),
+                    new SqlParameter("@Nombre", model.Nombre),
+                    new SqlParameter("@Apellido", model.Apellido),
+                    new SqlParameter("@Correo", model.Correo),
+                    new SqlParameter("@Telefono", model.Telefono),
+                    new SqlParameter("@Contrasenia", model.Contrasenia)
+                );
+
+                return model;
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Number == 2627)
+                {
+                    throw new InvalidOperationException("El número de teléfono seleccionado ya está en uso");
+                }
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public ICollection<Usuario> List()

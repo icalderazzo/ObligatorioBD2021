@@ -62,7 +62,12 @@ namespace Obligatorio.Services.Services
 
         public void Modify(Publicacion entity)
         {
-            throw new NotImplementedException();
+            bool postInOffers = _postsRepository.CheckPostInOffers(entity.IdPublicacion);
+
+            if (!postInOffers) 
+            {
+                _postsRepository.Update(entity);
+            }
         }
 
         public void UpdatePostState(long postId, bool active)

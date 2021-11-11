@@ -76,7 +76,7 @@ namespace Obligatorio.Repositories.Repositories
         {
             try
             {
-                string query = "SELECT Nombre, Apellido, Correo FROM Usuario WHERE Ci = @Ci;";
+                string query = "SELECT Ci, Nombre, Apellido, Correo, NombreUsuario FROM Usuario WHERE Ci = @Ci;";
 
                 var result = _context.Select(query,
                     new SqlParameter("@Ci", id));
@@ -85,7 +85,6 @@ namespace Obligatorio.Repositories.Repositories
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

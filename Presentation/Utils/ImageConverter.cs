@@ -8,7 +8,7 @@ namespace Presentation.Utils
     {
         public Image ConvertFromByteArray(byte[] bytes)
         {
-            if (bytes.Length == 0)
+            if (bytes != null && bytes.Length == 0)
                 return null;
 
             Image image;

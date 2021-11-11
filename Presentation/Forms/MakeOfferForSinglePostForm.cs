@@ -6,56 +6,44 @@ using Presentation.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Presentation.Forms
 {
     public partial class MakeOfferForSinglePostForm : Form
     {
-        private readonly IPostsService _postsService;
         private readonly IOfferService _offerService;
         private readonly IImageConverter _imageConverter;
         private List<Publicacion> _includedOfferPosts;
-        public Publicacion DesiredPost { get; set; }
+        private Publicacion _desiredPost;
+        private List<Publicacion> _activeUsersPosts;
+        public Publicacion DesiredPost 
+        {
+            get { return _desiredPost; }
+            set 
+            {
+                _desiredPost = value;
+                ShowDesiredPost(value); 
+            } 
+        }
+        public List<Publicacion> ActiveUsersPosts
+        {
+            get { return _activeUsersPosts; }
+            set
+            {
+                _activeUsersPosts = value;
+                ShowActiveUserPosts(value);
+            }
+        }
 
         public MakeOfferForSinglePostForm(
-            IPostsService postsService,
             IOfferService offerService,
-            IImageConverter imageConverter
-            )
+            IImageConverter imageConverter)
         {
-            _postsService = postsService;
             _offerService = offerService;
             _imageConverter = imageConverter;
             _includedOfferPosts = new List<Publicacion>();
             InitializeComponent();
-        }
-        private async void MakeOfferForSinglePostForm_Load(object sender, EventArgs e)
-        {
-            await LoadPage();
-        }
-
-        private async Task LoadPage()
-        {
-            try
-            {
-                var activeUserPosts = await Task.Run(() => _postsService.ListPostsOfUser(Global.LoggedUser.Cedula));
-
-                if (activeUserPosts.Count == 0)
-                {
-                    MessageBox.Show("Aún no tienes articulos publicados, no puedes realizar ofertas", "Advertencia");
-                    Hide();
-                    return;
-                }
-
-                ShowActiveUserPosts(activeUserPosts);
-                ShowDesiredPost(DesiredPost);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Error inesperado");
-            }
         }
 
         private void ShowActiveUserPosts(List<Publicacion> posts)
@@ -112,9 +100,10 @@ namespace Presentation.Forms
 
                 _offerService.Create(offer);
 
-                MessageBox.Show("Oferta realiza correctamente", "Éxito");
-                DesiredPost = null;
                 _includedOfferPosts.Clear();
+                _activeUsersPosts.Clear();
+
+                MessageBox.Show("Oferta realizada correctamente", "Éxito");
                 Hide();
             }
             catch (Exception)

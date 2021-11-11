@@ -46,16 +46,16 @@
             // 
             // flowPanelDesiredPost
             // 
-            this.flowPanelDesiredPost.Location = new System.Drawing.Point(904, 68);
+            this.flowPanelDesiredPost.Location = new System.Drawing.Point(950, 68);
             this.flowPanelDesiredPost.Name = "flowPanelDesiredPost";
-            this.flowPanelDesiredPost.Size = new System.Drawing.Size(534, 514);
+            this.flowPanelDesiredPost.Size = new System.Drawing.Size(492, 469);
             this.flowPanelDesiredPost.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(1104, 25);
+            this.label1.Location = new System.Drawing.Point(1067, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(179, 23);
             this.label1.TabIndex = 2;
@@ -80,7 +80,7 @@
             this.btnCancelOffer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelOffer.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnCancelOffer.ForeColor = System.Drawing.Color.White;
-            this.btnCancelOffer.Location = new System.Drawing.Point(1152, 895);
+            this.btnCancelOffer.Location = new System.Drawing.Point(1098, 895);
             this.btnCancelOffer.Name = "btnCancelOffer";
             this.btnCancelOffer.Size = new System.Drawing.Size(158, 33);
             this.btnCancelOffer.TabIndex = 14;
@@ -97,7 +97,7 @@
             this.btnMakeOffer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMakeOffer.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnMakeOffer.ForeColor = System.Drawing.Color.White;
-            this.btnMakeOffer.Location = new System.Drawing.Point(1336, 895);
+            this.btnMakeOffer.Location = new System.Drawing.Point(1284, 895);
             this.btnMakeOffer.Name = "btnMakeOffer";
             this.btnMakeOffer.Size = new System.Drawing.Size(158, 33);
             this.btnMakeOffer.TabIndex = 13;
@@ -109,7 +109,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1522, 953);
+            this.ClientSize = new System.Drawing.Size(1472, 953);
             this.Controls.Add(this.btnCancelOffer);
             this.Controls.Add(this.btnMakeOffer);
             this.Controls.Add(this.label2);
@@ -122,7 +122,6 @@
             this.Name = "MakeOfferForSinglePostForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MakeOfferForSinglePostForm_FormClosing);
-            this.Load += new System.EventHandler(this.MakeOfferForSinglePostForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

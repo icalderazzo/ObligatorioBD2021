@@ -175,7 +175,14 @@ namespace Obligatorio.Repositories.Repositories
 
                 var dbResult = _databaseContext.Select(query, new SqlParameter("@Ci", ciActiveUser));
 
-                return ExtractPosts(dbResult);
+                var postObjects = ExtractPosts(dbResult);
+
+                foreach (var post in postObjects)
+                {
+                    post.InvolucradaEnOfertaCompletada = CheckPostInOffers(post.IdPublicacion, EnumOfertas.EstadoOferta.Completada);
+                }
+
+                return postObjects;
             }
             catch (Exception)
             {

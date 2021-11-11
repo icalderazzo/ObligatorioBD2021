@@ -11,5 +11,6 @@ namespace Obligatorio.Domain.Model
         public Usuario Propietario { get; set; }
         public Articulo Articulo { get; set; }
         public byte[] Imagen { get; set; }
+        public bool InvolucradaEnOfertaCompletada { get; set; }
     }
 }

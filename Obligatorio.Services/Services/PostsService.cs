@@ -1,4 +1,5 @@
-﻿using Obligatorio.Domain.Model;
+﻿using Obligatorio.Domain;
+using Obligatorio.Domain.Model;
 using Obligatorio.Repositories.Interfaces;
 using Obligatorio.Services.Interfaces;
 using System;
@@ -14,6 +15,11 @@ namespace Obligatorio.Services.Services
         public PostsService(IPostsRepository postsRepository)
         {
             _postsRepository = postsRepository;
+        }
+
+        public bool CheckPostInOffers(long idPost, EnumOfertas.EstadoOferta state)
+        {
+            return _postsRepository.CheckPostInOffers(idPost, state);
         }
 
         public void Create(Publicacion entity)
@@ -62,7 +68,7 @@ namespace Obligatorio.Services.Services
 
         public void Modify(Publicacion entity)
         {
-            bool postInOffers = _postsRepository.CheckPostInOffers(entity.IdPublicacion);
+            bool postInOffers = CheckPostInOffers(entity.IdPublicacion, EnumOfertas.EstadoOferta.Pendiente);
 
             if (!postInOffers) 
             {

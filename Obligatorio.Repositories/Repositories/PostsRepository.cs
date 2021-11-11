@@ -4,6 +4,7 @@ using Obligatorio.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using Obligatorio.Domain;
 
 namespace Obligatorio.Repositories.Repositories
 {
@@ -254,14 +255,17 @@ namespace Obligatorio.Repositories.Repositories
 
         }
 
-        public bool CheckPostInOffers(long idPost)
+        public bool CheckPostInOffers(long idPost, EnumOfertas.EstadoOferta state)
         {
             try
             {
-                string query = "select * from PublicacionOferta where IdPublicacion = @idPost";
+                string query = "select * from PublicacionOferta p " +
+                               "inner join Oferta o on o.IdOferta = p.IdOferta " +
+                               "where IdPublicacion = @idPost AND o.EstadoOferta = @state";
 
                 var dbResult = _databaseContext.Select(query,
-                    new SqlParameter("@idPost", idPost)
+                    new SqlParameter("@idPost", idPost),
+                    new SqlParameter("@state", state)
                 );
 
                 return dbResult.Count > 0;

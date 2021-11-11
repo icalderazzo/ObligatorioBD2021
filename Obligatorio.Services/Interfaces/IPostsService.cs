@@ -1,5 +1,6 @@
 ﻿using Obligatorio.Domain.Model;
 using System.Collections.Generic;
+using Obligatorio.Domain;
 
 namespace Obligatorio.Services.Interfaces
 {
@@ -10,5 +11,6 @@ namespace Obligatorio.Services.Interfaces
         List<Publicacion> ListPostsOfUser(int ciUser);
         List<Publicacion> GetPostsInOffer(long offerId, int ciUser);
         void UpdatePostState(long postId, bool active);
+        bool CheckPostInOffers(long idPost, EnumOfertas.EstadoOferta state);
     }
 }

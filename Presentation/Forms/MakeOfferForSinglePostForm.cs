@@ -106,6 +106,10 @@ namespace Presentation.Forms
                 MessageBox.Show("Oferta realizada correctamente", "Éxito");
                 Hide();
             }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             catch (Exception)
             {
                 throw;

@@ -234,5 +234,43 @@ namespace Obligatorio.Repositories.Repositories
                 throw;
             }
         }
+
+        public bool CheckForExistingOffer(List<Publicacion> posts)
+        {
+            try
+            {
+                string query = "SELECT po.IdOferta, COUNT(*) FROM PublicacionOferta po " +
+                               "INNER JOIN Oferta o ON po.IdOferta = o.IdOferta " +
+                               "WHERE o.EstadoOferta = @EstadoOferta " +
+                               "AND po.IdPublicacion IN ([Posts]) GROUP BY po.IdOferta " +
+                               "HAVING COUNT(*) = @PostsCount;";
+
+                string postsIds = "";
+                foreach (var p in posts)
+                {
+                    postsIds += $"{p.IdPublicacion}, ";
+                }
+                postsIds = postsIds.Substring(0, postsIds.Length - 2);
+
+                query = query.Replace("[Posts]", postsIds);
+
+                var result = _context.Select(query,
+                    new SqlParameter("@PostsCount", posts.Count),
+                    new SqlParameter("@EstadoOferta", EnumOfertas.EstadoOferta.Pendiente));
+
+                foreach (var row in result)
+                {
+                    var postsCount = int.Parse(row[1].ToString());
+                    if (postsCount == posts.Count)
+                        return true;
+                }
+
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

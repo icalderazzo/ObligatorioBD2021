@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System;
 using EmailService;
 using static Obligatorio.Domain.Emails.EmailBodies;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace Obligatorio.Services.Services
 {
@@ -34,6 +34,11 @@ namespace Obligatorio.Services.Services
 
             if (validation_result.Item1)
             {
+                var postsInOffer = entity.PublicacionesEmisor.Union(entity.PublicacionesDestinatario).ToList();
+
+                if (_offerRepository.CheckForExistingOffer(postsInOffer))
+                    throw new InvalidOperationException("Ya existe una oferta pendiente que contiene a los articulos seleccionados");
+
                 _offerRepository.Insert(entity);
 
                 // Si es una contraoferta envio mail de contraoferta a emisor

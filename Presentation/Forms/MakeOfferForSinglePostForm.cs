@@ -90,11 +90,17 @@ namespace Presentation.Forms
                     PublicacionesDestinatario = new List<Publicacion>() { DesiredPost },
                     UsuarioEmisor = new Usuario()
                     {
-                        Cedula = Global.LoggedUser.Cedula
+                        Cedula = Global.LoggedUser.Cedula,
+                        Nombre = Global.LoggedUser.Nombre,
+                        Apellido = Global.LoggedUser.Apellido,
+                        Correo = Global.LoggedUser.Correo
                     },
                     UsuarioDestinatario = new Usuario()
                     {
-                        Cedula = DesiredPost.Propietario.Cedula
+                        Cedula = DesiredPost.Propietario.Cedula,
+                        Nombre = DesiredPost.Propietario.Nombre,
+                        Apellido = DesiredPost.Propietario.Apellido, 
+                        Correo = DesiredPost.Propietario.Correo
                     }
                 };
 

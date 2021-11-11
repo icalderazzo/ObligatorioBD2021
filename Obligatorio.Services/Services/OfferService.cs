@@ -189,7 +189,6 @@ namespace Obligatorio.Services.Services
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

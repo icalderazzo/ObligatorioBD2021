@@ -70,14 +70,20 @@ namespace Obligatorio.Services.Services
         {
             bool postInOffers = CheckPostInOffers(entity.IdPublicacion, EnumOfertas.EstadoOferta.Pendiente);
 
-            if (!postInOffers) 
+            if (postInOffers) 
             {
-                _postsRepository.Update(entity);
+                throw new InvalidOperationException("No puedes actualizar los datos de la publicación ya que se encuentra en una oferta en curso");
             }
+
+            _postsRepository.Update(entity);
         }
 
         public void UpdatePostState(long postId, bool active)
         {
+            if (_postsRepository.CheckPostInOffers(postId, EnumOfertas.EstadoOferta.Pendiente))
+            {
+                throw new InvalidOperationException("No puedes cambiar el estado a una publicación que está incluida en una oferta en curso.");
+            }
             _postsRepository.UpdatePostState(postId, active);
         }
     }

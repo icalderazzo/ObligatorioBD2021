@@ -176,10 +176,14 @@ namespace Presentation.Forms
                 _makeOfferForm.IncludedOfferPosts = includedPosts;
 
                 // set counter offer
-                _makeOfferForm.CounteredOffer = _counteredOffer;    
+                _makeOfferForm.CounteredOffer = _counteredOffer;
+                // set new offer's receiver's ci
+                _makeOfferForm.ReceiversCi = _counteredOffer.UsuarioEmisor.Cedula;
+                // set new offer's receiver's email
+                _makeOfferForm.ReceveirsEmail = _counteredOffer.UsuarioEmisor.Correo;
 
                 // Load all posts of users
-                _makeOfferForm.ActiveUserPosts = await Task.Run(() => _postsService.ListPostsOfUser(_counteredOffer.UsuarioDestinatario.Cedula));
+                _makeOfferForm.CounterofferPosts = _counteredOffer.PublicacionesDestinatario;
                 _makeOfferForm.OtherUsersPosts = await Task.Run(() => _postsService.ListPostsOfUser(_counteredOffer.UsuarioEmisor.Cedula));
 
                 _makeOfferForm.Show();

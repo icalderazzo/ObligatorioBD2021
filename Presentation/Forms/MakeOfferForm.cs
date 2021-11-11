@@ -34,6 +34,13 @@ namespace Presentation.Forms
                 LoadSelectPostItems(value, flowPanelActiveUserPosts);
             }
         }
+        public List<Publicacion> CounterofferPosts
+        {
+            set
+            {
+                LoadPostForCounterOffer(value);
+            }
+        }
         public List<Publicacion> OtherUsersPosts 
         {
             set
@@ -61,6 +68,22 @@ namespace Presentation.Forms
             InitializeComponent();
         }
 
+        private void LoadPostForCounterOffer(List<Publicacion> posts)
+        {
+            flowPanelActiveUserPosts.Controls.Clear();
+            foreach (var post in posts)
+            {
+                var postItem = new SelectPostItem(
+                    post,
+                    _imageConverter.ConvertFromByteArray(post.Imagen),
+                    includeInOffer: IsIncluded(post.IdPublicacion),
+                    checkVisible : false);
+
+                postItem.Check_IncludeInOffer += OnPostChecked;
+                postItem.Check_ExcludeInOffer += OnPostUnchecked;
+                flowPanelActiveUserPosts.Controls.Add(postItem);
+            }
+        }
         private void LoadSelectPostItems(List<Publicacion> posts, FlowLayoutPanel panel)
         {
             panel.Controls.Clear();

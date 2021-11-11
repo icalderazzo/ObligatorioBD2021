@@ -74,7 +74,20 @@ namespace Obligatorio.Repositories.Repositories
 
         public Usuario GetById(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = "SELECT Nombre, Apellido, Correo FROM Usuario WHERE Ci = @Ci;";
+
+                var result = _context.Select(query,
+                    new SqlParameter("@Ci", id));
+
+                return ExtractUser(result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public Usuario Insert(Usuario model)

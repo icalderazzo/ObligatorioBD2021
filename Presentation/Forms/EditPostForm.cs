@@ -34,6 +34,7 @@ namespace Presentation.Forms
             txtValorProducto.Text = _activePost.Articulo.Valor.ToString();
             productDescriptionText.Text = _activePost.Articulo.Descripcion;
             btnDisablePost.Text = _activePost.Estado ? "Desactivar" : "Activar";
+            btnDisablePost.BackColor = !_activePost.Estado ? Color.FromArgb(47, 132, 212) : Color.FromArgb(212, 47, 47);
             postPicBox.Image = _imageConverter.ConvertFromByteArray(_activePost.Imagen);
         }
 
@@ -54,6 +55,7 @@ namespace Presentation.Forms
             {
                 if (ChangePostStateClick != null)
                 {
+                    _activePost.Estado = !_activePost.Estado;
                     this.ChangePostStateClick(this, new PostEventArgs(_activePost));
                 }
             }
@@ -63,7 +65,17 @@ namespace Presentation.Forms
         {
             if (UpdatePostClick != null)
             {
-                this.UpdatePostClick(this, new PostEventArgs(_activePost));
+                try
+                {
+                    _activePost.Articulo.Nombre = txtNombreProducto.Text;
+                    _activePost.Articulo.Descripcion = productDescriptionText.Text;
+                    _activePost.Articulo.Valor = int.Parse(txtValorProducto.Text);
+                    this.UpdatePostClick(this, new PostEventArgs(_activePost));
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("El campo valor solo puede ser numérico.");
+                }
             }
         }
 

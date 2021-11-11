@@ -83,6 +83,7 @@
             // 
             this.btnUpdatePost.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnUpdatePost.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(115)))), ((int)(((byte)(45)))));
+            this.btnUpdatePost.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnUpdatePost.FlatAppearance.BorderSize = 0;
             this.btnUpdatePost.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpdatePost.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -157,6 +158,7 @@
             this.postPicBox.Location = new System.Drawing.Point(27, 34);
             this.postPicBox.Name = "postPicBox";
             this.postPicBox.Size = new System.Drawing.Size(480, 409);
+            this.postPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.postPicBox.TabIndex = 42;
             this.postPicBox.TabStop = false;
             // 
@@ -164,7 +166,7 @@
             // 
             this.btnDisablePost.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDisablePost.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(212)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.btnDisablePost.Cursor = System.Windows.Forms.Cursors.No;
+            this.btnDisablePost.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDisablePost.FlatAppearance.BorderSize = 0;
             this.btnDisablePost.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDisablePost.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);

@@ -33,6 +33,9 @@ namespace Presentation.Forms
 
         private void LoadPostInPanel(Publicacion post)
         {
+            if (post.InvolucradaEnOfertaCompletada)
+                return;
+
             var postItem = new PostItem(post, _imageConverter.ConvertFromByteArray(post.Imagen));
             postItem.ShowDetail_Click += new EventHandler(ShowEditForm);
             postsFlowPanel.Controls.Add(postItem);
@@ -66,8 +69,6 @@ namespace Presentation.Forms
             {
                 var post = ((PostEventArgs)e).Post;
                 _postsService.Modify(post);
-                _editPostForm.Close();
-                _editPostForm = null;
                 MessageBox.Show("Datos guardados correctamente");
             }
             catch (InvalidOperationException io)
@@ -78,11 +79,34 @@ namespace Presentation.Forms
             {
                 MessageBox.Show("Error desconocido");
             }
+            finally
+            {
+                _editPostForm.Close();
+                _editPostForm = null;
+            }
 
         }
         protected void ChangePostState(object sender, EventArgs e)
         {
-
+            try
+            {
+                var post = ((PostEventArgs)e).Post;
+                _postsService.UpdatePostState(post.IdPublicacion, post.Estado);
+                MessageBox.Show("Estado de la publicación actualizado correctamente");
+            }
+            catch (InvalidOperationException io)
+            {
+                MessageBox.Show(io.Message);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error desconocido");
+            }
+            finally
+            {
+                _editPostForm.Close();
+                _editPostForm = null;
+            }
         }
         #endregion
     }

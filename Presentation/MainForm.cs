@@ -12,16 +12,19 @@ namespace Presentation
         private readonly HomeForm _homeForm;
         private readonly CreatePostForm _createPostForm;
         private readonly ShowOffersForm _showOffersForm;
+        private readonly ShowPostsForm _showPostsForm;
 
         public MainForm(
             HomeForm homeForm,
             CreatePostForm createPostForm,
-            ShowOffersForm showOffersForm
+            ShowOffersForm showOffersForm,
+            ShowPostsForm showPostsForm
             )
         {
             _createPostForm = createPostForm;
             _homeForm = homeForm;
             _showOffersForm = showOffersForm;
+            _showPostsForm = showPostsForm;
             InitializeComponent();
         }
 
@@ -54,6 +57,10 @@ namespace Presentation
         private void btnUserOptions_Click(object sender, EventArgs e)
         {
 
+        }
+        private void btnShowPosts_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(_showPostsForm, sender);
         }
         #endregion
 

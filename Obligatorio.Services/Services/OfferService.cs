@@ -35,6 +35,51 @@ namespace Obligatorio.Services.Services
             if (validation_result.Item1)
             {
                 _offerRepository.Insert(entity);
+
+                // Si es una contraoferta envio mail de contraoferta a emisor
+                if (entity.TransaccionContraofertada != null)
+                {
+                    var recieverPosts = new List<string>();
+
+                    // Obtengo las publicaciones del emisor porque estoy parado en la contraoferta
+                    // Estas publicaciones son las mismas que las PublicacionesDestinatario de la oferta original
+                    foreach (Publicacion pub in entity.PublicacionesEmisor)
+                    {
+                        recieverPosts.Add(pub.Articulo.Nombre);
+                    }
+
+                    _emailNotificationsService.Notify(new Email()
+                    {
+                        Subject = "Oferta contraofertada",
+                        Body = SenderCounterOfferEmailBody(
+                                    name: entity.UsuarioEmisor.Nombre,
+                                    surname: entity.UsuarioEmisor.Apellido,
+                                    postsnames: recieverPosts
+                                ),
+                        ToEmail = entity.UsuarioEmisor.Correo
+                    });
+                }
+                // Sino envio mail de oferta recibida a destinatario
+                else 
+                {
+                    var senderPosts = new List<string>();
+
+                    foreach (Publicacion pub in entity.PublicacionesEmisor)
+                    {
+                        senderPosts.Add(pub.Articulo.Nombre);
+                    }
+
+                    _emailNotificationsService.Notify(new Email()
+                    {
+                        Subject = "Oferta recibida",
+                        Body = RecieverNewOfferEmailBody(
+                                    name: entity.UsuarioDestinatario.Nombre,
+                                    surname: entity.UsuarioDestinatario.Apellido,
+                                    postsnames: senderPosts
+                                ),
+                        ToEmail = entity.UsuarioDestinatario.Correo
+                    });
+                }
             }
             else 
             {
@@ -147,12 +192,37 @@ namespace Obligatorio.Services.Services
 
                 throw;
             }
-            //Enviar mail a destinatario
         }
 
         public void CancelOffer(Oferta offer)
         {
-            _offerRepository.UpdateOfferState(offer.IdOferta, EnumOfertas.EstadoOferta.Rechazada);
+            try
+            {
+                _offerRepository.UpdateOfferState(offer.IdOferta, EnumOfertas.EstadoOferta.Rechazada);
+
+                var receiversPosts = new List<string>();
+
+                foreach (Publicacion pub in offer.PublicacionesDestinatario)
+                {
+                    receiversPosts.Add(pub.Articulo.Nombre);
+                }
+
+                _emailNotificationsService.Notify(new Email()
+                {
+                    Subject = "Oferta rechazada",
+                    Body = SenderRejectedOfferEmailBody(
+                                name: offer.UsuarioEmisor.Nombre,
+                                surname: offer.UsuarioEmisor.Apellido,
+                                postsnames: receiversPosts
+                            ),
+                    ToEmail = offer.UsuarioEmisor.Correo
+                });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
 
     }

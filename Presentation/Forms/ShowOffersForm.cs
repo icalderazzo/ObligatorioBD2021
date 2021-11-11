@@ -163,6 +163,10 @@ namespace Presentation.Forms
                     {
                         IdPublicacion = post.IdPublicacion,
                         Propietario = new Usuario() { Cedula = post.Propietario.Cedula },
+                        Articulo = new Articulo()
+                        {
+                            Valor = post.Articulo.Valor
+                        }
                     });
                 }
                 foreach (var post in _counteredOffer.PublicacionesEmisor)
@@ -171,6 +175,10 @@ namespace Presentation.Forms
                     {
                         IdPublicacion = post.IdPublicacion,
                         Propietario = new Usuario() { Cedula = post.Propietario.Cedula },
+                        Articulo = new Articulo()
+                        {
+                            Valor = post.Articulo.Valor
+                        }
                     });
                 }
                 _makeOfferForm.IncludedOfferPosts = includedPosts;

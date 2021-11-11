@@ -69,8 +69,7 @@ namespace Presentation.Forms
                     _makeOfferForm.ActiveUserPosts = activeUsersPosts;
                     _makeOfferForm.OtherUsersPosts = otherUsersPosts;
                     _makeOfferForm.IncludedPostOfferPosts = new List<Publicacion>() { _activePost };
-                    _makeOfferForm.ReceiversCi = _activePost.Propietario.Cedula;
-                    _makeOfferForm.ReceveirsEmail = _activePost.Propietario.Correo;
+                    _makeOfferForm.Receiver = _activePost.Propietario;
 
                     MessageBox.Show("A continuación se mostrarán las demás publicaciones del usuario");
 

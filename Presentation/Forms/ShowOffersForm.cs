@@ -185,10 +185,8 @@ namespace Presentation.Forms
 
                 // set counter offer
                 _makeOfferForm.CounteredOffer = _counteredOffer;
-                // set new offer's receiver's ci
-                _makeOfferForm.ReceiversCi = _counteredOffer.UsuarioEmisor.Cedula;
-                // set new offer's receiver's email
-                _makeOfferForm.ReceveirsEmail = _counteredOffer.UsuarioEmisor.Correo;
+                //set receiver user
+                _makeOfferForm.Receiver = _counteredOffer.UsuarioEmisor;
 
                 // Load all posts of users
                 _makeOfferForm.CounterofferPosts = _counteredOffer.PublicacionesDestinatario;

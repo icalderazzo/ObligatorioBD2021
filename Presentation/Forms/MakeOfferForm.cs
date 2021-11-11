@@ -16,8 +16,7 @@ namespace Presentation.Forms
         private readonly IImageConverter _imageConverter;
         private List<Publicacion> _includedOfferPosts;
 
-        public int ReceiversCi { get; set; }
-        public string ReceveirsEmail { get; set; }
+        public Usuario Receiver { get; set; }
         public Oferta CounteredOffer { get; set; }
         public List<Publicacion> IncludedPostOfferPosts
         {
@@ -131,19 +130,23 @@ namespace Presentation.Forms
             try
             {
                 var sendersPosts = _includedOfferPosts.Where(p => p.Propietario.Cedula == Global.LoggedUser.Cedula).ToList();
-                var receiversPosts = _includedOfferPosts.Where(p => p.Propietario.Cedula == ReceiversCi).ToList();
+                var receiversPosts = _includedOfferPosts.Where(p => p.Propietario.Cedula == Receiver.Cedula).ToList();
 
                 var newOffer = new Oferta()
                 {
                     UsuarioEmisor = new Usuario()
                     {
                         Cedula = Global.LoggedUser.Cedula,
-                        Correo = Global.LoggedUser.Correo
+                        Correo = Global.LoggedUser.Correo,
+                        Nombre = Global.LoggedUser.Nombre,
+                        Apellido = Global.LoggedUser.Apellido
                     },
                     UsuarioDestinatario = new Usuario()
                     {
-                        Cedula = ReceiversCi,
-                        Correo = ReceveirsEmail
+                        Cedula = Receiver.Cedula,
+                        Nombre = Receiver.Nombre,
+                        Apellido = Receiver.Apellido,
+                        Correo = Receiver.Correo
                     },
                     PublicacionesEmisor = sendersPosts,
                     PublicacionesDestinatario = receiversPosts,

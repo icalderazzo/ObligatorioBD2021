@@ -32,7 +32,6 @@
         {
             this.txtNombreProducto = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -67,13 +66,6 @@
             this.label1.Size = new System.Drawing.Size(226, 23);
             this.label1.TabIndex = 6;
             this.label1.Text = "Nombre del producto";
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(114, 31);
-            this.label2.TabIndex = 26;
             // 
             // label3
             // 
@@ -152,8 +144,7 @@
             // btnAddImage
             // 
             this.btnAddImage.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnAddImage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnAddImage.BackColor = System.Drawing.Color.Gray;
+            this.btnAddImage.BackColor = System.Drawing.Color.Transparent;
             this.btnAddImage.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnAddImage.Location = new System.Drawing.Point(268, 492);
             this.btnAddImage.Name = "btnAddImage";
@@ -178,7 +169,7 @@
             this.lblImageFileName.AutoSize = true;
             this.lblImageFileName.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblImageFileName.ForeColor = System.Drawing.Color.Black;
-            this.lblImageFileName.Location = new System.Drawing.Point(417, 499);
+            this.lblImageFileName.Location = new System.Drawing.Point(274, 552);
             this.lblImageFileName.Name = "lblImageFileName";
             this.lblImageFileName.Size = new System.Drawing.Size(0, 23);
             this.lblImageFileName.TabIndex = 30;
@@ -212,7 +203,6 @@
             this.Controls.Add(this.txtValorProducto);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtNombreProducto);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -227,7 +217,6 @@
         private System.Windows.Forms.TextBox txtNombreProducto;
         private System.Windows.Forms.TextBox txtValorProducto;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;

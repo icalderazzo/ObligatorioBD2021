@@ -10,5 +10,6 @@ namespace Obligatorio.Repositories.Interfaces
         Oferta GetCounterOffer(long idOferr);
         void UpdateOfferState(long idOffer, EnumOfertas.EstadoOferta state);
         Usuario GetUserByRole(EnumRoles.RolOferta usersRole, long idOffer);
+        bool CheckForExistingOffer(List<Publicacion> posts);
     }
 }

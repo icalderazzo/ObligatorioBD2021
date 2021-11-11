@@ -56,5 +56,68 @@ namespace Obligatorio.Domain.Emails
 
             return stringBuilder.ToString();
         }
+
+        public static string SenderRejectedOfferEmailBody(
+            string name,
+            string surname,
+            List<string> postsnames
+            )
+        {
+            stringBuilder.Clear();
+            stringBuilder.AppendLine($"Hola, {name} {surname}!");
+            stringBuilder.AppendLine("Lamentamos informarte que la oferta que realizaste por: ");
+            stringBuilder.AppendLine();
+            foreach (var post in postsnames)
+            {
+                stringBuilder.AppendLine($"- {post}");
+            }
+            stringBuilder.AppendLine();
+            stringBuilder.AppendLine("Ha sido rechazada.");
+
+            return stringBuilder.ToString();
+        }
+
+        public static string SenderCounterOfferEmailBody(
+            string name,
+            string surname,
+            List<string> postsnames
+            )
+        {
+            stringBuilder.Clear();
+            stringBuilder.AppendLine($"Hola, {name} {surname}!");
+            stringBuilder.AppendLine("La oferta que realizaste por: ");
+            stringBuilder.AppendLine();
+            foreach (var post in postsnames)
+            {
+                stringBuilder.AppendLine($"- {post}");
+            }
+            stringBuilder.AppendLine();
+            stringBuilder.AppendLine("Ha sido contraofertada.");
+            stringBuilder.AppendLine("Revisa tu pestaña de ofertas.");
+
+            return stringBuilder.ToString();
+        }
+
+        public static string RecieverNewOfferEmailBody(
+            string name,
+            string surname,
+            List<string> postsnames
+            )
+        {
+            stringBuilder.Clear();
+            stringBuilder.AppendLine($"Hola, {name} {surname}!");
+            stringBuilder.AppendLine("Has recibido una oferta!");
+            stringBuilder.AppendLine("La misma consta de los siguientes artículos: ");
+            stringBuilder.AppendLine();
+            foreach (var post in postsnames)
+            {
+                stringBuilder.AppendLine($"- {post}");
+            }
+            stringBuilder.AppendLine();
+            stringBuilder.AppendLine("Revisa tu pestaña de ofertas.");
+
+            return stringBuilder.ToString();
+        }
+
     }
 }

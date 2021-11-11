@@ -75,7 +75,27 @@ namespace Obligatorio.Services.Services
 
         public void Modify(Usuario entity)
         {
-            throw new NotImplementedException();
+            (bool, string) validation = _userValidator.Validate(entity);
+            bool validationResult = validation.Item1;
+            string validationMessage = validation.Item2;
+
+            if (!validationResult)
+            {
+                throw new InvalidOperationException(validationMessage);
+            }
+
+            //Hash password
+            entity.Contrasenia = HashingModule.ComputeSha256Hash(entity.Contrasenia);
+
+            try
+            {
+                // Update user
+                _userRepository.Update(entity);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

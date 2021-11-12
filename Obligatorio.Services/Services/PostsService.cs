@@ -11,10 +11,14 @@ namespace Obligatorio.Services.Services
     public class PostsService : IPostsService
     {
         private readonly IPostsRepository _postsRepository;
+        private readonly IUserService _userService;
 
-        public PostsService(IPostsRepository postsRepository)
+        public PostsService(
+            IPostsRepository postsRepository,
+            IUserService userService)
         {
             _postsRepository = postsRepository;
+            _userService = userService;
         }
 
         public bool CheckPostInOffers(long idPost, EnumOfertas.EstadoOferta state)
@@ -34,11 +38,21 @@ namespace Obligatorio.Services.Services
 
         public List<Publicacion> FilterByName(string name, int ciActiveUser)
         {
+            List<Publicacion> result;
             if (string.IsNullOrEmpty(name))
             {
-                return _postsRepository.ListForFeed(ciActiveUser).ToList();
+                result =  _postsRepository.ListForFeed(ciActiveUser).ToList();
             }
-            return _postsRepository.FilterByName(name, ciActiveUser).ToList();
+            else
+            {
+                result = _postsRepository.FilterByName(name, ciActiveUser).ToList();
+            }
+            foreach (var p in result)
+            {
+                p.Propietario = _userService.GetById(p.Propietario.Cedula.ToString());
+            }
+
+            return result;
         }
 
         public Publicacion GetById(string entityId)
@@ -58,7 +72,13 @@ namespace Obligatorio.Services.Services
 
         public List<Publicacion> ListForFeed(int ciActiveUser)
         {
-            return _postsRepository.ListForFeed(ciActiveUser).ToList();
+            var result =  _postsRepository.ListForFeed(ciActiveUser).ToList();
+            foreach (var p in result)
+            {
+                p.Propietario = _userService.GetById(p.Propietario.Cedula.ToString());
+            }
+
+            return result;
         }
 
         public List<Publicacion> ListPostsOfUser(int ciUser)

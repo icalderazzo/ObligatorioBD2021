@@ -16,7 +16,7 @@ namespace Presentation.Forms
         private readonly IImageConverter _imageConverter;
         private List<Publicacion> _includedOfferPosts;
 
-        public int ReceiversCi { get; set; }
+        public Usuario Receiver { get; set; }
         public Oferta CounteredOffer { get; set; }
         public List<Publicacion> IncludedPostOfferPosts
         {
@@ -33,6 +33,13 @@ namespace Presentation.Forms
                 LoadSelectPostItems(value, flowPanelActiveUserPosts);
             }
         }
+        public List<Publicacion> CounterofferPosts
+        {
+            set
+            {
+                LoadPostForCounterOffer(value);
+            }
+        }
         public List<Publicacion> OtherUsersPosts 
         {
             set
@@ -40,8 +47,14 @@ namespace Presentation.Forms
                 LoadSelectPostItems(value, flowLayoutPanel2);
             }
         }
-
-        
+        public List<Publicacion> IncludedOfferPosts
+        {
+            get { return _includedOfferPosts; }
+            set
+            {
+                _includedOfferPosts = value;
+            }
+        }
         public MakeOfferForm(
             IOfferService offerService,
             IPostsService postsService,
@@ -54,6 +67,22 @@ namespace Presentation.Forms
             InitializeComponent();
         }
 
+        private void LoadPostForCounterOffer(List<Publicacion> posts)
+        {
+            flowPanelActiveUserPosts.Controls.Clear();
+            foreach (var post in posts)
+            {
+                var postItem = new SelectPostItem(
+                    post,
+                    _imageConverter.ConvertFromByteArray(post.Imagen),
+                    includeInOffer: IsIncluded(post.IdPublicacion),
+                    checkVisible : false);
+
+                postItem.Check_IncludeInOffer += OnPostChecked;
+                postItem.Check_ExcludeInOffer += OnPostUnchecked;
+                flowPanelActiveUserPosts.Controls.Add(postItem);
+            }
+        }
         private void LoadSelectPostItems(List<Publicacion> posts, FlowLayoutPanel panel)
         {
             panel.Controls.Clear();
@@ -101,17 +130,23 @@ namespace Presentation.Forms
             try
             {
                 var sendersPosts = _includedOfferPosts.Where(p => p.Propietario.Cedula == Global.LoggedUser.Cedula).ToList();
-                var receiversPosts = _includedOfferPosts.Where(p => p.Propietario.Cedula == ReceiversCi).ToList();
+                var receiversPosts = _includedOfferPosts.Where(p => p.Propietario.Cedula == Receiver.Cedula).ToList();
 
                 var newOffer = new Oferta()
                 {
                     UsuarioEmisor = new Usuario()
                     {
-                        Cedula = Global.LoggedUser.Cedula
+                        Cedula = Global.LoggedUser.Cedula,
+                        Correo = Global.LoggedUser.Correo,
+                        Nombre = Global.LoggedUser.Nombre,
+                        Apellido = Global.LoggedUser.Apellido
                     },
                     UsuarioDestinatario = new Usuario()
                     {
-                        Cedula = ReceiversCi
+                        Cedula = Receiver.Cedula,
+                        Nombre = Receiver.Nombre,
+                        Apellido = Receiver.Apellido,
+                        Correo = Receiver.Correo
                     },
                     PublicacionesEmisor = sendersPosts,
                     PublicacionesDestinatario = receiversPosts,

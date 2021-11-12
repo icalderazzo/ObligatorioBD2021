@@ -65,7 +65,7 @@ namespace Obligatorio.Services.Services
 
         public Usuario GetById(string entityId)
         {
-            throw new NotImplementedException();
+            return _userRepository.GetById(entityId);
         }
 
         public ICollection<Usuario> List()

@@ -7,23 +7,28 @@ using Obligatorio.Domain.Model;
 using Obligatorio.Services.Interfaces;
 using Presentation.CustomEvents;
 using Presentation.IndividualComponents;
+using System.Linq;
 
 namespace Presentation.Forms
 {
     public partial class ShowOffersForm : Form
     {
         private readonly IOfferService _offerService;
+        private readonly IPostsService _postsService;
         private readonly MakeOfferForm _makeOfferForm;
         private readonly OfferDetailForm _offerDetailForm;
         private OfferFilter _currentFilter;
+        private Oferta _counteredOffer;
 
         public ShowOffersForm(
             IOfferService offerService,
+            IPostsService postsService,
             MakeOfferForm makeOfferForm,
             OfferDetailForm offerDetailForm
             )
         {
             _offerService = offerService;
+            _postsService = postsService;
             _makeOfferForm = makeOfferForm;
             _offerDetailForm = offerDetailForm;
             InitializeComponent();
@@ -144,15 +149,53 @@ namespace Presentation.Forms
 
 
         }
-        protected void CounterOffer(object sender, EventArgs e)
+        protected async void CounterOffer(object sender, EventArgs e)
         {
             try
             {
+                _counteredOffer = ((OfferEventArgs)e).Offer;
+                var includedPosts = new List<Publicacion>();
 
+                // set included post in original offer to see them checked
+                foreach (var post in _counteredOffer.PublicacionesDestinatario)
+                {
+                    includedPosts.Add(new Publicacion()
+                    {
+                        IdPublicacion = post.IdPublicacion,
+                        Propietario = new Usuario() { Cedula = post.Propietario.Cedula },
+                        Articulo = new Articulo()
+                        {
+                            Valor = post.Articulo.Valor
+                        }
+                    });
+                }
+                foreach (var post in _counteredOffer.PublicacionesEmisor)
+                {
+                    includedPosts.Add(new Publicacion()
+                    {
+                        IdPublicacion = post.IdPublicacion,
+                        Propietario = new Usuario() { Cedula = post.Propietario.Cedula },
+                        Articulo = new Articulo()
+                        {
+                            Valor = post.Articulo.Valor
+                        }
+                    });
+                }
+                _makeOfferForm.IncludedOfferPosts = includedPosts;
+
+                // set counter offer
+                _makeOfferForm.CounteredOffer = _counteredOffer;
+                //set receiver user
+                _makeOfferForm.Receiver = _counteredOffer.UsuarioEmisor;
+
+                // Load all posts of users
+                _makeOfferForm.CounterofferPosts = _counteredOffer.PublicacionesDestinatario;
+                _makeOfferForm.OtherUsersPosts = await Task.Run(() => _postsService.ListPostsOfUser(_counteredOffer.UsuarioEmisor.Cedula));
+
+                _makeOfferForm.Show();
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

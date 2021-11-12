@@ -293,6 +293,7 @@
             this.Name = "EditUserFrom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EditUserFrom";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditUserFrom_FormClosing);
             this.Load += new System.EventHandler(this.EditUserFrom_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

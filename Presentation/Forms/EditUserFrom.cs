@@ -47,7 +47,8 @@ namespace Presentation.Forms
                     Nombre = txtName.Text,
                     Apellido = txtSurname.Text,
                     Correo = txtEmail.Text,
-                    Telefono = int.Parse(txtPhoneNumber.Text)
+                    Telefono = int.Parse(txtPhoneNumber.Text),
+                    Contrasenia = ""
                 };
 
                 if (txtCurrentPasswd.Visible)
@@ -98,6 +99,15 @@ namespace Presentation.Forms
             txtSurname.Text = Global.LoggedUser.Apellido.ToString();
             txtEmail.Text = Global.LoggedUser.Correo.ToString();
             txtPhoneNumber.Text = Global.LoggedUser.Telefono.ToString();
+        }
+
+        private void EditUserFrom_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
         }
     }
 }

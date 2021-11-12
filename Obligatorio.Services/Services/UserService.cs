@@ -87,9 +87,7 @@ namespace Obligatorio.Services.Services
                 throw new InvalidOperationException(validationMessage);
             }
 
-            bool usernameUsed = _userRepository.ExistsUserWithUsername(entity.NombreUsuario);
             bool phoneUsed = _userRepository.ExistsUserWithPhoneNumber(entity.Telefono);
-            bool ciUsed = _userRepository.ExistsUserWithCi(entity.Cedula);
             bool emailUsed = _userRepository.ExistsUserWithEmail(entity.Correo);
 
             // Check phone number not being used

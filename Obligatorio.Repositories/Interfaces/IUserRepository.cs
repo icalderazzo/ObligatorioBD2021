@@ -8,5 +8,6 @@ namespace Obligatorio.Repositories.Interfaces
         bool ExistsUserWithUsername(string username);
         bool ExistsUserWithPhoneNumber(int phoneNumber);
         bool ExistsUserWithCi(int ci);
+        bool ExistsUserWithEmail(string email);
     }
 }

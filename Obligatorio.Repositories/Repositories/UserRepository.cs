@@ -119,36 +119,30 @@ namespace Obligatorio.Repositories.Repositories
         {
             try
             {
+                var tran = _context.BeginTransaction();
 
-                if (!string.IsNullOrEmpty(model.Contrasenia))
-                {
-                    string query = "UPDATE Usuario SET " +
-                              "Nombre=@Nombre, Apellido=@Apellido, Correo=@Correo, Telefono=@Telefono, Contrasenia=@Contrasenia " +
-                              "WHERE Usuario.Ci = @Ci";
-
-                    _context.SaveData(query,
-                        new SqlParameter("@Ci", model.Cedula),
-                        new SqlParameter("@Nombre", model.Nombre),
-                        new SqlParameter("@Apellido", model.Apellido),
-                        new SqlParameter("@Correo", model.Correo),
-                        new SqlParameter("@Telefono", model.Telefono),
-                        new SqlParameter("@Contrasenia", model.Contrasenia)
-                    );
-                }
-                else {
-                    string query = "UPDATE Usuario SET " +
+                string query = "UPDATE Usuario SET " +
                               "Nombre=@Nombre, Apellido=@Apellido, Correo=@Correo, Telefono=@Telefono " +
                               "WHERE Usuario.Ci = @Ci";
 
-                    _context.SaveData(query,
-                        new SqlParameter("@Ci", model.Cedula),
-                        new SqlParameter("@Nombre", model.Nombre),
-                        new SqlParameter("@Apellido", model.Apellido),
-                        new SqlParameter("@Correo", model.Correo),
-                        new SqlParameter("@Telefono", model.Telefono)
+                _context.SaveData(tran, query,
+                    new SqlParameter("@Ci", model.Cedula),
+                    new SqlParameter("@Nombre", model.Nombre),
+                    new SqlParameter("@Apellido", model.Apellido),
+                    new SqlParameter("@Correo", model.Correo),
+                    new SqlParameter("@Telefono", model.Telefono)
+                );
+
+                if (!string.IsNullOrEmpty(model.Contrasenia))
+                {
+                    query = "UPDATE Usuario SET Contrasenia=@Contrasenia WHERE Usuario.Ci = @Ci";
+
+                    _context.SaveData(tran,query,
+                        new SqlParameter("@Contrasenia", model.Contrasenia)
                     );
                 }
 
+                _context.Commit(tran);
                 return model;
             }
             catch (SqlException ex)

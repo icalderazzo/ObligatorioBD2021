@@ -33,9 +33,9 @@ namespace Obligatorio.Domain
                     // we have to validate that newOffer postsAsked are different from previousOffer postsOffered
                     var postsPreviouslyOffered = offer.TransaccionContraofertada.PublicacionesEmisor;
 
-                    var postsDiffer = PostsAreDifferent(postsAsked, postsPreviouslyOffered);
+                    var postsAreTheSame = PostsAreTheSame(postsAsked, postsPreviouslyOffered);
 
-                    if (!postsDiffer) { return (true, ""); }
+                    if (!postsAreTheSame) { return (true, ""); }
                     else { return (false, "La contra oferta debe ser distinta a la oferta original"); }
                 }
 
@@ -45,7 +45,7 @@ namespace Obligatorio.Domain
             
         }
 
-        private bool PostsAreDifferent(List<Publicacion> posts1, List<Publicacion> posts2)
+        private bool PostsAreTheSame(List<Publicacion> posts1, List<Publicacion> posts2)
         {
             if (posts1.Count == posts2.Count)
             {
@@ -65,7 +65,7 @@ namespace Obligatorio.Domain
                 return (idsPosts1.SequenceEqual(idsPosts2));
             }
 
-            return true;
+            return false;
         }
     }
 }

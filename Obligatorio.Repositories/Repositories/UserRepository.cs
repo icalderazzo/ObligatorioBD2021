@@ -119,18 +119,35 @@ namespace Obligatorio.Repositories.Repositories
         {
             try
             {
-                string query = "UPDATE Usuario SET " +
-                               "Nombre=@Nombre, Apellido=@Apellido, Correo=@Correo, Telefono=@Telefono, Contrasenia=@Contrasenia " +
-                               "WHERE Usuario.Ci = @Ci";
 
-                _context.SaveData(query,
-                    new SqlParameter("@Ci", model.Cedula),
-                    new SqlParameter("@Nombre", model.Nombre),
-                    new SqlParameter("@Apellido", model.Apellido),
-                    new SqlParameter("@Correo", model.Correo),
-                    new SqlParameter("@Telefono", model.Telefono),
-                    new SqlParameter("@Contrasenia", model.Contrasenia)
-                );
+                if (!string.IsNullOrEmpty(model.Contrasenia))
+                {
+                    string query = "UPDATE Usuario SET " +
+                              "Nombre=@Nombre, Apellido=@Apellido, Correo=@Correo, Telefono=@Telefono, Contrasenia=@Contrasenia " +
+                              "WHERE Usuario.Ci = @Ci";
+
+                    _context.SaveData(query,
+                        new SqlParameter("@Ci", model.Cedula),
+                        new SqlParameter("@Nombre", model.Nombre),
+                        new SqlParameter("@Apellido", model.Apellido),
+                        new SqlParameter("@Correo", model.Correo),
+                        new SqlParameter("@Telefono", model.Telefono),
+                        new SqlParameter("@Contrasenia", model.Contrasenia)
+                    );
+                }
+                else {
+                    string query = "UPDATE Usuario SET " +
+                              "Nombre=@Nombre, Apellido=@Apellido, Correo=@Correo, Telefono=@Telefono " +
+                              "WHERE Usuario.Ci = @Ci";
+
+                    _context.SaveData(query,
+                        new SqlParameter("@Ci", model.Cedula),
+                        new SqlParameter("@Nombre", model.Nombre),
+                        new SqlParameter("@Apellido", model.Apellido),
+                        new SqlParameter("@Correo", model.Correo),
+                        new SqlParameter("@Telefono", model.Telefono)
+                    );
+                }
 
                 return model;
             }

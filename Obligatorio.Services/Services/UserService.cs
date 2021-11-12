@@ -97,5 +97,23 @@ namespace Obligatorio.Services.Services
                 throw;
             }
         }
+
+        public bool IsUserAllowedToChangePassword(string username, string oldPassword)
+        {
+            try
+            {
+                var dbUser = _userRepository.GetCompleteUserByUsername(username);
+
+                var hashedOldPasswd = HashingModule.ComputeSha256Hash(oldPassword);
+                if (!hashedOldPasswd.Equals(dbUser.Contrasenia))
+                    return false;
+
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

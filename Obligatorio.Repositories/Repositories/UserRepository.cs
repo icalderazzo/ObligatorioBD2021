@@ -152,5 +152,27 @@ namespace Obligatorio.Repositories.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Usuario GetCompleteUserByUsername(string username)
+        {
+            try
+            {
+                string query = "SELECT Ci, Nombre, Apellido, Correo, NombreUsuario, Contrasenia, Telefono " +
+                    "FROM Usuario WHERE NombreUsuario = @Username;";
+
+                var dbResult = _context.Select(query,
+                    new SqlParameter("@Username", username));
+
+                var user = ExtractUser(dbResult);
+                user.Contrasenia = dbResult[0][5].ToString();
+                user.Telefono = int.Parse(dbResult[0][6].ToString());
+
+                return user;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

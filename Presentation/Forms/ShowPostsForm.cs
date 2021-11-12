@@ -51,14 +51,13 @@ namespace Presentation.Forms
 
         private void ShowEditForm(object sender, EventArgs e)
         {
-            if (_editPostForm == null)
+            if (_editPostForm == null || _editPostForm.IsDisposed)
             {
                 var post = ((PostEventArgs)e).Post;
                 _editPostForm = new EditPostForm(post, _imageConverter, _defaultImageConverter);
                 _editPostForm.UpdatePostClick += new EventHandler(UpdatePost);
                 _editPostForm.ChangePostStateClick += new EventHandler(ChangePostState);
             }
-
             _editPostForm.Show();
         }
 

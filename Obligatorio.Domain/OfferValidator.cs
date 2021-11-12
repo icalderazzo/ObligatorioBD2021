@@ -2,6 +2,7 @@
 using Obligatorio.Domain.Model;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace Obligatorio.Domain
 {
@@ -34,7 +35,7 @@ namespace Obligatorio.Domain
 
                     var postsDiffer = PostsAreDifferent(postsAsked, postsPreviouslyOffered);
 
-                    if (postsDiffer) { return (true, ""); }
+                    if (!postsDiffer) { return (true, ""); }
                     else { return (false, "La contraOferta debe ser distinta a la oferta original"); }
                 }
 
@@ -61,7 +62,7 @@ namespace Obligatorio.Domain
                 Array.Sort(idsPosts2);
 
                 //If idsArrays are different method return true
-                return (idsPosts1 != idsPosts2);
+                return (idsPosts1.SequenceEqual(idsPosts2));
             }
 
             return true;

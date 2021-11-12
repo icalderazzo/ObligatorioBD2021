@@ -36,7 +36,7 @@ namespace Obligatorio.Domain
                     var postsDiffer = PostsAreDifferent(postsAsked, postsPreviouslyOffered);
 
                     if (!postsDiffer) { return (true, ""); }
-                    else { return (false, "La contraOferta debe ser distinta a la oferta original"); }
+                    else { return (false, "La contra oferta debe ser distinta a la oferta original"); }
                 }
 
                 return (true, ""); 

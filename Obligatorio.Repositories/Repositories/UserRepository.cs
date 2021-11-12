@@ -41,6 +41,13 @@ namespace Obligatorio.Repositories.Repositories
             var result = _context.Select(query, new SqlParameter("@username", username));
             return result.Count > 0;
         }
+
+        public bool ExistsUserWithEmail(string email)
+        {
+            string query = "SELECT u.Ci FROM Usuario u WHERE u.Correo = @email;";
+            var result = _context.Select(query, new SqlParameter("@email", email));
+            return result.Count > 0;
+        }
         public bool ExistsUserWithPhoneNumber(int phoneNumber)
         {
             string query = "SELECT u.Ci FROM Usuario u WHERE u.Telefono = @phoneNumber;";

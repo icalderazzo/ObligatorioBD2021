@@ -154,12 +154,14 @@ namespace Obligatorio.Services.Services
 
                 foreach (Publicacion pub in offer.PublicacionesDestinatario)
                 {
+                    // cambiar estado de todas las ofertas en las que aparezca pub
                     _postService.UpdatePostState(pub.IdPublicacion, false);
                     receiversPosts.Add(pub.Articulo.Nombre);
                 }
 
                 foreach (Publicacion pub in offer.PublicacionesEmisor)
                 {
+                    // cambiar estado de todas las ofertas en las que aparezca pub
                     _postService.UpdatePostState(pub.IdPublicacion, false);
                     sendersPosts.Add(pub.Articulo.Nombre);
                 }

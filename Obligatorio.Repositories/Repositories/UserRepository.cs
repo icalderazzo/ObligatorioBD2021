@@ -38,23 +38,30 @@ namespace Obligatorio.Repositories.Repositories
         public bool ExistsUserWithUsername(string username)
         {
             string query = "SELECT u.Ci FROM Usuario u WHERE u.NombreUsuario = @username;";
-            var result = _context.Select(query, new SqlParameter("@username", username));
+            var result = _context.Select(query, 
+                new SqlParameter("@username", username)
+            );
             return result.Count > 0;
         }
 
-        public bool ExistsUserWithEmail(string email)
+        public bool ExistsUserWithEmail(string email, int ci)
         {
-            string query = "SELECT u.Ci FROM Usuario u WHERE u.Correo = @email;";
-            var result = _context.Select(query, new SqlParameter("@email", email));
+            string query = "SELECT u.Ci FROM Usuario u WHERE u.Correo = @email WHERE u.Ci <> @Ci;";
+            var result = _context.Select(query, 
+                new SqlParameter("@email", email),
+                new SqlParameter("@Ci", ci)
+            );
             return result.Count > 0;
         }
-        public bool ExistsUserWithPhoneNumber(int phoneNumber)
+        public bool ExistsUserWithPhoneNumber(int phoneNumber, int ci)
         {
-            string query = "SELECT u.Ci FROM Usuario u WHERE u.Telefono = @phoneNumber;";
-            var result = _context.Select(query, new SqlParameter("@phoneNumber", phoneNumber));
+            string query = "SELECT u.Ci FROM Usuario u WHERE u.Telefono = @phoneNumber WHERE u.Ci <> @Ci;";
+            var result = _context.Select(query, 
+                new SqlParameter("@phoneNumber", phoneNumber),
+                new SqlParameter("@Ci", ci)
+            );
             return result.Count > 0;
         }
-
         public bool ExistsUserWithCi(int ci)
         {
             string query = "SELECT u.Ci FROM Usuario u WHERE u.Ci = @ci;";

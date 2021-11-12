@@ -35,12 +35,11 @@ namespace Obligatorio.Repositories.Repositories
             return user;
         }
 
-        public bool ExistsUserWithUsername(string username, int ci)
+        public bool ExistsUserWithUsername(string username)
         {
-            string query = "SELECT u.Ci FROM Usuario u WHERE u.NombreUsuario = @username WHERE u.Ci <> @Ci;";
+            string query = "SELECT u.Ci FROM Usuario u WHERE u.NombreUsuario = @username;";
             var result = _context.Select(query, 
-                new SqlParameter("@username", username),
-                new SqlParameter("@Ci", ci)
+                new SqlParameter("@username", username)
             );
             return result.Count > 0;
         }

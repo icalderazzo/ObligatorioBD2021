@@ -66,9 +66,9 @@ namespace Presentation.Forms
                 if (dialogResult == DialogResult.No)
                 {
                     var otherUsersPosts = await Task.Run(() => _postsService.ListPostsOfUser(_activePost.Propietario.Cedula));
+                    _makeOfferForm.IncludedPostOfferPosts = new List<Publicacion>() { _activePost };
                     _makeOfferForm.ActiveUserPosts = activeUsersPosts;
                     _makeOfferForm.OtherUsersPosts = otherUsersPosts;
-                    _makeOfferForm.IncludedPostOfferPosts = new List<Publicacion>() { _activePost };
                     _makeOfferForm.Receiver = _activePost.Propietario;
 
                     MessageBox.Show("A continuación se mostrarán las demás publicaciones del usuario");

@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_9933CA5045E8434CB7578EA4499EEA14"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_EA1648188FBE42DBA23E754017F91AEF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -43,6 +49,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -59,6 +73,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -76,10 +98,40 @@
         {
             "LaunchCondition"
             {
+                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_EB74728E037747A6A355FF037685CBDF"
+                {
+                "Name" = "8:.NET Core"
+                "Message" = "8:[VSDNETCOREMSG]"
+                "AllowLaterVersions" = "11:FALSE"
+                "InstallUrl" = "8:https://dotnet.microsoft.com/download/dotnet-core/[NetCoreVerMajorDotMinor]"
+                "IsNETCore" = "11:TRUE"
+                "Architecture" = "2:0"
+                "Runtime" = "2:0"
+                }
             }
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9933CA5045E8434CB7578EA4499EEA14"
+            {
+            "SourcePath" = "8:..\\Presentation\\Resources\\UCUTradeLogo.ico"
+            "TargetName" = "8:UCUTradeLogo.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_BBE851B1BC5749868B3F57395B6E2438"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EA1648188FBE42DBA23E754017F91AEF"
             {
             "SourcePath" = "8:..\\Presentation\\bin\\Debug\\net5.0-windows\\appsettings.json"
@@ -288,7 +340,7 @@
             "Target" = "8:_1BCF3DD41C7E4D66829E1622132B21B7"
             "Folder" = "8:_F131CE77F89F4028AE49355E6D37FA14"
             "WorkingFolder" = "8:_BBE851B1BC5749868B3F57395B6E2438"
-            "Icon" = "8:"
+            "Icon" = "8:_9933CA5045E8434CB7578EA4499EEA14"
             "Feature" = "8:"
             }
         }

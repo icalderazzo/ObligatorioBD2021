@@ -138,7 +138,8 @@ namespace Obligatorio.Repositories.Repositories
                     query = "UPDATE Usuario SET Contrasenia=@Contrasenia WHERE Usuario.Ci = @Ci";
 
                     _context.SaveData(tran,query,
-                        new SqlParameter("@Contrasenia", model.Contrasenia)
+                        new SqlParameter("@Contrasenia", model.Contrasenia),
+                        new SqlParameter("@Ci", model.Cedula)
                     );
                 }
 

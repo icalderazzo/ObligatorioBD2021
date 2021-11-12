@@ -43,6 +43,7 @@ namespace Obligatorio.Services.Services
             bool usernameUsed = _userRepository.ExistsUserWithUsername(entity.NombreUsuario);
             bool phoneUsed = _userRepository.ExistsUserWithPhoneNumber(entity.Telefono);
             bool ciUsed = _userRepository.ExistsUserWithCi(entity.Cedula);
+            bool emailUsed = _userRepository.ExistsUserWithEmail(entity.Correo);
 
             // Check username not being used
             if (usernameUsed) { throw new InvalidOperationException("El nombre de usuario seleccionado ya está ocupado"); }
@@ -50,6 +51,8 @@ namespace Obligatorio.Services.Services
             if (phoneUsed) { throw new InvalidOperationException("El número de teléfono seleccionado ya está ocupado"); }
             // Check ci not being used
             if (ciUsed) { throw new InvalidOperationException("La cédula seleccionada ya está ocupada"); }
+            // Check email not being used
+            if (emailUsed) { throw new InvalidOperationException("El email seleccionado ya está ocupado"); }
 
             //Hash password
             entity.Contrasenia = HashingModule.ComputeSha256Hash(entity.Contrasenia);
@@ -83,6 +86,14 @@ namespace Obligatorio.Services.Services
             {
                 throw new InvalidOperationException(validationMessage);
             }
+
+            bool phoneUsed = _userRepository.ExistsUserWithPhoneNumber(entity.Telefono);
+            bool emailUsed = _userRepository.ExistsUserWithEmail(entity.Correo);
+
+            // Check phone number not being used
+            if (phoneUsed) { throw new InvalidOperationException("El número de teléfono seleccionado ya está ocupado"); }
+            // Check email not being used
+            if (emailUsed) { throw new InvalidOperationException("El email seleccionado ya está ocupado"); }
 
             //Hash password
             entity.Contrasenia = HashingModule.ComputeSha256Hash(entity.Contrasenia);

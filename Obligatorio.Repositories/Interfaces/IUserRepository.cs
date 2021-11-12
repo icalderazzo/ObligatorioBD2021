@@ -9,5 +9,6 @@ namespace Obligatorio.Repositories.Interfaces
         bool ExistsUserWithPhoneNumber(int phoneNumber);
         bool ExistsUserWithCi(int ci);
         Usuario GetCompleteUserByUsername(string username);
+        bool ExistsUserWithEmail(string email);
     }
 }

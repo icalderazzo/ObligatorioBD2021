@@ -63,8 +63,14 @@ namespace Presentation.Forms
                 }
 
                 _postService.Create(newPost);
-                _loadedImage = null;
+
                 MessageBox.Show("Se ha publicado el post correctamente");
+                
+                txtNombreProducto.Text = "";
+                txtValorProducto.Text = "";
+                productDescriptionText.Text = "";
+                lblImageFileName.Text = "";
+                _loadedImage = null;
             }
             catch (InvalidOperationException ex)
             {

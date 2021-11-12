@@ -80,6 +80,7 @@
             this.MaximizeBox = false;
             this.Name = "UserControlsFrom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserControlsFrom_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

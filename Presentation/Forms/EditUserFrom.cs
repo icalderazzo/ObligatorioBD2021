@@ -40,7 +40,7 @@ namespace Presentation.Forms
         {
             try
             {
-                Usuario updatedUser = new Usuario()
+                Usuario updatedUser = new()
                 {
                     Cedula = Global.LoggedUser.Cedula,
                     NombreUsuario = Global.LoggedUser.NombreUsuario,
@@ -50,7 +50,8 @@ namespace Presentation.Forms
                     Telefono = int.Parse(txtPhoneNumber.Text),
                     Contrasenia = ""
                 };
-
+                
+                // si el usuario habilito el cambio de contraseña
                 if (txtCurrentPasswd.Visible)
                 {
                     if(_userService.IsUserAllowedToChangePassword(Global.LoggedUser.NombreUsuario, txtCurrentPasswd.Text))
@@ -79,6 +80,8 @@ namespace Presentation.Forms
                 txtCurrentPasswd.Text = "";
                 txtNewPasswd.Text = "";
                 txtRepeatNewPasswd.Text = "";
+
+                Hide();
             }
             catch(InvalidOperationException io)
             {

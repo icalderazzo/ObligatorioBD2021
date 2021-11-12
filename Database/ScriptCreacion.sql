@@ -4,7 +4,7 @@ CREATE TABLE Usuario(
     Ci INT NOT NULL,
     Nombre NVARCHAR(30) NOT NULL,
     Apellido NVARCHAR(30) NOT NULL,
-    Correo NVARCHAR(50) NOT NULL,
+    Correo NVARCHAR(50) NOT NULL UNIQUE,
     NombreUsuario NVARCHAR(20) NOT NULL UNIQUE,
     Contrasenia NVARCHAR(300) NOT NULL,
     Telefono INT UNIQUE,

@@ -27,6 +27,11 @@ namespace Presentation.Forms
             try
             {
                 valorUcuCoins = int.Parse(txtValorProducto.Text);
+                if (valorUcuCoins == 0) 
+                {
+                    MessageBox.Show("El precio en UcuCoins debe ser mayor a 0");
+                    return;
+                }
             }
             catch (FormatException)
             {

@@ -167,6 +167,15 @@ namespace Obligatorio.Services.Services
                 Thread t = new Thread(o =>
                 {
                     var offer = (Oferta)o;
+
+                    var allPosts = offer.PublicacionesEmisor.Union(offer.PublicacionesDestinatario).ToList();
+                    var otherOffers = _offerRepository.GetPendingOffersWithPosts(offer.IdOferta, allPosts);
+
+                    foreach (var idOffer in otherOffers)
+                    {
+                        _offerRepository.UpdateOfferState(idOffer, EnumOfertas.EstadoOferta.Cancelada);
+                    }
+
                     var sendersPosts = new List<string>();
                     var receiversPosts = new List<string>();
 

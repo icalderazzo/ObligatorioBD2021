@@ -71,7 +71,7 @@ namespace Obligatorio.Repositories.Repositories
 
         public Usuario GetForLogin(string username, string password)
         {
-            string query = "SELECT u.Ci, u.Nombre, u.Apellido, u.Correo, u.NombreUsuario FROM Usuario u " +
+            string query = "SELECT u.Ci, u.Nombre, u.Apellido, u.Correo, u.NombreUsuario, u.Contrasenia, u.Telefono From Usuario u " +
                            "WHERE u.NombreUsuario = @username AND u.Contrasenia = @password;";
 
             var dbResult = _context.Select(query,
@@ -81,7 +81,10 @@ namespace Obligatorio.Repositories.Repositories
 
             if (dbResult.Any())
             {
-                return ExtractUser(dbResult);
+                var user = ExtractUser(dbResult);
+                user.Telefono = 
+                user.Telefono = int.Parse(dbResult[0][6].ToString());
+                return user;
             }
             return null;
         }

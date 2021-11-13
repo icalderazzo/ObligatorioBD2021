@@ -63,7 +63,7 @@
             this.productDescriptionText.Location = new System.Drawing.Point(788, 179);
             this.productDescriptionText.Name = "productDescriptionText";
             this.productDescriptionText.Size = new System.Drawing.Size(478, 181);
-            this.productDescriptionText.TabIndex = 40;
+            this.productDescriptionText.TabIndex = 3;
             this.productDescriptionText.Text = "";
             // 
             // btnAddImage
@@ -91,7 +91,7 @@
             this.btnUpdatePost.Location = new System.Drawing.Point(1123, 507);
             this.btnUpdatePost.Name = "btnUpdatePost";
             this.btnUpdatePost.Size = new System.Drawing.Size(143, 41);
-            this.btnUpdatePost.TabIndex = 38;
+            this.btnUpdatePost.TabIndex = 5;
             this.btnUpdatePost.Text = "Guardar";
             this.btnUpdatePost.UseVisualStyleBackColor = false;
             this.btnUpdatePost.Click += new System.EventHandler(this.btnUpdatePost_Click);
@@ -104,7 +104,7 @@
             this.txtValorProducto.MaxLength = 15;
             this.txtValorProducto.Name = "txtValorProducto";
             this.txtValorProducto.Size = new System.Drawing.Size(323, 34);
-            this.txtValorProducto.TabIndex = 37;
+            this.txtValorProducto.TabIndex = 2;
             // 
             // label4
             // 
@@ -151,7 +151,7 @@
             this.txtNombreProducto.MaxLength = 50;
             this.txtNombreProducto.Name = "txtNombreProducto";
             this.txtNombreProducto.Size = new System.Drawing.Size(478, 34);
-            this.txtNombreProducto.TabIndex = 32;
+            this.txtNombreProducto.TabIndex = 1;
             // 
             // postPicBox
             // 
@@ -174,7 +174,7 @@
             this.btnDisablePost.Location = new System.Drawing.Point(942, 507);
             this.btnDisablePost.Name = "btnDisablePost";
             this.btnDisablePost.Size = new System.Drawing.Size(160, 41);
-            this.btnDisablePost.TabIndex = 43;
+            this.btnDisablePost.TabIndex = 4;
             this.btnDisablePost.Text = "Desactivar";
             this.btnDisablePost.UseVisualStyleBackColor = false;
             this.btnDisablePost.Click += new System.EventHandler(this.btnDisablePost_Click);

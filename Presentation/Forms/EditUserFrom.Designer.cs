@@ -58,7 +58,7 @@
             this.txtPhoneNumber.MaxLength = 9;
             this.txtPhoneNumber.Name = "txtPhoneNumber";
             this.txtPhoneNumber.Size = new System.Drawing.Size(199, 34);
-            this.txtPhoneNumber.TabIndex = 27;
+            this.txtPhoneNumber.TabIndex = 2;
             // 
             // txtEmail
             // 
@@ -66,7 +66,7 @@
             this.txtEmail.Location = new System.Drawing.Point(220, 367);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(199, 34);
-            this.txtEmail.TabIndex = 26;
+            this.txtEmail.TabIndex = 3;
             // 
             // txtSurname
             // 
@@ -74,15 +74,16 @@
             this.txtSurname.Location = new System.Drawing.Point(221, 217);
             this.txtSurname.Name = "txtSurname";
             this.txtSurname.Size = new System.Drawing.Size(199, 34);
-            this.txtSurname.TabIndex = 25;
+            this.txtSurname.TabIndex = 1;
             // 
             // txtCurrentPasswd
             // 
             this.txtCurrentPasswd.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtCurrentPasswd.Location = new System.Drawing.Point(891, 145);
             this.txtCurrentPasswd.Name = "txtCurrentPasswd";
+            this.txtCurrentPasswd.PasswordChar = '●';
             this.txtCurrentPasswd.Size = new System.Drawing.Size(199, 34);
-            this.txtCurrentPasswd.TabIndex = 24;
+            this.txtCurrentPasswd.TabIndex = 5;
             this.txtCurrentPasswd.Visible = false;
             // 
             // label7
@@ -148,7 +149,7 @@
             this.btnChangePassword.Location = new System.Drawing.Point(959, 12);
             this.btnChangePassword.Name = "btnChangePassword";
             this.btnChangePassword.Size = new System.Drawing.Size(178, 29);
-            this.btnChangePassword.TabIndex = 28;
+            this.btnChangePassword.TabIndex = 4;
             this.btnChangePassword.Text = "Cambiar contraseña";
             this.btnChangePassword.UseVisualStyleBackColor = true;
             this.btnChangePassword.Click += new System.EventHandler(this.btnChangePassword_Click);
@@ -202,7 +203,7 @@
             this.txtName.Location = new System.Drawing.Point(221, 133);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(199, 34);
-            this.txtName.TabIndex = 30;
+            this.txtName.TabIndex = 0;
             // 
             // lblUsername
             // 
@@ -243,8 +244,9 @@
             this.txtNewPasswd.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtNewPasswd.Location = new System.Drawing.Point(891, 229);
             this.txtNewPasswd.Name = "txtNewPasswd";
+            this.txtNewPasswd.PasswordChar = '●';
             this.txtNewPasswd.Size = new System.Drawing.Size(199, 34);
-            this.txtNewPasswd.TabIndex = 31;
+            this.txtNewPasswd.TabIndex = 6;
             this.txtNewPasswd.Visible = false;
             // 
             // txtRepeatNewPasswd
@@ -252,8 +254,9 @@
             this.txtRepeatNewPasswd.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtRepeatNewPasswd.Location = new System.Drawing.Point(891, 289);
             this.txtRepeatNewPasswd.Name = "txtRepeatNewPasswd";
+            this.txtRepeatNewPasswd.PasswordChar = '●';
             this.txtRepeatNewPasswd.Size = new System.Drawing.Size(199, 34);
-            this.txtRepeatNewPasswd.TabIndex = 33;
+            this.txtRepeatNewPasswd.TabIndex = 7;
             this.txtRepeatNewPasswd.Visible = false;
             // 
             // btnUpdateUser
@@ -267,7 +270,7 @@
             this.btnUpdateUser.Location = new System.Drawing.Point(1011, 433);
             this.btnUpdateUser.Name = "btnUpdateUser";
             this.btnUpdateUser.Size = new System.Drawing.Size(126, 33);
-            this.btnUpdateUser.TabIndex = 34;
+            this.btnUpdateUser.TabIndex = 8;
             this.btnUpdateUser.Text = "Actualizar";
             this.btnUpdateUser.UseVisualStyleBackColor = false;
             this.btnUpdateUser.Click += new System.EventHandler(this.btnUpdateUser_Click);

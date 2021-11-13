@@ -123,7 +123,7 @@
             this.txtValorProducto.MaxLength = 15;
             this.txtValorProducto.Name = "txtValorProducto";
             this.txtValorProducto.Size = new System.Drawing.Size(323, 34);
-            this.txtValorProducto.TabIndex = 16;
+            this.txtValorProducto.TabIndex = 1;
             // 
             // btnCreatePost
             // 
@@ -136,7 +136,7 @@
             this.btnCreatePost.Location = new System.Drawing.Point(768, 636);
             this.btnCreatePost.Name = "btnCreatePost";
             this.btnCreatePost.Size = new System.Drawing.Size(179, 41);
-            this.btnCreatePost.TabIndex = 23;
+            this.btnCreatePost.TabIndex = 4;
             this.btnCreatePost.Text = "Publicar";
             this.btnCreatePost.UseVisualStyleBackColor = false;
             this.btnCreatePost.Click += new System.EventHandler(this.btnCreatePost_Click);
@@ -149,7 +149,7 @@
             this.btnAddImage.Location = new System.Drawing.Point(268, 492);
             this.btnAddImage.Name = "btnAddImage";
             this.btnAddImage.Size = new System.Drawing.Size(121, 38);
-            this.btnAddImage.TabIndex = 28;
+            this.btnAddImage.TabIndex = 3;
             this.btnAddImage.Text = "Subir";
             this.btnAddImage.UseVisualStyleBackColor = false;
             this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
@@ -161,7 +161,7 @@
             this.productDescriptionText.Location = new System.Drawing.Point(268, 255);
             this.productDescriptionText.Name = "productDescriptionText";
             this.productDescriptionText.Size = new System.Drawing.Size(478, 181);
-            this.productDescriptionText.TabIndex = 29;
+            this.productDescriptionText.TabIndex = 2;
             this.productDescriptionText.Text = "";
             // 
             // lblImageFileName

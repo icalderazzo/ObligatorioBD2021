@@ -84,7 +84,7 @@ namespace Presentation.Forms
             this.btnLogin.Location = new System.Drawing.Point(696, 393);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(100, 33);
-            this.btnLogin.TabIndex = 1;
+            this.btnLogin.TabIndex = 2;
             this.btnLogin.Text = "Ingresar";
             this.btnLogin.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnLogin.UseVisualStyleBackColor = false;
@@ -97,7 +97,7 @@ namespace Presentation.Forms
             this.txtUsername.Location = new System.Drawing.Point(257, 197);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(323, 32);
-            this.txtUsername.TabIndex = 2;
+            this.txtUsername.TabIndex = 0;
             // 
             // txtPassword
             // 
@@ -107,7 +107,7 @@ namespace Presentation.Forms
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '●';
             this.txtPassword.Size = new System.Drawing.Size(323, 32);
-            this.txtPassword.TabIndex = 3;
+            this.txtPassword.TabIndex = 1;
             // 
             // lblUser
             // 

@@ -50,11 +50,10 @@
             // txtCI
             // 
             this.txtCI.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtCI.Location = new System.Drawing.Point(150, 89);
-            this.txtCI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtCI.Location = new System.Drawing.Point(171, 119);
             this.txtCI.MaxLength = 8;
             this.txtCI.Name = "txtCI";
-            this.txtCI.Size = new System.Drawing.Size(175, 29);
+            this.txtCI.Size = new System.Drawing.Size(199, 34);
             this.txtCI.TabIndex = 0;
             // 
             // label1
@@ -62,9 +61,9 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(47, 94);
+            this.label1.Location = new System.Drawing.Point(54, 125);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(68, 21);
+            this.label1.Size = new System.Drawing.Size(84, 23);
             this.label1.TabIndex = 6;
             this.label1.Text = "Cédula";
             // 
@@ -73,9 +72,9 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(47, 153);
+            this.label2.Location = new System.Drawing.Point(54, 204);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 21);
+            this.label2.Size = new System.Drawing.Size(90, 23);
             this.label2.TabIndex = 7;
             this.label2.Text = "Nombre";
             // 
@@ -84,9 +83,9 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(47, 212);
+            this.label3.Location = new System.Drawing.Point(54, 283);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(74, 21);
+            this.label3.Size = new System.Drawing.Size(92, 23);
             this.label3.TabIndex = 8;
             this.label3.Text = "Apellido";
             // 
@@ -95,9 +94,9 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(47, 277);
+            this.label4.Location = new System.Drawing.Point(54, 369);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(76, 21);
+            this.label4.Size = new System.Drawing.Size(93, 23);
             this.label4.TabIndex = 9;
             this.label4.Text = "Teléfono";
             // 
@@ -106,9 +105,9 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(415, 94);
+            this.label5.Location = new System.Drawing.Point(474, 125);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(157, 21);
+            this.label5.Size = new System.Drawing.Size(197, 23);
             this.label5.TabIndex = 10;
             this.label5.Text = "Nombre de usuario";
             // 
@@ -117,9 +116,9 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(415, 153);
+            this.label6.Location = new System.Drawing.Point(474, 204);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(103, 21);
+            this.label6.Size = new System.Drawing.Size(125, 23);
             this.label6.TabIndex = 11;
             this.label6.Text = "Contraseña";
             // 
@@ -128,67 +127,61 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(53, 332);
+            this.label7.Location = new System.Drawing.Point(61, 443);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(63, 21);
+            this.label7.Size = new System.Drawing.Size(77, 23);
             this.label7.TabIndex = 12;
             this.label7.Text = "Correo";
             // 
             // txtNombre
             // 
             this.txtNombre.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtNombre.Location = new System.Drawing.Point(150, 153);
-            this.txtNombre.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtNombre.Location = new System.Drawing.Point(171, 204);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(175, 29);
-            this.txtNombre.TabIndex = 13;
+            this.txtNombre.Size = new System.Drawing.Size(199, 34);
+            this.txtNombre.TabIndex = 1;
             // 
             // txtApellido
             // 
             this.txtApellido.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtApellido.Location = new System.Drawing.Point(150, 212);
-            this.txtApellido.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtApellido.Location = new System.Drawing.Point(171, 283);
             this.txtApellido.Name = "txtApellido";
-            this.txtApellido.Size = new System.Drawing.Size(175, 29);
-            this.txtApellido.TabIndex = 14;
+            this.txtApellido.Size = new System.Drawing.Size(199, 34);
+            this.txtApellido.TabIndex = 2;
             // 
             // txtCorreo
             // 
             this.txtCorreo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtCorreo.Location = new System.Drawing.Point(150, 327);
-            this.txtCorreo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtCorreo.Location = new System.Drawing.Point(171, 436);
             this.txtCorreo.Name = "txtCorreo";
-            this.txtCorreo.Size = new System.Drawing.Size(175, 29);
-            this.txtCorreo.TabIndex = 15;
+            this.txtCorreo.Size = new System.Drawing.Size(199, 34);
+            this.txtCorreo.TabIndex = 4;
             // 
             // txtTelefono
             // 
             this.txtTelefono.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtTelefono.Location = new System.Drawing.Point(150, 272);
-            this.txtTelefono.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtTelefono.Location = new System.Drawing.Point(171, 363);
             this.txtTelefono.MaxLength = 9;
             this.txtTelefono.Name = "txtTelefono";
-            this.txtTelefono.Size = new System.Drawing.Size(175, 29);
-            this.txtTelefono.TabIndex = 16;
+            this.txtTelefono.Size = new System.Drawing.Size(199, 34);
+            this.txtTelefono.TabIndex = 3;
             // 
             // txtNombreUsuario
             // 
             this.txtNombreUsuario.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtNombreUsuario.Location = new System.Drawing.Point(604, 88);
-            this.txtNombreUsuario.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtNombreUsuario.Location = new System.Drawing.Point(690, 117);
             this.txtNombreUsuario.Name = "txtNombreUsuario";
-            this.txtNombreUsuario.Size = new System.Drawing.Size(172, 29);
-            this.txtNombreUsuario.TabIndex = 17;
+            this.txtNombreUsuario.Size = new System.Drawing.Size(196, 34);
+            this.txtNombreUsuario.TabIndex = 5;
             // 
             // txtContrasenia
             // 
             this.txtContrasenia.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtContrasenia.Location = new System.Drawing.Point(604, 148);
-            this.txtContrasenia.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtContrasenia.Location = new System.Drawing.Point(690, 197);
             this.txtContrasenia.Name = "txtContrasenia";
             this.txtContrasenia.PasswordChar = '●';
-            this.txtContrasenia.Size = new System.Drawing.Size(172, 29);
-            this.txtContrasenia.TabIndex = 18;
+            this.txtContrasenia.Size = new System.Drawing.Size(196, 34);
+            this.txtContrasenia.TabIndex = 6;
             // 
             // btnCreateUser
             // 
@@ -197,11 +190,10 @@
             this.btnCreateUser.FlatAppearance.BorderSize = 0;
             this.btnCreateUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCreateUser.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnCreateUser.Location = new System.Drawing.Point(625, 384);
-            this.btnCreateUser.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCreateUser.Location = new System.Drawing.Point(714, 512);
             this.btnCreateUser.Name = "btnCreateUser";
-            this.btnCreateUser.Size = new System.Drawing.Size(110, 25);
-            this.btnCreateUser.TabIndex = 23;
+            this.btnCreateUser.Size = new System.Drawing.Size(126, 33);
+            this.btnCreateUser.TabIndex = 7;
             this.btnCreateUser.Text = "Registrarse";
             this.btnCreateUser.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnCreateUser.UseVisualStyleBackColor = false;
@@ -214,11 +206,10 @@
             this.btnReturnToLogin.FlatAppearance.BorderSize = 0;
             this.btnReturnToLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReturnToLogin.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnReturnToLogin.Location = new System.Drawing.Point(445, 384);
-            this.btnReturnToLogin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnReturnToLogin.Location = new System.Drawing.Point(509, 512);
             this.btnReturnToLogin.Name = "btnReturnToLogin";
-            this.btnReturnToLogin.Size = new System.Drawing.Size(142, 25);
-            this.btnReturnToLogin.TabIndex = 21;
+            this.btnReturnToLogin.Size = new System.Drawing.Size(162, 33);
+            this.btnReturnToLogin.TabIndex = 8;
             this.btnReturnToLogin.Text = "Volver al login";
             this.btnReturnToLogin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnReturnToLogin.UseVisualStyleBackColor = false;
@@ -230,18 +221,18 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Century Gothic", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label8.ForeColor = System.Drawing.SystemColors.Control;
-            this.label8.Location = new System.Drawing.Point(336, 28);
+            this.label8.Location = new System.Drawing.Point(384, 37);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(127, 25);
+            this.label8.Size = new System.Drawing.Size(161, 34);
             this.label8.TabIndex = 24;
             this.label8.Text = "Registrarse";
             // 
             // CreateUserForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(107)))));
-            this.ClientSize = new System.Drawing.Size(801, 435);
+            this.ClientSize = new System.Drawing.Size(915, 580);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.btnCreateUser);
             this.Controls.Add(this.btnReturnToLogin);
@@ -259,7 +250,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtCI);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "CreateUserForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.CreateUserForm_Load);

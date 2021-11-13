@@ -57,6 +57,10 @@ namespace Presentation.IndividualComponents
                     lblTitle.Text = "Oferta rechazada";
                     bannerColorPanel.BackColor = RejectedOfferColor;
                     break;
+                case EnumOfertas.EstadoOferta.Cancelada:
+                    lblTitle.Text = "Oferta cancelada";
+                    bannerColorPanel.BackColor = RejectedOfferColor;
+                    break;
                 default:
                     break;
             }
@@ -65,18 +69,18 @@ namespace Presentation.IndividualComponents
             {
                 case EnumRoles.RolOferta.Emisor:
                     lblSubTitle.Text = lblSubTitle.Text.Replace("[OfferSubtitle]", "Has ofertado por ");
-                    LoadPostsList(_offer.PublicacionesEmisor);
                     btnAccpetOffer.Visible = false;
                     btnRejectOffer.Visible = false;
                     btnCounterOffer.Visible = false;
                     break;
                 case EnumRoles.RolOferta.Destinatario:
                     lblSubTitle.Text = lblSubTitle.Text.Replace("[OfferSubtitle]", "Has recibido una oferta por ");
-                    LoadPostsList(_offer.PublicacionesDestinatario);
                     break;
                 default:
                     break;
             }
+
+            LoadPostsList(_offer.PublicacionesDestinatario);
         }
 
         private void LoadPostsList(List<Publicacion> posts)

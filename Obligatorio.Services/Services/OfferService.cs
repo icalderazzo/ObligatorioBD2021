@@ -7,6 +7,7 @@ using System;
 using EmailService;
 using static Obligatorio.Domain.Emails.EmailBodies;
 using System.Linq;
+using System.Threading;
 
 namespace Obligatorio.Services.Services
 {
@@ -16,6 +17,7 @@ namespace Obligatorio.Services.Services
         private readonly IPostsService _postService;
         private readonly INotificationsService<Email> _emailNotificationsService;
         private readonly IValidator<Oferta> _offerValidator;
+
         public OfferService(
             IOfferRepository offerRepository, 
             IPostsService postsService, 
@@ -28,6 +30,7 @@ namespace Obligatorio.Services.Services
             _offerRepository = offerRepository;
             _emailNotificationsService = emailNotificationsService;
         }
+
         public void Create(Oferta entity)
         {
             var validation_result = _offerValidator.Validate(entity);
@@ -41,62 +44,78 @@ namespace Obligatorio.Services.Services
 
                 _offerRepository.Insert(entity);
 
-                // Si es una contraoferta envio mail de contraoferta a emisor
-                if (entity.TransaccionContraofertada != null)
+
+                Thread t = new Thread(o =>
                 {
-                    var recieverPosts = new List<string>();
-
-                    // Obtengo las publicaciones del emisor porque estoy parado en la contraoferta
-                    // Estas publicaciones son las mismas que las PublicacionesDestinatario de la oferta original
-                    foreach (Publicacion pub in entity.PublicacionesEmisor)
+                    var offer = (Oferta)o;
+                    // Si es una contraoferta envio mail de contraoferta a emisor
+                    if (entity.TransaccionContraofertada != null)
                     {
-                        recieverPosts.Add(pub.Articulo.Nombre);
+                        var recieverPosts = new List<string>();
+
+                        // Obtengo las publicaciones del emisor porque estoy parado en la contraoferta
+                        // Estas publicaciones son las mismas que las PublicacionesDestinatario de la oferta original
+                        foreach (Publicacion pub in offer.PublicacionesEmisor)
+                        {
+                            recieverPosts.Add(pub.Articulo.Nombre);
+                        }
+
+                        _emailNotificationsService.Notify(new Email()
+                        {
+                            Subject = "Oferta contraofertada",
+                            Body = SenderCounterOfferEmailBody(
+                                        name: offer.UsuarioEmisor.Nombre,
+                                        surname: offer.UsuarioEmisor.Apellido,
+                                        postsnames: recieverPosts
+                                    ),
+                            ToEmail = offer.UsuarioEmisor.Correo
+                        });
                     }
-
-                    _emailNotificationsService.Notify(new Email()
+                    // Sino envio mail de oferta recibida a destinatario
+                    else
                     {
-                        Subject = "Oferta contraofertada",
-                        Body = SenderCounterOfferEmailBody(
-                                    name: entity.UsuarioEmisor.Nombre,
-                                    surname: entity.UsuarioEmisor.Apellido,
-                                    postsnames: recieverPosts
-                                ),
-                        ToEmail = entity.UsuarioEmisor.Correo
-                    });
-                }
-                // Sino envio mail de oferta recibida a destinatario
-                else 
-                {
-                    var senderPosts = new List<string>();
+                        var senderPosts = new List<string>();
+                        var receiversPosts = new List<string>();
 
-                    foreach (Publicacion pub in entity.PublicacionesEmisor)
-                    {
-                        senderPosts.Add(pub.Articulo.Nombre);
+                        foreach (Publicacion pub in offer.PublicacionesEmisor)
+                        {
+                            senderPosts.Add(pub.Articulo.Nombre);
+                        }
+
+                        foreach (var post in offer.PublicacionesDestinatario)
+                        {
+                            receiversPosts.Add(post.Articulo.Nombre);
+                        }
+
+                        _emailNotificationsService.Notify(new Email()
+                        {
+                            Subject = "Oferta recibida",
+                            Body = RecieverNewOfferEmailBody(
+                                        name: offer.UsuarioDestinatario.Nombre,
+                                        surname: offer.UsuarioDestinatario.Apellido,
+                                        sendersPostsnames: senderPosts,
+                                        receiversPostnames: receiversPosts
+                                    ),
+                            ToEmail = offer.UsuarioDestinatario.Correo
+                        });
                     }
+                })
+                { 
+                    IsBackground = true,
+                    Name = "AfterCreateOffer"
+                };
 
-                    _emailNotificationsService.Notify(new Email()
-                    {
-                        Subject = "Oferta recibida",
-                        Body = RecieverNewOfferEmailBody(
-                                    name: entity.UsuarioDestinatario.Nombre,
-                                    surname: entity.UsuarioDestinatario.Apellido,
-                                    postsnames: senderPosts
-                                ),
-                        ToEmail = entity.UsuarioDestinatario.Correo
-                    });
-                }
+                t.Start(entity);
             }
             else 
             {
                 throw new InvalidOperationException(validation_result.Item2);
             }
         }
-
         public void Delete(string entityId)
         {
             throw new System.NotImplementedException();
         }
-
         public Oferta GetById(string entityId)
         {
             try
@@ -115,7 +134,6 @@ namespace Obligatorio.Services.Services
                 throw;
             }
         }
-
         public List<Oferta> FilterOffers(OfferFilter filter)
         {
             // Obtain offers that the user recieved and are pending
@@ -132,97 +150,113 @@ namespace Obligatorio.Services.Services
 
             return offersRecieved;
         }
-
         public ICollection<Oferta> List()
         {
             throw new System.NotImplementedException();
         }
-
         public void Modify(Oferta entity)
         {
             throw new System.NotImplementedException();
         }
-
         public void AcceptOffer(Oferta offer)
         {
             try
             {
                 _offerRepository.UpdateOfferState(offer.IdOferta, EnumOfertas.EstadoOferta.Completada);
 
-                var sendersPosts = new List<string>();
-                var receiversPosts = new List<string>();
-
-                foreach (Publicacion pub in offer.PublicacionesDestinatario)
+                Thread t = new Thread(o =>
                 {
-                    // cambiar estado de todas las ofertas en las que aparezca pub
-                    _postService.UpdatePostState(pub.IdPublicacion, false);
-                    receiversPosts.Add(pub.Articulo.Nombre);
-                }
+                    var offer = (Oferta)o;
+                    var sendersPosts = new List<string>();
+                    var receiversPosts = new List<string>();
 
-                foreach (Publicacion pub in offer.PublicacionesEmisor)
-                {
-                    // cambiar estado de todas las ofertas en las que aparezca pub
-                    _postService.UpdatePostState(pub.IdPublicacion, false);
-                    sendersPosts.Add(pub.Articulo.Nombre);
-                }
+                    foreach (Publicacion pub in offer.PublicacionesDestinatario)
+                    {
+                        // cambiar estado de todas las ofertas en las que aparezca pub
+                        _postService.UpdatePostState(pub.IdPublicacion, false);
+                        receiversPosts.Add(pub.Articulo.Nombre);
+                    }
 
-                _emailNotificationsService.Notify(new Email()
-                {
-                    Subject = "Oferta aceptada",
-                    Body = SenderAcceptedOfferEmailBody(
-                                name: offer.UsuarioEmisor.Nombre,
-                                surname: offer.UsuarioEmisor.Apellido,
-                                postsnames: receiversPosts,
-                                receiversName: offer.UsuarioDestinatario.Nombre,
-                                receiversSurname: offer.UsuarioDestinatario.Apellido,
-                                receiversEmail: offer.UsuarioDestinatario.Correo
-                           ),
-                    ToEmail = offer.UsuarioEmisor.Correo
-                });
+                    foreach (Publicacion pub in offer.PublicacionesEmisor)
+                    {
+                        // cambiar estado de todas las ofertas en las que aparezca pub
+                        _postService.UpdatePostState(pub.IdPublicacion, false);
+                        sendersPosts.Add(pub.Articulo.Nombre);
+                    }
 
-                _emailNotificationsService.Notify(new Email()
+                    _emailNotificationsService.Notify(new Email()
+                    {
+                        Subject = "Oferta aceptada",
+                        Body = SenderAcceptedOfferEmailBody(
+                                    name: offer.UsuarioEmisor.Nombre,
+                                    surname: offer.UsuarioEmisor.Apellido,
+                                    postsnames: receiversPosts,
+                                    receiversName: offer.UsuarioDestinatario.Nombre,
+                                    receiversSurname: offer.UsuarioDestinatario.Apellido,
+                                    receiversEmail: offer.UsuarioDestinatario.Correo
+                               ),
+                        ToEmail = offer.UsuarioEmisor.Correo
+                    });
+
+                    _emailNotificationsService.Notify(new Email()
+                    {
+                        Subject = "Oferta aceptada",
+                        Body = ReceiversAcceptedOfferEmailBody(
+                                    name: offer.UsuarioDestinatario.Nombre,
+                                    surname: offer.UsuarioDestinatario.Apellido,
+                                    postsnames: sendersPosts,
+                                    sendersName: offer.UsuarioEmisor.Nombre,
+                                    sendersSurname: offer.UsuarioEmisor.Apellido,
+                                    sendersEmail: offer.UsuarioEmisor.Correo
+                                ),
+                        ToEmail = offer.UsuarioDestinatario.Correo
+                    });
+                })
                 {
-                    Subject = "Oferta aceptada",
-                    Body = ReceiversAcceptedOfferEmailBody(
-                                name: offer.UsuarioDestinatario.Nombre,
-                                surname: offer.UsuarioDestinatario.Apellido,
-                                postsnames: sendersPosts,
-                                sendersName: offer.UsuarioEmisor.Nombre,
-                                sendersSurname: offer.UsuarioEmisor.Apellido,
-                                sendersEmail: offer.UsuarioEmisor.Correo
-                            ),
-                    ToEmail = offer.UsuarioDestinatario.Correo
-                });
+                    IsBackground = true, 
+                    Name = "AfterAcceptOffer"
+                };
+
+                t.Start(offer);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-
         public void CancelOffer(Oferta offer)
         {
             try
             {
                 _offerRepository.UpdateOfferState(offer.IdOferta, EnumOfertas.EstadoOferta.Rechazada);
 
-                var receiversPosts = new List<string>();
-
-                foreach (Publicacion pub in offer.PublicacionesDestinatario)
+                Thread t = new Thread(o =>
                 {
-                    receiversPosts.Add(pub.Articulo.Nombre);
-                }
+                    var offer = (Oferta)o;
+                    var receiversPosts = new List<string>();
 
-                _emailNotificationsService.Notify(new Email()
+                    foreach (Publicacion pub in offer.PublicacionesDestinatario)
+                    {
+                        receiversPosts.Add(pub.Articulo.Nombre);
+                    }
+
+                    _emailNotificationsService.Notify(new Email()
+                    {
+                        Subject = "Oferta rechazada",
+                        Body = SenderRejectedOfferEmailBody(
+                                    name: offer.UsuarioEmisor.Nombre,
+                                    surname: offer.UsuarioEmisor.Apellido,
+                                    postsnames: receiversPosts
+                                ),
+                        ToEmail = offer.UsuarioEmisor.Correo
+                    });
+                })
                 {
-                    Subject = "Oferta rechazada",
-                    Body = SenderRejectedOfferEmailBody(
-                                name: offer.UsuarioEmisor.Nombre,
-                                surname: offer.UsuarioEmisor.Apellido,
-                                postsnames: receiversPosts
-                            ),
-                    ToEmail = offer.UsuarioEmisor.Correo
-                });
+                    IsBackground = true,
+                    Name = "AfterRejectOffer"
+                };
+
+                t.Start(offer);
             }
             catch (Exception)
             {
@@ -230,7 +264,5 @@ namespace Obligatorio.Services.Services
             }
             
         }
-
     }
-
 }

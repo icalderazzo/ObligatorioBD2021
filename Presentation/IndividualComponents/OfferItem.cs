@@ -65,14 +65,14 @@ namespace Presentation.IndividualComponents
             {
                 case EnumRoles.RolOferta.Emisor:
                     lblSubTitle.Text = lblSubTitle.Text.Replace("[OfferSubtitle]", "Has ofertado por ");
-                    LoadPostsList(_offer.PublicacionesDestinatario);
+                    LoadPostsList(_offer.PublicacionesEmisor);
                     btnAccpetOffer.Visible = false;
                     btnRejectOffer.Visible = false;
                     btnCounterOffer.Visible = false;
                     break;
                 case EnumRoles.RolOferta.Destinatario:
                     lblSubTitle.Text = lblSubTitle.Text.Replace("[OfferSubtitle]", "Has recibido una oferta por ");
-                    LoadPostsList(_offer.PublicacionesEmisor);
+                    LoadPostsList(_offer.PublicacionesDestinatario);
                     break;
                 default:
                     break;

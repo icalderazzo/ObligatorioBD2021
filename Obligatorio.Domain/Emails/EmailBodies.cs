@@ -101,21 +101,30 @@ namespace Obligatorio.Domain.Emails
         public static string RecieverNewOfferEmailBody(
             string name,
             string surname,
-            List<string> postsnames
+            List<string> sendersPostsnames,
+            List<string> receiversPostnames
             )
         {
             stringBuilder.Clear();
             stringBuilder.AppendLine($"Hola, {name} {surname}!");
             stringBuilder.AppendLine("Has recibido una oferta!");
-            stringBuilder.AppendLine("La misma consta de los siguientes artículos: ");
             stringBuilder.AppendLine();
-            foreach (var post in postsnames)
+
+            stringBuilder.AppendLine("Te han ofrecido: ");
+            foreach (var post in sendersPostsnames)
             {
                 stringBuilder.AppendLine($"- {post}");
             }
             stringBuilder.AppendLine();
-            stringBuilder.AppendLine("Revisa tu pestaña de ofertas.");
 
+            stringBuilder.AppendLine("Por tus siguientes publicaciones: ");
+            foreach (var p in receiversPostnames)
+            {
+                stringBuilder.AppendLine($"- {p}");
+            }
+            stringBuilder.AppendLine();
+
+            stringBuilder.AppendLine("Revisa tu pestaña de ofertas.");
             return stringBuilder.ToString();
         }
 

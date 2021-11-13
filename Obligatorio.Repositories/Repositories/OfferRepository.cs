@@ -258,14 +258,7 @@ namespace Obligatorio.Repositories.Repositories
                     new SqlParameter("@PostsCount", posts.Count),
                     new SqlParameter("@EstadoOferta", EnumOfertas.EstadoOferta.Pendiente));
 
-                foreach (var row in result)
-                {
-                    var postsCount = int.Parse(row[1].ToString());
-                    if (postsCount == posts.Count)
-                        return true;
-                }
-
-                return false;
+                return result.Count > 0;
             }
             catch (Exception)
             {

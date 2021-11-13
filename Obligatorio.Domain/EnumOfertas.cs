@@ -8,7 +8,8 @@ namespace Obligatorio.Domain
             None,
             Pendiente,
             Completada,
-            Rechazada
+            Rechazada,
+            Cancelada
         }
     }
 }

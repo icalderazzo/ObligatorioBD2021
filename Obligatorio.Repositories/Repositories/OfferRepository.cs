@@ -258,17 +258,47 @@ namespace Obligatorio.Repositories.Repositories
                     new SqlParameter("@PostsCount", posts.Count),
                     new SqlParameter("@EstadoOferta", EnumOfertas.EstadoOferta.Pendiente));
 
-                foreach (var row in result)
-                {
-                    var postsCount = int.Parse(row[1].ToString());
-                    if (postsCount == posts.Count)
-                        return true;
-                }
-
-                return false;
+                return result.Count > 0;
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+
+        public List<long> GetPendingOffersWithPosts(long idOfertaActual, List<Publicacion> posts)
+        {
+            try
+            {
+                string query = "SELECT DISTINCT po.IdOferta FROM PublicacionOferta po " +
+                                "INNER JOIN Oferta o ON po.IdOferta = o.IdOferta " +
+                                "WHERE o.EstadoOferta = @EstadoOferta AND po.IdPublicacion IN ([Posts]) " +
+                                "AND po.IdOferta <> @OfertaActual;";
+
+                string postsIds = "";
+                foreach (var p in posts)
+                {
+                    postsIds += $"{p.IdPublicacion}, ";
+                }
+                postsIds = postsIds.Substring(0, postsIds.Length - 2);
+                query = query.Replace("[Posts]", postsIds);
+
+                var dbResult = _context.Select(query,
+                    new SqlParameter("@EstadoOferta", EnumOfertas.EstadoOferta.Pendiente),
+                    new SqlParameter("@OfertaActual", idOfertaActual)
+                );
+
+                var result = new List<long>();
+                foreach (var row in dbResult)
+                {
+                    result.Add(long.Parse(row[0].ToString()));
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }

@@ -79,6 +79,8 @@ namespace Presentation
                 .AddScoped<ShowOffersForm>()
                 .AddScoped<OfferDetailForm>()
                 .AddScoped<ShowPostsForm>()
+                .AddScoped<UserControlsFrom>()
+                .AddScoped<EditUserFrom>()
                 ;
         }
     }

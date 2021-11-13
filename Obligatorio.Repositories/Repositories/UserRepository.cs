@@ -46,7 +46,7 @@ namespace Obligatorio.Repositories.Repositories
 
         public bool ExistsUserWithEmail(string email, int ci)
         {
-            string query = "SELECT u.Ci FROM Usuario u WHERE u.Correo = @email WHERE u.Ci <> @Ci;";
+            string query = "SELECT u.Ci FROM Usuario u WHERE u.Correo = @email AND u.Ci <> @Ci;";
             var result = _context.Select(query, 
                 new SqlParameter("@email", email),
                 new SqlParameter("@Ci", ci)
@@ -55,7 +55,7 @@ namespace Obligatorio.Repositories.Repositories
         }
         public bool ExistsUserWithPhoneNumber(int phoneNumber, int ci)
         {
-            string query = "SELECT u.Ci FROM Usuario u WHERE u.Telefono = @phoneNumber WHERE u.Ci <> @Ci;";
+            string query = "SELECT u.Ci FROM Usuario u WHERE u.Telefono = @phoneNumber AND u.Ci <> @Ci;";
             var result = _context.Select(query, 
                 new SqlParameter("@phoneNumber", phoneNumber),
                 new SqlParameter("@Ci", ci)
@@ -177,6 +177,28 @@ namespace Obligatorio.Repositories.Repositories
         public ICollection<Usuario> List()
         {
             throw new NotImplementedException();
+        }
+
+        public Usuario GetCompleteUserByUsername(string username)
+        {
+            try
+            {
+                string query = "SELECT Ci, Nombre, Apellido, Correo, NombreUsuario, Contrasenia, Telefono " +
+                    "FROM Usuario WHERE NombreUsuario = @Username;";
+
+                var dbResult = _context.Select(query,
+                    new SqlParameter("@Username", username));
+
+                var user = ExtractUser(dbResult);
+                user.Contrasenia = dbResult[0][5].ToString();
+                user.Telefono = int.Parse(dbResult[0][6].ToString());
+
+                return user;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

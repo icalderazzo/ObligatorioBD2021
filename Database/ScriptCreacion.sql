@@ -40,6 +40,7 @@ begin tran
 insert into EstadoOferta Values ('Pendiente')
 insert into EstadoOferta Values ('Completada')
 insert into EstadoOferta Values ('Rechazada')
+insert into EstadoOferta values ('Cancelada')
 commit
 
 

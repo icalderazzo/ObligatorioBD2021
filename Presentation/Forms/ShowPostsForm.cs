@@ -15,6 +15,7 @@ namespace Presentation.Forms
         private readonly IPostsService _postsService;
         private readonly IImageConverter _imageConverter; 
         private readonly System.Drawing.ImageConverter _defaultImageConverter;
+
         public ShowPostsForm(
             IPostsService postsService,
             IImageConverter imageConverter,
@@ -25,8 +26,8 @@ namespace Presentation.Forms
             _defaultImageConverter = defaultImageConverter;
             InitializeComponent();
         }
-
-        private async void ShowPostsForm_Load(object sender, EventArgs e)
+        
+        public async void RefreshPosts()
         {
             await GetActiveUsersPosts();
         }
@@ -42,13 +43,13 @@ namespace Presentation.Forms
         }
         private async Task GetActiveUsersPosts()
         {
+            postsFlowPanel.Controls.Clear();
             var posts = await Task.Run(() => _postsService.ListPostsOfUser(Global.LoggedUser.Cedula));
             foreach (var post in posts)
             {
                 LoadPostInPanel(post);
             }
         }
-
         private void ShowEditForm(object sender, EventArgs e)
         {
             if (_editPostForm == null || _editPostForm.IsDisposed)

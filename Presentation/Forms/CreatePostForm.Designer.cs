@@ -91,18 +91,6 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "Valor Producto";
             // 
-            // label5
-            // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Century Gothic", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.ForeColor = System.Drawing.SystemColors.Control;
-            this.label5.Location = new System.Drawing.Point(389, -34);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(242, 34);
-            this.label5.TabIndex = 24;
-            this.label5.Text = "Alta Publicación";
-            // 
             // label6
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;

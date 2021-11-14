@@ -210,7 +210,7 @@ namespace Obligatorio.Repositories.Repositories
                 // Insercion de Publicacion
                 string query = "UPDATE Publicacion SET Estado=@state, DescripcionProducto=@description, NombreProducto=@name, ValorProducto=@value WHERE IdPublicacion=@id";
 
-                var dbResult = _databaseContext.SaveData(query,
+                var dbResult = _databaseContext.SaveData(tran, query,
                     new SqlParameter("@state", entity.Estado),
                     new SqlParameter("@description", entity.Articulo.Descripcion),
                     new SqlParameter("@name", entity.Articulo.Nombre),

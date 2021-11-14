@@ -211,7 +211,6 @@
             this.MaximizeBox = false;
             this.Name = "EditPostForm";
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Editar publicación";
             this.Load += new System.EventHandler(this.EditPostForm_Load);

@@ -91,7 +91,7 @@ namespace Presentation.Forms
         {
             using (var fileDialog = new OpenFileDialog())
             {
-                fileDialog.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+                fileDialog.Filter = "Image Files(*.jpg; *.jpeg; *.bmp; *.png)|*.jpg; *.jpeg; *.bmp; *.png";
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
                     Image img = Image.FromFile(fileDialog.FileName);

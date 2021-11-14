@@ -42,16 +42,18 @@
             this.productDescriptionText = new System.Windows.Forms.RichTextBox();
             this.lblImageFileName = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.postPicBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.postPicBox)).BeginInit();
             this.SuspendLayout();
             // 
             // txtNombreProducto
             // 
             this.txtNombreProducto.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtNombreProducto.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtNombreProducto.Location = new System.Drawing.Point(268, 75);
+            this.txtNombreProducto.Location = new System.Drawing.Point(720, 26);
             this.txtNombreProducto.MaxLength = 50;
             this.txtNombreProducto.Name = "txtNombreProducto";
-            this.txtNombreProducto.Size = new System.Drawing.Size(478, 34);
+            this.txtNombreProducto.Size = new System.Drawing.Size(424, 34);
             this.txtNombreProducto.TabIndex = 0;
             // 
             // label1
@@ -61,7 +63,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(36, 82);
+            this.label1.Location = new System.Drawing.Point(479, 33);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(226, 23);
             this.label1.TabIndex = 6;
@@ -73,11 +75,11 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(36, 255);
+            this.label3.Location = new System.Drawing.Point(479, 218);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(123, 23);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Descripcion";
+            this.label3.Text = "Descripción";
             // 
             // label4
             // 
@@ -85,19 +87,26 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(36, 164);
+            this.label4.Location = new System.Drawing.Point(479, 123);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(159, 23);
             this.label4.TabIndex = 9;
             this.label4.Text = "Valor Producto";
             // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(0, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(100, 23);
+            this.label5.TabIndex = 32;
+            // 
             // label6
             // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(36, 497);
+            this.label6.Location = new System.Drawing.Point(21, 461);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(86, 23);
             this.label6.TabIndex = 9;
@@ -107,21 +116,22 @@
             // 
             this.txtValorProducto.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtValorProducto.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtValorProducto.Location = new System.Drawing.Point(268, 157);
+            this.txtValorProducto.Location = new System.Drawing.Point(721, 112);
             this.txtValorProducto.MaxLength = 15;
             this.txtValorProducto.Name = "txtValorProducto";
-            this.txtValorProducto.Size = new System.Drawing.Size(323, 34);
+            this.txtValorProducto.Size = new System.Drawing.Size(294, 34);
             this.txtValorProducto.TabIndex = 1;
             // 
             // btnCreatePost
             // 
             this.btnCreatePost.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnCreatePost.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(115)))), ((int)(((byte)(45)))));
+            this.btnCreatePost.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCreatePost.FlatAppearance.BorderSize = 0;
             this.btnCreatePost.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCreatePost.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnCreatePost.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnCreatePost.Location = new System.Drawing.Point(768, 636);
+            this.btnCreatePost.Location = new System.Drawing.Point(1018, 517);
             this.btnCreatePost.Name = "btnCreatePost";
             this.btnCreatePost.Size = new System.Drawing.Size(179, 41);
             this.btnCreatePost.TabIndex = 4;
@@ -134,7 +144,7 @@
             this.btnAddImage.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnAddImage.BackColor = System.Drawing.Color.Transparent;
             this.btnAddImage.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnAddImage.Location = new System.Drawing.Point(268, 492);
+            this.btnAddImage.Location = new System.Drawing.Point(273, 454);
             this.btnAddImage.Name = "btnAddImage";
             this.btnAddImage.Size = new System.Drawing.Size(121, 38);
             this.btnAddImage.TabIndex = 3;
@@ -146,18 +156,19 @@
             // 
             this.productDescriptionText.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.productDescriptionText.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.productDescriptionText.Location = new System.Drawing.Point(268, 255);
+            this.productDescriptionText.Location = new System.Drawing.Point(720, 218);
             this.productDescriptionText.Name = "productDescriptionText";
-            this.productDescriptionText.Size = new System.Drawing.Size(478, 181);
+            this.productDescriptionText.Size = new System.Drawing.Size(424, 208);
             this.productDescriptionText.TabIndex = 2;
             this.productDescriptionText.Text = "";
             // 
             // lblImageFileName
             // 
+            this.lblImageFileName.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblImageFileName.AutoSize = true;
             this.lblImageFileName.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblImageFileName.ForeColor = System.Drawing.Color.Black;
-            this.lblImageFileName.Location = new System.Drawing.Point(274, 552);
+            this.lblImageFileName.Location = new System.Drawing.Point(21, 526);
             this.lblImageFileName.Name = "lblImageFileName";
             this.lblImageFileName.Size = new System.Drawing.Size(0, 23);
             this.lblImageFileName.TabIndex = 30;
@@ -169,18 +180,28 @@
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(642, 164);
+            this.label7.Location = new System.Drawing.Point(1041, 119);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(104, 23);
             this.label7.TabIndex = 31;
             this.label7.Text = "UCUCoins";
+            // 
+            // postPicBox
+            // 
+            this.postPicBox.Location = new System.Drawing.Point(21, 79);
+            this.postPicBox.Name = "postPicBox";
+            this.postPicBox.Size = new System.Drawing.Size(373, 339);
+            this.postPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.postPicBox.TabIndex = 43;
+            this.postPicBox.TabStop = false;
             // 
             // CreatePostForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(976, 721);
+            this.ClientSize = new System.Drawing.Size(1234, 583);
+            this.Controls.Add(this.postPicBox);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.lblImageFileName);
             this.Controls.Add(this.productDescriptionText);
@@ -196,6 +217,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "CreatePostForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            ((System.ComponentModel.ISupportInitialize)(this.postPicBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -214,5 +236,6 @@
         private System.Windows.Forms.RichTextBox productDescriptionText;
         private System.Windows.Forms.Label lblImageFileName;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.PictureBox postPicBox;
     }
 }

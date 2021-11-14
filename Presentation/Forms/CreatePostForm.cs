@@ -75,6 +75,7 @@ namespace Presentation.Forms
                 txtValorProducto.Text = "";
                 productDescriptionText.Text = "";
                 lblImageFileName.Text = "";
+                postPicBox.Image = null;
                 _loadedImage = null;
             }
             catch (InvalidOperationException ex)
@@ -95,6 +96,7 @@ namespace Presentation.Forms
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
                     Image img = Image.FromFile(fileDialog.FileName);
+                    postPicBox.Image = img;
                     byte[] xByte = (byte[])_imageConverter.ConvertTo(img, typeof(byte[]));
                     _loadedImage = xByte;
                     lblImageFileName.Text = fileDialog.SafeFileName;

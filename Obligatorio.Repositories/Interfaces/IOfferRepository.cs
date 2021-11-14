@@ -11,6 +11,6 @@ namespace Obligatorio.Repositories.Interfaces
         void UpdateOfferState(long idOffer, EnumOfertas.EstadoOferta state);
         Usuario GetUserByRole(EnumRoles.RolOferta usersRole, long idOffer);
         bool CheckForExistingOffer(List<Publicacion> posts);
-        List<long> GetPendingOffersWithPosts(long idOfertaActual, List<Publicacion> posts);  
+        List<long> GetPendingOffersWithPosts(long idOfertaActual, List<Publicacion> posts);
     }
 }

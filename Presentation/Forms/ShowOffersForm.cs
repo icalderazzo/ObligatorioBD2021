@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Obligatorio.Domain;
+﻿using Obligatorio.Domain;
 using Obligatorio.Domain.Model;
 using Obligatorio.Services.Interfaces;
 using Presentation.CustomEvents;
 using Presentation.IndividualComponents;
-using System.Linq;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Presentation.Forms
 {

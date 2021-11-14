@@ -17,14 +17,14 @@ namespace Presentation.Forms
         private List<Publicacion> _includedOfferPosts;
         private Publicacion _desiredPost;
         private List<Publicacion> _activeUsersPosts;
-        public Publicacion DesiredPost 
+        public Publicacion DesiredPost
         {
             get { return _desiredPost; }
-            set 
+            set
             {
                 _desiredPost = value;
-                ShowDesiredPost(value); 
-            } 
+                ShowDesiredPost(value);
+            }
         }
         public List<Publicacion> ActiveUsersPosts
         {
@@ -99,7 +99,7 @@ namespace Presentation.Forms
                     {
                         Cedula = DesiredPost.Propietario.Cedula,
                         Nombre = DesiredPost.Propietario.Nombre,
-                        Apellido = DesiredPost.Propietario.Apellido, 
+                        Apellido = DesiredPost.Propietario.Apellido,
                         Correo = DesiredPost.Propietario.Correo
                     }
                 };

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Obligatorio.Domain.Model;
+﻿using Obligatorio.Domain.Model;
 using Obligatorio.Services.Interfaces;
 using Presentation.CustomEvents;
 using Presentation.IndividualComponents;
 using Presentation.Utils;
+using System;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Presentation.Forms
 {
@@ -13,7 +13,7 @@ namespace Presentation.Forms
     {
         private EditPostForm _editPostForm;
         private readonly IPostsService _postsService;
-        private readonly IImageConverter _imageConverter; 
+        private readonly IImageConverter _imageConverter;
         private readonly System.Drawing.ImageConverter _defaultImageConverter;
 
         public ShowPostsForm(
@@ -26,7 +26,7 @@ namespace Presentation.Forms
             _defaultImageConverter = defaultImageConverter;
             InitializeComponent();
         }
-        
+
         public async void RefreshPosts()
         {
             await GetActiveUsersPosts();

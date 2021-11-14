@@ -26,8 +26,8 @@ namespace Presentation.Forms
                 _includedOfferPosts = value;
             }
         }
-        public List<Publicacion> ActiveUserPosts 
-        { 
+        public List<Publicacion> ActiveUserPosts
+        {
             set
             {
                 LoadSelectPostItems(value, flowPanelActiveUserPosts);
@@ -40,7 +40,7 @@ namespace Presentation.Forms
                 LoadPostForCounterOffer(value);
             }
         }
-        public List<Publicacion> OtherUsersPosts 
+        public List<Publicacion> OtherUsersPosts
         {
             set
             {
@@ -76,7 +76,7 @@ namespace Presentation.Forms
                     post,
                     _imageConverter.ConvertFromByteArray(post.Imagen),
                     includeInOffer: IsIncluded(post.IdPublicacion),
-                    checkVisible : false);
+                    checkVisible: false);
 
                 postItem.Check_IncludeInOffer += OnPostChecked;
                 postItem.Check_ExcludeInOffer += OnPostUnchecked;
@@ -161,7 +161,7 @@ namespace Presentation.Forms
                 MessageBox.Show("La oferta ha sido realizada exitosamente!", "Éxito");
                 Hide();
             }
-            catch (InvalidOperationException ex) 
+            catch (InvalidOperationException ex)
             {
                 MessageBox.Show(ex.Message);
             }

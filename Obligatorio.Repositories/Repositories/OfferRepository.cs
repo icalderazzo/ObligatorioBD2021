@@ -28,7 +28,7 @@ namespace Obligatorio.Repositories.Repositories
             {
                 string query = "SELECT IdOferta, FechaRealizacion FROM Oferta WHERE IdOferta = @IdOffer;";
                 var result = _context.Select(
-                    query, 
+                    query,
                         new SqlParameter("@IdOffer", long.Parse(id))
                     );
                 return ExtractOffer(result[0]);
@@ -193,7 +193,7 @@ namespace Obligatorio.Repositories.Repositories
             }
         }
 
-        private Oferta ExtractOffer (object[] oferta)
+        private Oferta ExtractOffer(object[] oferta)
         {
             Oferta offer = new Oferta()
             {

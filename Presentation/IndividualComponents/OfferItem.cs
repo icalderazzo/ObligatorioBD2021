@@ -1,11 +1,11 @@
-﻿using Obligatorio.Domain.Model;
+﻿using Obligatorio.Domain;
+using Obligatorio.Domain.Model;
+using Presentation.CustomEvents;
 using System;
-using System.Windows.Forms;
-using Obligatorio.Domain;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 using static Presentation.Constant.Styles;
-using Presentation.CustomEvents;
 
 namespace Presentation.IndividualComponents
 {
@@ -21,9 +21,9 @@ namespace Presentation.IndividualComponents
         public EventHandler ViewOfferDetailEventHandler;
 
         public OfferItem(
-            Oferta offer, 
-            EnumOfertas.EstadoOferta offerStatus, 
-            EnumRoles.RolOferta offerRole) 
+            Oferta offer,
+            EnumOfertas.EstadoOferta offerStatus,
+            EnumRoles.RolOferta offerRole)
         {
             _offer = offer;
             _offerStatus = offerStatus;

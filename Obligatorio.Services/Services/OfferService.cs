@@ -1,13 +1,13 @@
+using EmailService;
 using Obligatorio.Domain;
 using Obligatorio.Domain.Model;
 using Obligatorio.Repositories.Interfaces;
 using Obligatorio.Services.Interfaces;
-using System.Collections.Generic;
 using System;
-using EmailService;
-using static Obligatorio.Domain.Emails.EmailBodies;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using static Obligatorio.Domain.Emails.EmailBodies;
 
 namespace Obligatorio.Services.Services
 {
@@ -19,8 +19,8 @@ namespace Obligatorio.Services.Services
         private readonly IValidator<Oferta> _offerValidator;
 
         public OfferService(
-            IOfferRepository offerRepository, 
-            IPostsService postsService, 
+            IOfferRepository offerRepository,
+            IPostsService postsService,
             INotificationsService<Email> emailNotificationsService,
             IValidator<Oferta> offerValidator
         )
@@ -100,14 +100,14 @@ namespace Obligatorio.Services.Services
                         });
                     }
                 })
-                { 
+                {
                     IsBackground = true,
                     Name = "AfterCreateOffer"
                 };
 
                 t.Start(entity);
             }
-            else 
+            else
             {
                 throw new InvalidOperationException(validation_result.Item2);
             }
@@ -141,7 +141,7 @@ namespace Obligatorio.Services.Services
 
             foreach (var offer in offersRecieved)
             {
-;               offer.UsuarioEmisor = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Emisor, offer.IdOferta);
+                ; offer.UsuarioEmisor = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Emisor, offer.IdOferta);
                 offer.UsuarioDestinatario = _offerRepository.GetUserByRole(EnumRoles.RolOferta.Destinatario, offer.IdOferta);
                 offer.PublicacionesEmisor = _postService.GetPostsInOffer(offer.IdOferta, offer.UsuarioEmisor.Cedula);
                 offer.PublicacionesDestinatario = _postService.GetPostsInOffer(offer.IdOferta, offer.UsuarioDestinatario.Cedula);
@@ -222,7 +222,7 @@ namespace Obligatorio.Services.Services
                     });
                 })
                 {
-                    IsBackground = true, 
+                    IsBackground = true,
                     Name = "AfterAcceptOffer"
                 };
 
@@ -271,7 +271,7 @@ namespace Obligatorio.Services.Services
             {
                 throw;
             }
-            
+
         }
     }
 }

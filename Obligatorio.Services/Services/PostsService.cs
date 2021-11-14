@@ -41,7 +41,7 @@ namespace Obligatorio.Services.Services
             List<Publicacion> result;
             if (string.IsNullOrEmpty(name))
             {
-                result =  _postsRepository.ListForFeed(ciActiveUser).ToList();
+                result = _postsRepository.ListForFeed(ciActiveUser).ToList();
             }
             else
             {
@@ -72,7 +72,7 @@ namespace Obligatorio.Services.Services
 
         public List<Publicacion> ListForFeed(int ciActiveUser)
         {
-            var result =  _postsRepository.ListForFeed(ciActiveUser).ToList();
+            var result = _postsRepository.ListForFeed(ciActiveUser).ToList();
             foreach (var p in result)
             {
                 p.Propietario = _userService.GetById(p.Propietario.Cedula.ToString());
@@ -90,7 +90,7 @@ namespace Obligatorio.Services.Services
         {
             bool postInOffers = CheckPostInOffers(entity.IdPublicacion, EnumOfertas.EstadoOferta.Pendiente);
 
-            if (postInOffers) 
+            if (postInOffers)
             {
                 throw new InvalidOperationException("No puedes actualizar los datos de la publicación ya que se encuentra en una oferta en curso");
             }

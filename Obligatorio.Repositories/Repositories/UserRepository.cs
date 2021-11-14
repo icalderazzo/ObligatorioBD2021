@@ -38,7 +38,7 @@ namespace Obligatorio.Repositories.Repositories
         public bool ExistsUserWithUsername(string username)
         {
             string query = "SELECT u.Ci FROM Usuario u WHERE u.NombreUsuario = @username;";
-            var result = _context.Select(query, 
+            var result = _context.Select(query,
                 new SqlParameter("@username", username)
             );
             return result.Count > 0;
@@ -47,7 +47,7 @@ namespace Obligatorio.Repositories.Repositories
         public bool ExistsUserWithEmail(string email, int ci)
         {
             string query = "SELECT u.Ci FROM Usuario u WHERE u.Correo = @email AND u.Ci <> @Ci;";
-            var result = _context.Select(query, 
+            var result = _context.Select(query,
                 new SqlParameter("@email", email),
                 new SqlParameter("@Ci", ci)
             );
@@ -56,7 +56,7 @@ namespace Obligatorio.Repositories.Repositories
         public bool ExistsUserWithPhoneNumber(int phoneNumber, int ci)
         {
             string query = "SELECT u.Ci FROM Usuario u WHERE u.Telefono = @phoneNumber AND u.Ci <> @Ci;";
-            var result = _context.Select(query, 
+            var result = _context.Select(query,
                 new SqlParameter("@phoneNumber", phoneNumber),
                 new SqlParameter("@Ci", ci)
             );
@@ -82,7 +82,7 @@ namespace Obligatorio.Repositories.Repositories
             if (dbResult.Any())
             {
                 var user = ExtractUser(dbResult);
-                user.Telefono = 
+                user.Telefono =
                 user.Telefono = int.Parse(dbResult[0][6].ToString());
                 return user;
             }
@@ -154,7 +154,7 @@ namespace Obligatorio.Repositories.Repositories
                 {
                     query = "UPDATE Usuario SET Contrasenia=@Contrasenia WHERE Usuario.Ci = @Ci";
 
-                    _context.SaveData(tran,query,
+                    _context.SaveData(tran, query,
                         new SqlParameter("@Contrasenia", model.Contrasenia),
                         new SqlParameter("@Ci", model.Cedula)
                     );

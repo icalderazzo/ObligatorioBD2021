@@ -9,15 +9,15 @@ namespace Presentation.Forms
     public partial class OfferDetailForm : Form
     {
         private readonly IImageConverter _imageConverter;
-        public List<Publicacion> ActiveUsersPosts 
-        { 
+        public List<Publicacion> ActiveUsersPosts
+        {
             set
             {
                 LoadSelectPostItems(value, activeUsersPostsFlowPanel);
             }
         }
-        public List<Publicacion> OtherUsersPosts 
-        { 
+        public List<Publicacion> OtherUsersPosts
+        {
             set
             {
                 LoadSelectPostItems(value, otherUsersPostsFlowPanel);
@@ -35,10 +35,10 @@ namespace Presentation.Forms
             foreach (var post in posts)
             {
                 var postItem = new SelectPostItem(
-                    post, 
-                    image: _imageConverter.ConvertFromByteArray(post.Imagen), 
-                    includeInOffer : false,
-                    checkVisible : false
+                    post,
+                    image: _imageConverter.ConvertFromByteArray(post.Imagen),
+                    includeInOffer: false,
+                    checkVisible: false
                 );
                 panel.Controls.Add(postItem);
             }

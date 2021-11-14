@@ -1,10 +1,10 @@
 ﻿using DatabaseInterface;
+using Obligatorio.Domain;
 using Obligatorio.Domain.Model;
 using Obligatorio.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using Obligatorio.Domain;
 
 namespace Obligatorio.Repositories.Repositories
 {

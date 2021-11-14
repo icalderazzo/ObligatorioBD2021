@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-using Obligatorio.Domain.Model;
+﻿using Obligatorio.Domain.Model;
 using Obligatorio.Services.Interfaces;
+using System;
+using System.Windows.Forms;
 
 namespace Presentation.Forms
 {
@@ -50,11 +50,11 @@ namespace Presentation.Forms
                     Telefono = int.Parse(txtPhoneNumber.Text),
                     Contrasenia = ""
                 };
-                
+
                 // si el usuario habilito el cambio de contraseña
                 if (txtCurrentPasswd.Visible)
                 {
-                    if(_userService.IsUserAllowedToChangePassword(Global.LoggedUser.NombreUsuario, txtCurrentPasswd.Text))
+                    if (_userService.IsUserAllowedToChangePassword(Global.LoggedUser.NombreUsuario, txtCurrentPasswd.Text))
                     {
                         if (txtNewPasswd.Text.Equals(txtRepeatNewPasswd.Text))
                         {
@@ -83,7 +83,7 @@ namespace Presentation.Forms
 
                 Hide();
             }
-            catch(InvalidOperationException io)
+            catch (InvalidOperationException io)
             {
                 MessageBox.Show(io.Message);
             }

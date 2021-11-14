@@ -1,7 +1,6 @@
-﻿using Obligatorio.Domain;
-using Obligatorio.Domain.Model;
-using System.Collections.Generic;
+﻿using Obligatorio.Domain.Model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Obligatorio.Domain
@@ -16,15 +15,15 @@ namespace Obligatorio.Domain
             int ucuCoinsOffered = 0;
             int ucuCoinsAsked = 0;
 
-            for (int i = 0; i < postsOffered.Count; i++){ ucuCoinsOffered += postsOffered[i].Articulo.Valor; }
+            for (int i = 0; i < postsOffered.Count; i++) { ucuCoinsOffered += postsOffered[i].Articulo.Valor; }
 
-            for (int i = 0; i < postsAsked.Count; i++){ ucuCoinsAsked += postsAsked[i].Articulo.Valor; }
+            for (int i = 0; i < postsAsked.Count; i++) { ucuCoinsAsked += postsAsked[i].Articulo.Valor; }
 
             if (ucuCoinsOffered != ucuCoinsAsked)
             {
                 return (false, "El precio en UCUCoins de las publicaciónes ofrecidas debe ser igual al de las publicaciones deseadas");
             }
-            else 
+            else
             {
                 // If offer is a counterOffer --> validate offer != previousOffer
                 if (offer.TransaccionContraofertada != null)
@@ -39,10 +38,10 @@ namespace Obligatorio.Domain
                     else { return (false, "La contra oferta debe ser distinta a la oferta original"); }
                 }
 
-                return (true, ""); 
-            
+                return (true, "");
+
             }
-            
+
         }
 
         private bool PostsAreTheSame(List<Publicacion> posts1, List<Publicacion> posts2)
@@ -54,7 +53,7 @@ namespace Obligatorio.Domain
                 long[] idsPosts2 = new long[posts2.Count];
 
                 // Fill arrays with ids
-                for (int i = 0; i < posts1.Count; i++){ idsPosts1[i] = posts1[i].IdPublicacion; }
+                for (int i = 0; i < posts1.Count; i++) { idsPosts1[i] = posts1[i].IdPublicacion; }
                 for (int i = 0; i < posts2.Count; i++) { idsPosts2[i] = posts2[i].IdPublicacion; }
 
                 // Compare arrays

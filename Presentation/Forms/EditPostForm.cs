@@ -17,15 +17,15 @@ namespace Presentation.Forms
         public EventHandler ChangePostStateClick;
 
         public EditPostForm(
-            Publicacion post, 
-            IImageConverter imageConverter, 
+            Publicacion post,
+            IImageConverter imageConverter,
             System.Drawing.ImageConverter defaultImageConverter)
         {
             _imageConverter = imageConverter;
             _defaultImageConverter = defaultImageConverter;
             _activePost = post;
             InitializeComponent();
-            
+
         }
 
         private void EditPostForm_Load(object sender, EventArgs e)

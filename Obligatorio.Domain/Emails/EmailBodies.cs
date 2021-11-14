@@ -8,7 +8,7 @@ namespace Obligatorio.Domain.Emails
     {
         private static readonly StringBuilder stringBuilder = new StringBuilder();
         public static string SenderAcceptedOfferEmailBody(
-            string name, 
+            string name,
             string surname,
             List<string> postsnames,
             string receiversName,

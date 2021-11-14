@@ -1,6 +1,6 @@
-﻿using Obligatorio.Domain.Model;
+﻿using Obligatorio.Domain;
+using Obligatorio.Domain.Model;
 using System.Collections.Generic;
-using Obligatorio.Domain;
 
 namespace Obligatorio.Repositories.Interfaces
 {

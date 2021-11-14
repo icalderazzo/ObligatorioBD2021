@@ -70,6 +70,13 @@ namespace Presentation.Forms
                     _activePost.Articulo.Nombre = txtNombreProducto.Text;
                     _activePost.Articulo.Descripcion = productDescriptionText.Text;
                     _activePost.Articulo.Valor = int.Parse(txtValorProducto.Text);
+
+                    if (_activePost.Articulo.Valor <= 0)
+                    {
+                        MessageBox.Show("El valor del producto debe ser mayor a 0");
+                        return;
+                    }
+
                     this.UpdatePostClick(this, new PostEventArgs(_activePost));
                 }
                 catch (FormatException)

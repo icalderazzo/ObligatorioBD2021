@@ -41,6 +41,7 @@ namespace Presentation.Forms
 
         private void LoadPost()
         {
+            pictureBox1.Image = null;
             var img = _imageConverter.ConvertFromByteArray(_activePost.Imagen);
 
             if (img != null)

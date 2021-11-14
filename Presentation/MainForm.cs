@@ -58,6 +58,7 @@ namespace Presentation
         }
         private void btnShowPosts_Click(object sender, EventArgs e)
         {
+            _showPostsForm.RefreshPosts();
             OpenChildForm(_showPostsForm, sender);
         }
         #endregion

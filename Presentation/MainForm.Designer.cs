@@ -31,6 +31,7 @@ namespace Presentation
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.sideBarPanel = new System.Windows.Forms.Panel();
+            this.btnShowPosts = new System.Windows.Forms.Button();
             this.btnTransactions = new System.Windows.Forms.Button();
             this.btnPostArticle = new System.Windows.Forms.Button();
             this.btnHome = new System.Windows.Forms.Button();
@@ -43,7 +44,6 @@ namespace Presentation
             this.panel4 = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
             this.mainContentPanel = new System.Windows.Forms.Panel();
-            this.btnShowPosts = new System.Windows.Forms.Button();
             this.sideBarPanel.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -64,6 +64,26 @@ namespace Presentation
             this.sideBarPanel.Name = "sideBarPanel";
             this.sideBarPanel.Size = new System.Drawing.Size(235, 1033);
             this.sideBarPanel.TabIndex = 0;
+            // 
+            // btnShowPosts
+            // 
+            this.btnShowPosts.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnShowPosts.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnShowPosts.FlatAppearance.BorderSize = 0;
+            this.btnShowPosts.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnShowPosts.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnShowPosts.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnShowPosts.Image = ((System.Drawing.Image)(resources.GetObject("btnShowPosts.Image")));
+            this.btnShowPosts.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnShowPosts.Location = new System.Drawing.Point(0, 370);
+            this.btnShowPosts.Name = "btnShowPosts";
+            this.btnShowPosts.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.btnShowPosts.Size = new System.Drawing.Size(235, 90);
+            this.btnShowPosts.TabIndex = 5;
+            this.btnShowPosts.Text = "Publicaciones";
+            this.btnShowPosts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnShowPosts.UseVisualStyleBackColor = false;
+            this.btnShowPosts.Click += new System.EventHandler(this.btnShowPosts_Click);
             // 
             // btnTransactions
             // 
@@ -221,26 +241,6 @@ namespace Presentation
             this.mainContentPanel.Name = "mainContentPanel";
             this.mainContentPanel.Size = new System.Drawing.Size(1667, 933);
             this.mainContentPanel.TabIndex = 3;
-            // 
-            // btnShowPosts
-            // 
-            this.btnShowPosts.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnShowPosts.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnShowPosts.FlatAppearance.BorderSize = 0;
-            this.btnShowPosts.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnShowPosts.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnShowPosts.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnShowPosts.Image = ((System.Drawing.Image)(resources.GetObject("btnShowPosts.Image")));
-            this.btnShowPosts.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnShowPosts.Location = new System.Drawing.Point(0, 370);
-            this.btnShowPosts.Name = "btnShowPosts";
-            this.btnShowPosts.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.btnShowPosts.Size = new System.Drawing.Size(235, 90);
-            this.btnShowPosts.TabIndex = 5;
-            this.btnShowPosts.Text = "Publicaciones";
-            this.btnShowPosts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnShowPosts.UseVisualStyleBackColor = false;
-            this.btnShowPosts.Click += new System.EventHandler(this.btnShowPosts_Click);
             // 
             // MainForm
             // 

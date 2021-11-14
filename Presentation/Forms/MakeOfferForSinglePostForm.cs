@@ -86,7 +86,7 @@ namespace Presentation.Forms
             {
                 var offer = new Oferta()
                 {
-                    PublicacionesEmisor = _includedOfferPosts,
+                    PublicacionesEmisor = _includedOfferPosts.ToList(), //clonar lista
                     PublicacionesDestinatario = new List<Publicacion>() { DesiredPost },
                     UsuarioEmisor = new Usuario()
                     {
@@ -106,11 +106,10 @@ namespace Presentation.Forms
 
                 _offerService.Create(offer);
 
-                _includedOfferPosts.Clear();
-                _activeUsersPosts.Clear();
-
                 MessageBox.Show("Oferta realizada correctamente", "Éxito");
                 Hide();
+                _includedOfferPosts.Clear();
+                _activeUsersPosts.Clear();
             }
             catch (InvalidOperationException ex)
             {

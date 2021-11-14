@@ -109,14 +109,17 @@ namespace Presentation
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("¿Está seguro que desea salir de la aplicación?", "Salir", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            if (e.CloseReason == CloseReason.UserClosing)
             {
-                Global.LoggedUser = null;
-            }
-            else
-            {
-                e.Cancel = true;
+                DialogResult dialogResult = MessageBox.Show("¿Está seguro que desea salir de la aplicación?", "Salir", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Global.LoggedUser = null;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
         }
 

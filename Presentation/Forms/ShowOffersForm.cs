@@ -164,6 +164,7 @@ namespace Presentation.Forms
                         Propietario = new Usuario() { Cedula = post.Propietario.Cedula },
                         Articulo = new Articulo()
                         {
+                            Nombre = post.Articulo.Nombre,
                             Valor = post.Articulo.Valor
                         }
                     });
@@ -176,6 +177,7 @@ namespace Presentation.Forms
                         Propietario = new Usuario() { Cedula = post.Propietario.Cedula },
                         Articulo = new Articulo()
                         {
+                            Nombre = post.Articulo.Nombre,
                             Valor = post.Articulo.Valor
                         }
                     });
